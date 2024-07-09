@@ -1,0 +1,14 @@
+Compose App for building decks
+- Use of Raise and Ior
+  - Card not found => Left
+  - More than 4 of something => Both
+  - [(Identifier, Number)] -> Ior<NonEmptyList<Problem>, Deck>
+- We use pokemon-tcg-data service to search
+  - Apply resilience there (retry, circuit breaker)
+  - Parse JSON using optics (instead of plain deserialization)
+- Designing a good API for your ViewModel
+  - Use optics-compose to provide a view over parts of it (?)
+  - Use Molecule to test (maybe also speak about injecting there?)
+- Keeping all the resources correctly
+  - Resource / SuspendApp for HttpClient and others
+- Computing statistics in one go => Collectors

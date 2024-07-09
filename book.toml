@@ -1,0 +1,19 @@
+[book]
+authors = ["Alejandro Serrano Mena"]
+language = "en"
+multilingual = false
+src = "guide"
+
+[preprocessor]
+
+[preprocessor.catppuccin]
+assets_version = "2.1.0" # DO NOT EDIT: Managed by `mdbook-catppuccin install`
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.0.2" # do not edit: managed by `mdbook-admonish install`
+
+[output]
+
+[output.html]
+additional-css = ["./theme/catppuccin.css", "./theme/catppuccin-admonish.css", "./theme/mdbook-admonish.css"]

@@ -1,0 +1,9 @@
+product: jvm/app
+
+dependencies:
+    - $compose.foundation
+    - $compose.material3
+    - $compose.desktop.currentOs
+
+settings:
+    compose: enabled
