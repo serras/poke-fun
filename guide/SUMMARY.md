@@ -2,12 +2,13 @@
 
 [Welcome](./welcome.md)
 
-- [Introduction to the domain](./intro.md)
+- [Trading Card Games](./tcg.md)
 - [The technology](./tech-intro.md)
+- [Introduction](./intro.md)
 - [What is (in) a deck](./adt.md)
-- [Deck validation](./validation.md)
+- [Law-abiding decks](./validation.md)
 - [Deck building](./build.md)
-- [Test without interaction](./molecule.md)
-- [Card search](./search.md)
 - [Deal with bad internet](./resilience.md)
+- [Loading and saving](./par.md)
 - [Better architecture](./architecture.md)
+- [Nicer UI](./cmp.md)

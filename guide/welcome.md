@@ -12,15 +12,16 @@ For ease of development, the provided skeleton is a desktop application. Using C
 
 The starting point introduces the domain and the main components of the technology.
 
-- If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the [introduction to the domain](./intro.md);
-- If you are new to Amper or Compose Multiplatform, start with [the technology](./tech-intro.md).
+- If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the [introduction to the domain](./tcg.md);
+- If you are new to Amper or Compose Multiplatform, start with [the technology](./tech-intro.md),
 
+Afterward, the [introduction](./intro.md) describes the main components of the given code.
 The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on.
 
-- [What is (in) a deck](./adt.md): model data using data classes and sealed hierarchies
-- [Deck validation](./validation.md): learn about `Raise` and `Ior`
-- [Deck building](./build.md): design a good `ViewModel` using functional principles
-- [Test without interaction](./molecule.md): ensure everything works as expected with Molecule
-- [Card search](./search.md): use optics to access [Pokémon TCG API](https://pokemontcg.io/)
-- [Deal with bad internet](./resilience.md): improve the experience with `Schedule` and `CircuitBreaker`
+- [What is (in) a deck](./adt.md): model data using data classes and sealed hierarchies, and learn about optics for JSON
+- [Law-abiding decks](./validation.md): check that the deck follows the rules, and learn about `Raise` and `Ior` along the way
+- [Deck building](./build.md): design a good `ViewModel` using functional principles, and design undo/redo with actions-as-data
+- [Deal with bad internet](./resilience.md): improve the experience with `Schedule` and `CircuitBreaker`, and cache results using memoization
+- [Loading and saving](./par.md): store your work locally, and learn about parallel combinators in Arrow Fx
 - [Better architecture](./architecture.md): introduce resource management, and overall nicer design
+- [Nicer UI](./cmp.md): implement more visual feedback using Compose Multiplatform
