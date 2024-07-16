@@ -7,12 +7,12 @@ import tcg.PokemonStage
 import tcg.Type
 import kotlin.time.Duration.Companion.seconds
 
-interface PokemonApi {
+interface PokemonTcgApi {
     suspend fun search(name: String): List<Card>
 }
 
-class FakePokemonApi {
-    suspend fun search(name: String): List<Card> {
+class FakePokemonTcgApi: PokemonTcgApi {
+    override suspend fun search(name: String): List<Card> {
         delay(3.seconds)
         return FAKE_CARDS.filter { name.contains(name, ignoreCase = true) }
     }
