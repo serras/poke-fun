@@ -10,7 +10,7 @@ data class Card(
     val identifier: String,
     val category: Category,
     val type: Type?
-) {
+): Comparable<Card> {
     val imageUrl: String
         get() {
             val (set, id) = identifier.split('-')
@@ -19,12 +19,35 @@ data class Card(
 
     val imageResource: KamelResource<Painter>
       @Composable get() = asyncPainterResource(data = imageUrl)
+
+    override fun compareTo(other: Card): Int {
+        if (this.category != other.category) return this.category.compareTo(other.category)
+        if (this.name != other.name) return this.name.compareTo(other.name)
+        return this.identifier.compareTo(other.identifier)
+    }
 }
 
-sealed interface Category {
+sealed interface Category: Comparable<Category> {
     data class Pokemon(val stage: PokemonStage) : Category
     data class Energy(val category: EnergyCategory) : Category
     data class Trainer(val category: TrainerCategory) : Category
+
+    override fun compareTo(other: Category): Int =
+        when {
+            this is Pokemon && other is Pokemon ->
+                this.stage.compareTo(other.stage)
+            this is Pokemon -> -1
+            other is Pokemon -> 1
+            this is Energy && other is Energy ->
+                this.category.compareTo(other.category)
+            this is Energy -> -1
+            other is Energy -> 1
+            this is Trainer && other is Trainer ->
+                this.category.compareTo(other.category)
+            this is Trainer -> -1
+            other is Trainer -> 1
+            else -> 0
+        }
 }
 
 enum class PokemonStage {

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import io.kamel.image.KamelImage
 import androidx.compose.material3.Card as Material3Card
@@ -40,7 +41,13 @@ fun Card.view(
 ) {
     Material3Card(modifier = Modifier.width(150.dp).padding(5.dp)) {
         Column {
-            Text(name, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            Text(
+                name,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.fillMaxWidth().padding(2.dp)
+            )
             KamelImage(
                 resource = imageResource,
                 contentDescription = identifier,

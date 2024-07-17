@@ -7,5 +7,5 @@ import tcg.view
 
 @Composable
 fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
-    FakePokemonTcgApi.FAKE_CARDS.view(modifier)
+    deck.deck.sorted().view(modifier)
 }

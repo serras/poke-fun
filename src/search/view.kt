@@ -2,6 +2,7 @@ package search
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -10,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import deck.DeckModel
+import io.kamel.image.KamelImage
+import io.kamel.image.asyncPainterResource
 import tcg.view
 
 @Composable
@@ -48,7 +51,15 @@ fun SearchView(
                     } else {
                         result.results.view(
                             modifier = Modifier.fillMaxSize()
-                        )
+                        ) { card ->
+                            TextButton(
+                                onClick = { deck.add(card) },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Icon(Icons.Filled.Add, contentDescription = "Add ${card.name}")
+                                Text("Add", color = MaterialTheme.colorScheme.primary)
+                            }
+                        }
                     }
             }
         }
