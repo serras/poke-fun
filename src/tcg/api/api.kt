@@ -1,4 +1,4 @@
-package tcg
+package tcg.api
 
 import kotlinx.coroutines.delay
 import tcg.Card
@@ -9,6 +9,7 @@ import kotlin.time.Duration.Companion.seconds
 
 interface PokemonTcgApi {
     suspend fun search(name: String): List<Card>
+    suspend fun getById(identifier: String): Card?
 }
 
 class FakePokemonTcgApi: PokemonTcgApi {
@@ -16,7 +17,12 @@ class FakePokemonTcgApi: PokemonTcgApi {
         delay(3.seconds)
         return FAKE_CARDS.filter { name.contains(name, ignoreCase = true) }
     }
-    
+
+    override suspend fun getById(identifier: String): Card? {
+        delay(1.seconds)
+        return FAKE_CARDS.firstOrNull { it.identifier == identifier }
+    }
+
     companion object {
         val FAKE_CARDS: List<Card> = listOf(
             Card("Bulbasaur", "sv3pt5-1", Category.Pokemon(PokemonStage.Basic), Type.Grass),

@@ -8,15 +8,20 @@ dependencies:
     - $compose.desktop.components.splitPane
     - media.kamel:kamel-image:0.9.5
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0
-    - io.ktor:ktor-client:2.3.12
-    - io.ktor:ktor-client-cio:2.3.12
     - io.arrow-kt:arrow-core:1.2.4
     - io.arrow-kt:arrow-fx-coroutines:1.2.4
     - io.arrow-kt:arrow-resilience:1.2.4
     - io.arrow-kt:arrow-optics:1.2.4
+    - org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1
+    - io.ktor:ktor-client:2.3.12
+    - io.ktor:ktor-client-cio:2.3.12
+    - io.ktor:ktor-client-content-negotiation:2.3.12
+    - io.ktor:ktor-serialization-kotlinx-json:2.3.12
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
 
 settings:
     compose:
         enabled: true
         version: 1.6.11
+    kotlin:
+        serialization: json

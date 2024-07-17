@@ -26,15 +26,17 @@ fun main() = application {
         ) {
             val deckModel = viewModel { DeckModel() }
             HorizontalSplitPane {
-                first(200.dp) {
-                    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(10.dp).fillMaxSize()) {
-                        SearchView(deckModel)
-                    }
+                first(320.dp) {
+                    SearchView(
+                        deckModel,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(10.dp).fillMaxSize()
+                    )
                 }
                 second {
-                    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(10.dp).fillMaxSize()) {
-                        DeckView(deckModel)
-                    }
+                    DeckView(
+                        deckModel,
+                        modifier = Modifier.background(MaterialTheme.colorScheme.background).padding(10.dp).fillMaxSize()
+                    )
                 }
                 splitter {
                     visiblePart {
