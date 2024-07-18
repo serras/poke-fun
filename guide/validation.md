@@ -1,6 +1,6 @@
 # Law-abiding decks
 
-> **Topics**: validation, `Raise`, error accomulation
+> **Topics**: validation, `Raise`, error accumulation
 
 Handling errors is one of the scenarios where a functional approach shines. Using types like `Either` and contexts like `Raise`, we can easily compose larger validations from smaller ones.
 

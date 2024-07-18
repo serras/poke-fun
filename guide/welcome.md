@@ -19,7 +19,7 @@ Afterward, the [introduction](./intro.md) describes the main components of the g
 The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.
 
 - [What is (in) a deck](./adt.md): model data using data classes and sealed hierarchies;
-- [Law-abiding decks](./validation.md): check that the deck follows the rules, and learn about `Raise` and `Ior` along the way;
+- [Law-abiding decks](./validation.md): check that the deck follows the rules, and learn about `Raise` along the way;
 - [Deck building](./build.md): design a good `ViewModel` using functional principles, and design undo/redo with actions-as-data;
 - [Deal with bad internet](./resilience.md): improve the experience with `Schedule` and `CircuitBreaker`, and cache results using memoization;
 - [Loading and saving](./par.md): store your work locally, and learn about parallel combinators in Arrow Fx;

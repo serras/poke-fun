@@ -1,0 +1,599 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="./theme/catppuccin.css">
+        <link rel="stylesheet" href="./theme/catppuccin-admonish.css">
+        <link rel="stylesheet" href="./theme/mdbook-admonish.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="latte">Latte</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="frappe">Frappé</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="macchiato">Macchiato</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mocha">Mocha</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
+<p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on.</p>
+<p>This book assumes that you know your way around <a href="https://kotlinlang.org">Kotlin</a>, but previous experience with functional programming or <a href="https://arrow-kt.io">Arrow</a>, or with Compose Multiplatform, is not required.</p>
+<div id="admonition-compose-is-multi-plaftorm" class="admonition admonish-note" role="note" aria-labelledby="admonition-compose-is-multi-plaftorm-title">
+<div class="admonition-title">
+<div id="admonition-compose-is-multi-plaftorm-title">
+<p>Compose is multi-plaftorm</p>
+</div>
+<a class="admonition-anchor-link" href="welcome.html#admonition-compose-is-multi-plaftorm"></a>
+</div>
+<div>
+<p>For ease of development, the provided skeleton is a desktop application. Using Compose Multiplatform you can easily make it run in Android or iOS devices, with minor modifications.</p>
+</div>
+</div>
+<p>The starting point introduces the domain and the main components of the technology.</p>
+<ul>
+<li>If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the <a href="./tcg.html">introduction to the domain</a>;</li>
+<li>If you are new to Amper or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
+</ul>
+<p>Afterward, the <a href="./intro.html">introduction</a> describes the main components of the given code.
+The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
+<ul>
+<li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies;</li>
+<li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way;</li>
+<li><a href="./build.html">Deck building</a>: design a good <code>ViewModel</code> using functional principles, and design undo/redo with actions-as-data;</li>
+<li><a href="./resilience.html">Deal with bad internet</a>: improve the experience with <code>Schedule</code> and <code>CircuitBreaker</code>, and cache results using memoization;</li>
+<li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx;</li>
+<li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design;</li>
+<li><a href="./cmp.html">Nicer UI</a>: implement more visual feedback using Compose Multiplatform.</li>
+</ul>
+<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
+<div class="admonition-title">
+<div id="admonition-a-word-from-our-sponsor-title">
+<p>A word from our sponsor</p>
+</div>
+<a class="admonition-anchor-link" href="welcome.html#admonition-a-word-from-our-sponsor"></a>
+</div>
+<div>
+<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="trading-card-games"><a class="header" href="#trading-card-games">Trading Card Games</a></h1>
+<p>The application in which we are going to work on, Poké-Fun, helps in the process of building decks for the Pokémon Trading Card Game (TCG). As usual in any software project, we first need to understand what all the words in the previous sentence mean; in other words, we need to dive into the <em>domain</em>.</p>
+<p>In general, a <em>Trading Card Game</em> is a card game in which the set of cards is not fixed, as in Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of card; this is known as their <em>deck</em>. The <em>trading</em> in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.</p>
+<p>Most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function with at least one basic Pokémon.</p>
+<p>Once again we find a bunch of terms from the domain, what DDD practitioners call the <em>Ubiquituous Language</em>, so let's dive a bit more. Pokémon cards are divided in three big groups.</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td><img src="https://images.pokemontcg.io/svp/46_hires.png" alt="Bulbasaur" /></td><td><em>Pokémon</em> cards represent little monsters that fight against those of your opponent. Each Pokémon has one or more <em>attacks</em>, and <em>health points</em> (HP), which define how much damage they can take before fainting.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/sve/1_hires.png" alt="Grass Energy" /></td><td><em>Energy</em> cards are needed to power the attacks of Pokémon.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/sv2/183_hires.png" alt="Great Ball" /></td><td><em>Trainer</em> cards provide additional effects that you can use to help in the battle.</td></tr>
+</tbody></table>
+</div>
+<p>Pokémon and energies also have a <em>type</em>. There are currently 8 different types in the Pokémon TCG — grass <img src="images/grass.png" height="15px" />, fire <img src="images/fire.png" height="15px" />, water <img src="images/water.png" height="15px" />, lightning <img src="images/lightning.png" height="15px" />, fighting <img src="images/fighting.png" height="15px" />, psychic <img src="images/psychic.png" height="15px" />, metal <img src="images/metal.png" height="15px" />, darkness <img src="images/darkness.png" height="15px" />, and dragon <img src="images/dragon.png" height="15px" /> — alongside a special colorless <img src="images/colorless.png" height="15px" /> type. In most cases a Pokémon of a certain type requires energy of the same type, but this is not a rule.</p>
+<p>One key component of the Pokémon world is that the little monsters <em>evolve</em>, that is, the turn into bigger and more powerful creatures. In the TCG this is reflected by having to begin with <em>basic</em> Pokémon (hence the implicit requirement to have at least one in your deck), which then may turn into <em>stage 1</em>, and eventually in <em>stage 2</em>.</p>
+<p>Apart from the type, one key attribute of cards is their <em>name</em>, since the rules have explicit restrictions on the amount of cards you can have with the same name. However, this does not mean that all cards with the same name are the same; for that reason each of them has an <em>identifier</em> to uniquely point to it.</p>
+<div id="admonition-example" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-title">
+<div class="admonition-title">
+<div id="admonition-example-title">
+<p>Example</p>
+</div>
+<a class="admonition-anchor-link" href="tcg.html#admonition-example"></a>
+</div>
+<div>
+<p>These are two different (happy) Oddish cards. Same name, different identifier, different attacks and HP.</p>
+<p><img src="https://images.pokemontcg.io/sv3/1.png" alt="Oddish 1" /> <img src="https://images.pokemontcg.io/sv3pt5/43.png" alt="Oddish 2" /></p>
+</div>
+</div>
+<p>This is enough for our purposes. If you are interested to learn how to play the game, check the <a href="https://www.pokemon.com/us/pokemon-tcg/rules">official rulebook</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
+<p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
+<p>The one choice which goes out of the ordinary is using <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./amper run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
+<p>We recommend using <a href="https://www.jetbrains.com/fleet/">Fleet</a> or <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> to work on Poké-Fun. If you use the latter, you need the corresponding <a href="https://plugins.jetbrains.com/plugin/23076-amper">Amper plug-in</a>. In both cases, you should see a small play button to run the application from the IDE.</p>
+<p><img src="./images/amper-run.png" alt="Run in Amper Fleet" /></p>
+<h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
+<p>In the recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
+<div class="admonition-title">
+<div id="admonition-more-about-compose-multiplatform-title">
+<p>More about Compose Multiplatform</p>
+</div>
+<a class="admonition-anchor-link" href="tech-intro.html#admonition-more-about-compose-multiplatform"></a>
+</div>
+<div>
+<p>There is still not much documentation about Compose Multiplatform, but most of the information about Jetpack Compose (for Android) applies only with minor modifications.</p>
+<ul>
+<li><a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>,</li>
+<li><a href="https://developer.android.com/develop/ui/compose/documentation">Jetpack Compose guides</a> from Google,</li>
+<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplarform app</a>,</li>
+<li><a href="https://www.youtube.com/@PhilippLackner/videos">Philipp Lackner</a> has videos covering Compose Multiplarform.</li>
+</ul>
+</div>
+</div>
+<p>Compose applications are typically built from two components:</p>
+<ul>
+<li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
+<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
+</ul>
+<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter.</p>
+<pre><code class="language-kotlin">class Counter: ViewModel() {
+  // 1. define a state, starting with 0
+  private val _count = mutableStateOf(0)
+
+  // 2. expose the state in a read-only manner
+  val count: Int = _count.value
+
+  // 3. operations to change the state
+  fun increment() {
+    _count.value++
+  }
+}
+</code></pre>
+<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked.</p>
+<pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
+  Button(onClick = { counter.increment() }) {
+    Text("Clicked ${counter.count} times")
+  }
+}
+</code></pre>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. The <code>@Composable</code> annotation is the magic that makes this link work.</p>
+<p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
+<h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
+<p>The <code>tcg</code> module gives access to cards and their information.</p>
+<ul>
+<li>The <code>tcg.kt</code> file defines a set of types that represent the information of a single card, including their name, identifier, category, and type. We shall delve on these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
+<li>The <code>api.kt</code> file implements a service for searching a particular identifier or a set of cards, based on the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>. The current implementation is very basic, but after finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a>, we'll have some respectable code.</li>
+</ul>
+<h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
+<p>The diagram below roughly represents how Poké-Fun is architected.</p>
+<pre class="mermaid">graph LR;
+  PokemonTcgApi;
+  SearchModel;
+  PokemonTcgApi &lt;-.- SearchModel;
+  DeckModel;
+  subgraph View [SplitPane]
+    SearchView;
+    DeckView;
+  end
+  SearchModel --- SearchView;
+  DeckModel --- SearchView;
+  DeckModel --- DeckView;
+</pre>
+<p>In the center we find two different view models, which serve different purposes:</p>
+<ul>
+<li><code>DeckModel</code> (in <code>deck/model.kt</code>) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.</li>
+<li><code>SearchModel</code> (in <code>search/model.kt</code>) keeps track of the state of search, and is responsible for communicating with the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>.</li>
+</ul>
+<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using <a href="https://ktor.io">Ktor</a>, and a "fake" one with a few predefined cards.</p>
+<p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
+<ul>
+<li>On the left-hand side we have the <code>SearchView</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckModel</code>.</li>
+<li>On the right-hand side we have the <code>DeckView</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
+</ul>
+<p>Both view make use of common component to show a single <code>Card</code> and a list of <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-a-deck"><a class="header" href="#what-is-a-deck">What is a deck</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: sealed hierachies, data classes, immutability</p>
+</blockquote>
+<p>One of the key differences between a <em>functional</em> approach to programming, as opposed to a more <em>object-oriented</em> one, is the ingredients we use to <strong>model</strong> the data. In other words, how we represent the information we care about throughout the execution of our application.</p>
+<p>We prefer a <strong>immutable</strong> representation to one where mutation is available. This has a number of performance benefits but the main gain is at the level of <em>reasoning</em>. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
+<p>This property alone has a profound impact on our data types. Since there is no mutation, the values are <strong>stateless</strong>. Instead of thinking about modification, for example with <code>person.setName("me")</code>, we think in terms of transformation and copying, <code>person.copy(name = "me")</code>. Functional programmers are usually proud of their <strong>anemic</strong> domain models, in which operations always exist as transformations of data.</p>
+<p>We also strive for a <strong>precise</strong> representation, which captures every possible <em>invariant</em> (domain rule) in our data. A prime example from the UI world is data which may also be loading or have errors while obtaining. One potential representation is given by</p>
+<pre><code class="language-kotlin">class Result(
+  val data: Card?,
+  val problem: Throwable?
+)
+</code></pre>
+<p>with the additional invariant that at most one of the values should be non-<code>null</code>, and both being <code>null</code> represents a loading state.</p>
+<p>This is problematic, though, because there is nothing stopping us from breaking that invariant. A more precise representation capture the three possible states as three different types in a sealed hierarchy,</p>
+<pre><code class="language-kotlin">sealed interface Result {
+  data object Loading: Result
+  data class Success(val data: Card): Result
+  data class Problem(val problem: Throwable): Result
+}
+</code></pre>
+<p>Now the compiler guarantees that the right information is present at each point. Furthermore, we gain the ability to use <code>when</code> to check the current state, and the compiler guarantees that we always handle all possible cases.</p>
+<div id="admonition-sealed-hierarchies-are-everywhere" class="admonition admonish-tip" role="note" aria-labelledby="admonition-sealed-hierarchies-are-everywhere-title">
+<div class="admonition-title">
+<div id="admonition-sealed-hierarchies-are-everywhere-title">
+<p>Sealed hierarchies are everywhere</p>
+</div>
+<a class="admonition-anchor-link" href="adt.html#admonition-sealed-hierarchies-are-everywhere"></a>
+</div>
+<div>
+<p>The <code>SearchStatus</code> type used in <code>search/model.kt</code> is quite similar to <code>Result</code> above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
+</div>
+</div>
+<p>One nice advantage of using Compose is that it naturally leads to a more immutable representation of state. In the following tasks we focus on the precision of our domain model.</p>
+<div id="admonition-more-on-functional-domain-modeling" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-on-functional-domain-modeling-title">
+<div class="admonition-title">
+<div id="admonition-more-on-functional-domain-modeling-title">
+<p>More on functional domain modeling</p>
+</div>
+<a class="admonition-anchor-link" href="adt.html#admonition-more-on-functional-domain-modeling"></a>
+</div>
+<div>
+<ul>
+<li><a href="https://arrow-kt.io/learn/design/domain-modeling/">Domain modeling</a> in Arrow documentation.</li>
+<li>The book <a href="https://pragprog.com/titles/swdddf/domain-modeling-made-functional/">Domain modeling made functional</a> by Scott Wlaschin introduces many of these ideas in the context of F#, but it maps quite well to Kotlin.</li>
+</ul>
+</div>
+</div>
+<h2 id="more-precise-type"><a class="header" href="#more-precise-type">More precise <code>type</code></a></h2>
+<p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
+<h2 id="more-precise-energies"><a class="header" href="#more-precise-energies">More precise energies</a></h2>
+<p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
+<ul>
+<li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
+<li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
+</ul>
+<p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
+<h2 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h2>
+<p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
+<div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
+<div class="admonition-title">
+<div id="admonition-one-direction-does-not-imply-the-other-title">
+<p>One direction does not imply the other</p>
+</div>
+<a class="admonition-anchor-link" href="adt.html#admonition-one-direction-does-not-imply-the-other"></a>
+</div>
+<div>
+<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Poliwhirl may evolve into Poliwrath and Politoed, with Eevee having record eight different evolutions.</p>
+</div>
+</div>
+<p>Your <strong>task</strong> is to refine the domain model to include this information. You need to also update the <code>KtorPokemonTcgApi</code> implementation to account for this extra attribute, check the <a href="https://docs.pokemontcg.io/">Pokémon TCG API docs</a> for the place where it appears.</p>
+<p>TODO: link to kotlinx.serialization</p>
+<p>As an <strong>additional task</strong>, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="law-abiding-decks"><a class="header" href="#law-abiding-decks">Law-abiding decks</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: validation, <code>Raise</code>, error accumulation</p>
+</blockquote>
+<p>Handling errors is one of the scenarios where a functional approach shines. Using types like <code>Either</code> and contexts like <code>Raise</code>, we can easily compose larger validations from smaller ones.</p>
+<p>This topic is well documented in the official Arrow documentations, we suggest the reader to check the following material:</p>
+<ul>
+<li><a href="https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/">Working with typed errors</a></li>
+<li><a href="https://arrow-kt.io/learn/typed-errors/validation/">Validation</a></li>
+</ul>
+<p>Feel free to use any style that you prefer in this section. When in doubt, using <code>Raise</code> (as opposed to <code>Either</code>) is the preferred option when using Arrow.</p>
+<h2 id="legal-decks"><a class="header" href="#legal-decks">Legal decks</a></h2>
+<p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>DeckModel</code> class (in <code>search/model.kt</code>) contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck.</p>
+<p>The main rules for the legality of a deck are:</p>
+<ul>
+<li>The deck must contain exactly 60 cards,</li>
+<li>There must be at most 4 cards with the same name,
+<ul>
+<li>Note that cards with different identifiers but the same name are added together,</li>
+<li>The only exception to this rule are <em>basic</em> Energy cards, of which you can have an unlimited amount,</li>
+</ul>
+</li>
+<li>There must be at least one <em>basic</em> Pokémon.</li>
+</ul>
+<p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
+<p><strong>Extra task</strong>: implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
+<h2 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h2>
+<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckView</code> instead.</p>
+<p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
+<h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
+<p>The current implementation has a potential problem: you need to update <code>_problems</code> every time you update <code>_deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using <code>MutableState</code>.</p>
+<p>Your <strong>task</strong> is to replace each update to the <code>_problems</code> mutable state with a new definition based on <code>_deck</code>. You can use the function <code>map</code> in <code>utils/mutableState.kt</code>.</p>
+<div id="admonition-map-as-in-lists" class="admonition admonish-info" role="note" aria-labelledby="admonition-map-as-in-lists-title">
+<div class="admonition-title">
+<div id="admonition-map-as-in-lists-title">
+<p>Map as in lists</p>
+</div>
+<a class="admonition-anchor-link" href="validation.html#admonition-map-as-in-lists"></a>
+</div>
+<div>
+<p>An intuitive understanding for this operation arises if we look at a <code>MutableState</code> as a <em>list</em> of all the values as the time flows. In that way, the problems arise as <code>map</code>ping the validation over each element of that list.</p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deck-building"><a class="header" href="#deck-building">Deck building</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: reducers, actions as data</p>
+</blockquote>
+<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
+<ul>
+<li>ViewModel as reducer (initial + set of steps)
+<ul>
+<li>Relation to folds</li>
+</ul>
+</li>
+<li>Reify actions as data type</li>
+<li>Actions-as-data</li>
+</ul>
+<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Implement removing a card</li>
+<li><input disabled="" type="checkbox"/>
+Undo/redo using actions as data type</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deal-with-bad-internet"><a class="header" href="#deal-with-bad-internet">Deal with bad internet</a></h1>
+<h2 id="topics-1"><a class="header" href="#topics-1">Topics</a></h2>
+<ul>
+<li>Retry with <code>Schedule</code></li>
+<li>Circuit breaker</li>
+<li>Memoization</li>
+</ul>
+<h2 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Wrap the service using resilience
+<ul>
+<li>Retries</li>
+<li>Circuit breakers</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"/>
+Memoize the different services
+<ul>
+<li>Use cache4k</li>
+</ul>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
+<h2 id="topics-2"><a class="header" href="#topics-2">Topics</a></h2>
+<ul>
+<li>Parallel mapping</li>
+<li>Integration with Raise</li>
+</ul>
+<h2 id="tasks-2"><a class="header" href="#tasks-2">Tasks</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Load and store decks using identifiers
+<ul>
+<li>Loading information about cards should be done in parallel</li>
+</ul>
+</li>
+<li><input disabled="" type="checkbox"/>
+Move from exceptions to <code>Raise</code> to deal with missing cards</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="better-architecture"><a class="header" href="#better-architecture">Better architecture</a></h1>
+<h2 id="topics-3"><a class="header" href="#topics-3">Topics</a></h2>
+<ul>
+<li>Resource</li>
+<li>SuspendApp</li>
+</ul>
+<h2 id="tasks-3"><a class="header" href="#tasks-3">Tasks</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Initialize the application correctly</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="nicer-ui"><a class="header" href="#nicer-ui">Nicer UI</a></h1>
+<h2 id="topics-4"><a class="header" href="#topics-4">Topics</a></h2>
+<ul>
+<li>UI with Compose Multiplatform</li>
+<li>Navigation</li>
+</ul>
+<h2 id="tasks-4"><a class="header" href="#tasks-4">Tasks</a></h2>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Add more options to search</li>
+<li><input disabled="" type="checkbox"/>
+Details view for a card</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="./theme/mermaid.min.js"></script>
+        <script src="./theme/mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
