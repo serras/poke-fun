@@ -33,11 +33,11 @@ In the center we find two different view models, which serve different purposes:
 - `DeckModel` (in `deck/model.kt`) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.
 - `SearchModel` (in `search/model.kt`) keeps track of the state of search, and is responsible for communicating with the [Pokémon TCG API](https://docs.pokemontcg.io/).
 
-Access to the Pokémon TCG API is mediated by the `PokemonTcgApi` interface (in `tcg/api.kt`), for which we give a "real" implementation talking over the network, and a "fake" one with a few predefined cards.
+Access to the Pokémon TCG API is mediated by the `PokemonTcgApi` interface (in the `tcg/api` folder), for which we give a "real" implementation talking over the network using [Ktor](https://ktor.io), and a "fake" one with a few predefined cards.
 
 Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a `SplitPane`, one of the [desktop-specific components](https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop) offered by Compose Multiplatform.
 
 - On the left-hand side we have the `SearchView` (in `search/view.kt`), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the `DeckModel`.
 - On the right-hand side we have the `DeckView` (in `deck/view.kt`), which simply shows the cards and problems.
 
-Both view make use of a common component to show a `Card`, found in `tcg/cardView.kt`. This component has an `extra` parameter which is used to provide the different elements required in each of the views.
+Both view make use of common component to show a single `Card` and a list of `Card`s, found in `tcg/cardView.kt`. These components have an `extra` parameter which is used to provide the different elements required in each of the views (for example, the _Add_ button in the search pane).

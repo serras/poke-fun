@@ -1,11 +1,11 @@
 package tcg.api
 
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 import tcg.Card
 import tcg.Category
 import tcg.PokemonStage
 import tcg.Type
-import kotlin.time.Duration.Companion.seconds
 
 interface PokemonTcgApi {
     suspend fun search(name: String): List<Card>

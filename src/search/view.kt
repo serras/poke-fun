@@ -11,8 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import deck.DeckModel
-import io.kamel.image.KamelImage
-import io.kamel.image.asyncPainterResource
 import tcg.view
 
 @Composable

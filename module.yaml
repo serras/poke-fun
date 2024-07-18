@@ -4,6 +4,7 @@ dependencies:
     - org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.1
     - $compose.foundation
     - $compose.material3
+    - $compose.materialIconsExtended
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
     - media.kamel:kamel-image:0.9.5

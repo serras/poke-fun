@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tcg.Card
 import tcg.api.KtorPokemonTcgApi
 import tcg.api.PokemonTcgApi
-import kotlin.time.Duration.Companion.milliseconds
 
 sealed interface SearchStatus {
     data class Loading(val job: Job) : SearchStatus
