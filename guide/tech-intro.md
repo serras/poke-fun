@@ -12,7 +12,7 @@ We recommend using [Fleet](https://www.jetbrains.com/fleet/) or [IntelliJ IDEA](
 
 In the recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include [React](https://react.dev/) for web, [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, and [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android. [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).
 
-```admonish info
+```admonish info title="More about Compose Multiplatform"
 
 There is still not much documentation about Compose Multiplatform, but most of the information about Jetpack Compose (for Android) applies only with minor modifications.
 

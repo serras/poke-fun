@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Redo
+import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -37,11 +39,22 @@ fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
                     onClick = { deck.clear() }
                 ) { Icon(Icons.Default.Delete, contentDescription = "Clear") }
                 IconButton(
-                    onClick = { }
+                    onClick = { },
+                    enabled = false
                 ) { Icon(Icons.Default.FileOpen, contentDescription = "Open") }
                 IconButton(
-                    onClick = { }
+                    onClick = { },
+                    enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
+                VerticalDivider()
+                IconButton(
+                    onClick = { },
+                    enabled = false
+                ) { Icon(Icons.AutoMirrored.Filled.Undo, contentDescription = "Undo") }
+                IconButton(
+                    onClick = { },
+                    enabled = false
+                ) { Icon(Icons.AutoMirrored.Filled.Redo, contentDescription = "Redo") }
             }
         )
         VerticalSplitPane(

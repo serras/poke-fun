@@ -1,5 +1,7 @@
 # Deck building
 
+> **Topics**: reducers, actions as data
+
 ## Topics
 
 - ViewModel as reducer (initial + set of steps)
