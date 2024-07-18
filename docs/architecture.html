@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The technology</title>
+        <title>Better architecture</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html" class="active"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html" class="active"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,68 +178,27 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
-<p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
-<p>The one choice which goes out of the ordinary is using <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./amper run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
-<p>We recommend using <a href="https://www.jetbrains.com/fleet/">Fleet</a> or <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> to work on Poké-Fun. If you use the latter, you need the corresponding <a href="https://plugins.jetbrains.com/plugin/23076-amper">Amper plug-in</a>. In both cases, you should see a small play button to run the application from the IDE.</p>
-<p><img src="./images/amper-run.png" alt="Run in Amper Fleet" /></p>
-<h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In the recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
-<div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
-<div class="admonition-title">
-<div id="admonition-more-about-compose-multiplatform-title">
-<p>More about Compose Multiplatform</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-more-about-compose-multiplatform"></a>
-</div>
-<div>
-<p>There is still not much documentation about Compose Multiplatform, but most of the information about Jetpack Compose (for Android) applies only with minor modifications.</p>
+                        <h1 id="better-architecture"><a class="header" href="#better-architecture">Better architecture</a></h1>
+<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
 <ul>
-<li><a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>,</li>
-<li><a href="https://developer.android.com/develop/ui/compose/documentation">Jetpack Compose guides</a> from Google,</li>
-<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplarform app</a>,</li>
-<li><a href="https://www.youtube.com/@PhilippLackner/videos">Philipp Lackner</a> has videos covering Compose Multiplarform.</li>
+<li>Resource</li>
+<li>SuspendApp</li>
 </ul>
-</div>
-</div>
-<p>Compose applications are typically built from two components:</p>
+<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
 <ul>
-<li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
-<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
+<li><input disabled="" type="checkbox"/>
+Initialize the application correctly</li>
 </ul>
-<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter.</p>
-<pre><code class="language-kotlin">class Counter: ViewModel() {
-  // 1. define a state, starting with 0
-  private val _count = mutableStateOf(0)
-
-  // 2. expose the state in a read-only manner
-  val count: Int = _count.value
-
-  // 3. operations to change the state
-  fun increment() {
-    _count.value++
-  }
-}
-</code></pre>
-<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked.</p>
-<pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
-  Button(onClick = { counter.increment() }) {
-    Text("Clicked ${counter.count} times")
-  }
-}
-</code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. The <code>@Composable</code> annotation is the magic that makes this link work.</p>
-<p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="tcg.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="par.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="intro.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="cmp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -249,33 +208,17 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="tcg.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="par.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="intro.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="cmp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

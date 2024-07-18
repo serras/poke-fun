@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Deal with bad internet</title>
+        <title>Welcome</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html" class="active"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html" class="active">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,39 +178,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="deal-with-bad-internet"><a class="header" href="#deal-with-bad-internet">Deal with bad internet</a></h1>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
+                        <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
+<p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on.</p>
+<p>This book assumes that you know your way around <a href="https://kotlinlang.org">Kotlin</a>, but previous experience with functional programming or <a href="https://arrow-kt.io">Arrow</a>, or with Compose Multiplatform, is not required.</p>
+<div id="admonition-compose-is-multi-plaftorm" class="admonition admonish-note" role="note" aria-labelledby="admonition-compose-is-multi-plaftorm-title">
+<div class="admonition-title">
+<div id="admonition-compose-is-multi-plaftorm-title">
+<p>Compose is multi-plaftorm</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-compose-is-multi-plaftorm"></a>
+</div>
+<div>
+<p>For ease of development, the provided skeleton is a desktop application. Using Compose Multiplatform you can easily make it run in Android or iOS devices, with minor modifications.</p>
+</div>
+</div>
+<p>The starting point introduces the domain and the main components of the technology.</p>
 <ul>
-<li>Retry with <code>Schedule</code></li>
-<li>Circuit breaker</li>
-<li>Memoization</li>
+<li>If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the <a href="./tcg.html">introduction to the domain</a>;</li>
+<li>If you are new to Amper or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
 </ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
+<p>Afterward, the <a href="./intro.html">introduction</a> describes the main components of the given code.
+The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Wrap the service using resilience
-<ul>
-<li>Retries</li>
-<li>Circuit breakers</li>
+<li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies;</li>
+<li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way;</li>
+<li><a href="./build.html">Deck building</a>: design a good <code>ViewModel</code> using functional principles, and design undo/redo with actions-as-data;</li>
+<li><a href="./resilience.html">Deal with bad internet</a>: improve the experience with <code>Schedule</code> and <code>CircuitBreaker</code>, and cache results using memoization;</li>
+<li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx;</li>
+<li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design;</li>
+<li><a href="./cmp.html">Nicer UI</a>: implement more visual feedback using Compose Multiplatform.</li>
 </ul>
-</li>
-<li><input disabled="" type="checkbox"/>
-Memoize the different services
-<ul>
-<li>Use cache4k</li>
-</ul>
-</li>
-</ul>
-
+<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
+<div class="admonition-title">
+<div id="admonition-a-word-from-our-sponsor-title">
+<p>A word from our sponsor</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-a-word-from-our-sponsor"></a>
+</div>
+<div>
+<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
+</div>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="build.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                            </a>
 
-                            <a rel="next prefetch" href="par.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="tcg.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -220,33 +234,14 @@ Memoize the different services
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="build.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
 
-                    <a rel="next prefetch" href="par.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="tcg.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

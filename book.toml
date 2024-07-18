@@ -4,6 +4,9 @@ language = "en"
 multilingual = false
 src = "guide"
 
+[build]
+build-dir = "docs"
+
 [preprocessor]
 
 [preprocessor.catppuccin]

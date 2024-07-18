@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Deck building</title>
+        <title>Introduction</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html" class="active"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html" class="active"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,37 +178,51 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="deck-building"><a class="header" href="#deck-building">Deck building</a></h1>
-<blockquote>
-<p><strong>Topics</strong>: reducers, actions as data</p>
-</blockquote>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
+<h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
+<p>The <code>tcg</code> module gives access to cards and their information.</p>
 <ul>
-<li>ViewModel as reducer (initial + set of steps)
+<li>The <code>tcg.kt</code> file defines a set of types that represent the information of a single card, including their name, identifier, category, and type. We shall delve on these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
+<li>The <code>api.kt</code> file implements a service for searching a particular identifier or a set of cards, based on the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>. The current implementation is very basic, but after finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a>, we'll have some respectable code.</li>
+</ul>
+<h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
+<p>The diagram below roughly represents how Poké-Fun is architected.</p>
+<pre class="mermaid">graph LR;
+  PokemonTcgApi;
+  SearchModel;
+  PokemonTcgApi &lt;-.- SearchModel;
+  DeckModel;
+  subgraph View [SplitPane]
+    SearchView;
+    DeckView;
+  end
+  SearchModel --- SearchView;
+  DeckModel --- SearchView;
+  DeckModel --- DeckView;
+</pre>
+<p>In the center we find two different view models, which serve different purposes:</p>
 <ul>
-<li>Relation to folds</li>
+<li><code>DeckModel</code> (in <code>deck/model.kt</code>) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.</li>
+<li><code>SearchModel</code> (in <code>search/model.kt</code>) keeps track of the state of search, and is responsible for communicating with the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>.</li>
 </ul>
-</li>
-<li>Reify actions as data type</li>
-<li>Actions-as-data</li>
-</ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
+<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using <a href="https://ktor.io">Ktor</a>, and a "fake" one with a few predefined cards.</p>
+<p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
 <ul>
-<li><input disabled="" type="checkbox"/>
-Implement removing a card</li>
-<li><input disabled="" type="checkbox"/>
-Undo/redo using actions as data type</li>
+<li>On the left-hand side we have the <code>SearchView</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckModel</code>.</li>
+<li>On the right-hand side we have the <code>DeckView</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
+<p>Both view make use of common component to show a single <code>Card</code> and a list of <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="validation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="tech-intro.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="resilience.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="adt.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -218,33 +232,17 @@ Undo/redo using actions as data type</li>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="validation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="tech-intro.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="resilience.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="adt.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
