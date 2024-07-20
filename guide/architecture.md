@@ -1,9 +1,6 @@
 # Better architecture
 
-## Topics
-
-- Resource
-- SuspendApp
+> **Topics**: resource management, `SuspendApp`
 
 ## Tasks
 

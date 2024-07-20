@@ -1,5 +1,7 @@
 # Nicer UI
 
+> **Topics**: Compose, navigation
+
 ## Topics
 
 - UI with Compose Multiplatform

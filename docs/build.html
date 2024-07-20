@@ -182,23 +182,86 @@
 <blockquote>
 <p><strong>Topics</strong>: reducers, actions as data</p>
 </blockquote>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
+<p>This section dives a bit more in how we can see a view model from the lenses of an important topic in functional programming: <em>reducers</em> (also known as <em>folds</em>, or if you prefer a Greeker word, <em>catamorphisms</em>).</p>
+<p>Let's look at the components of the <code>DeckViewModel</code>:</p>
 <ul>
-<li>ViewModel as reducer (initial + set of steps)
-<ul>
-<li>Relation to folds</li>
+<li>An <em>initial</em> state, comprised of <code>Awesome Deck</code> as title and an empty list of cards,</li>
+<li>A series of <em>operations</em> (<code>add</code>, <code>changeTitle</code>, <code>clear</code>) which transform this state.</li>
 </ul>
-</li>
-<li>Reify actions as data type</li>
-<li>Actions-as-data</li>
-</ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Implement removing a card</li>
-<li><input disabled="" type="checkbox"/>
-Undo/redo using actions as data type</li>
-</ul>
+<p>Using these two elements, we can understand the whole lifetime of the application as consecutive steps, each transforming the previous state.</p>
+<pre class="mermaid">graph LR;
+  State1[State 1];
+  State2[State 2];
+  State3[State 3];
+  State4[...];
+  Initial --&gt;|add| State1;
+  State1 --&gt;|changeTitle| State2;
+  State2 --&gt;|add| State3;
+  State3 --&gt;|add| State4;
+</pre>
+<p>To understand why we call this the <em>reducer</em> model, let's take a small leap of faith, and assume we somehow model the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the <em>current</em> state of the system is define using the <code>fold</code> operation over the list of transformations until that point.</p>
+<pre><code class="language-kotlin">val currentState =
+  transformationsUntilNow.fold(initialState) { state, transformation -&gt;
+    transformation.apply(state)
+  }
+</code></pre>
+<div id="admonition-fold-and-reduce" class="admonition admonish-abstract" role="note" aria-labelledby="admonition-fold-and-reduce-title">
+<div class="admonition-title">
+<div id="admonition-fold-and-reduce-title">
+<p>Fold and reduce</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-fold-and-reduce"></a>
+</div>
+<div>
+<p>In Kotlin, the difference between <code>fold</code> and <code>reduce</code> is that in the former you provide an initial state, whereas in the latter the initial state is the first element in the list. But this is not as clear cut in other programming languages. For example, <a href="https://redux.js.org/">Redux</a> is one of the libraries that popularized this concept in JavaScript.</p>
+</div>
+</div>
+<p>Instead of using methods, we can express each of the available operations as data. We call this technique <em>actions as data</em>, or with a fancier term, <em>reification</em>. The description of each action should contain enough information to apply the operation to the current state. For our view model, we obtain:</p>
+<pre><code class="language-kotlin">sealed interface DeckOperation {
+  data class ChangeTitle(val newTitle: String): DeckOperation
+  data class AddCard(val card: Card): DeckOperation
+  data object Clear: DeckOperation
+}
+</code></pre>
+<p>Now our view model can use a single function, and dispatch based on the operation.</p>
+<pre><code class="language-kotlin">class DeckViewModel: ViewModel() {
+  fun apply(operation: DeckOperation) = when (operation) {
+    is DeckOperation.ChangeTitle -&gt; { ... }
+    is DeckOperation.AddCard -&gt; { ... }
+    DeckOperation.Clear -&gt; { ... }
+  }
+}
+</code></pre>
+<p>In the tasks below we use this idea to improve the implementation, and introduce new functionality.</p>
+<div id="admonition-initial-style-dsls" class="admonition admonish-info" role="note" aria-labelledby="admonition-initial-style-dsls-title">
+<div class="admonition-title">
+<div id="admonition-initial-style-dsls-title">
+<p>Initial style DSLs</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-initial-style-dsls"></a>
+</div>
+<div>
+<p>Actions as data is the beginning of a journey to <em>domain specific languages</em> (DSLs), the idea of introducing a small language to describe your specific domain. In particular, actions as data relate to a particular technique to implement DSLs, called <em>initial style</em>. <a href="https://serranofp.com/inikio/">Inikio</a> is a compiler plug-in to facilitate the development of such DSLs in Kotlin.</p>
+</div>
+</div>
+<h2 id="move-to-actions-as-data"><a class="header" href="#move-to-actions-as-data">Move to actions as data</a></h2>
+<p>Your <strong>task</strong> is to finish the conversion of the given code into an actions-as-data-based approach. That is, copy (and extend if necessary) the <code>DeckOperation</code> type given above, and change the view model to use a single point of entry <code>apply</code> to every transformation.</p>
+<h2 id="remove-a-card"><a class="header" href="#remove-a-card">Remove a card</a></h2>
+<p>Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your <strong>task</strong> is to implement functionality to <em>remove</em> a card from the deck: this involes changes in <em>both</em> view model and view.</p>
+<div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
+<div class="admonition-title">
+<div id="admonition-tip-title">
+<p>Tip</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-tip"></a>
+</div>
+<div>
+<p>Take a look at <code>search/view.kt</code> to see how to add components to each card shown on the screen.</p>
+</div>
+</div>
+<h2 id="undo-and-redo"><a class="header" href="#undo-and-redo">Undo and redo</a></h2>
+<p>One functionality which becomes much easier to implement when operations are reified as data is undo and redo, since you can very easily keep track of what the user has done.</p>
+<p>Your <strong>task</strong> is to finish the implementation: the given view contains buttons for the actions, but they do nothing and are never enabled. At the end, the corresponding buttons in the view should only be enabled when there are operations to undo (or redo, respectively).</p>
 
                     </main>
 

@@ -1,10 +1,6 @@
 # Deal with bad internet
 
-## Topics
-
-- Retry with `Schedule`
-- Circuit breaker
-- Memoization
+> **Topics**: resilience, `Schedule`, circuit breaker, memoization
 
 ## Tasks
 
