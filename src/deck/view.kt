@@ -15,6 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.compose.rememberFileSaverLauncher
+import io.github.vinceglb.filekit.core.PickerType
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.VerticalSplitPane
 import org.jetbrains.compose.splitpane.rememberSplitPaneState
@@ -38,14 +41,25 @@ fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
                 IconButton(
                     onClick = { deck.clear() }
                 ) { Icon(Icons.Default.Delete, contentDescription = "Clear") }
+
+                val openPicker = rememberFilePickerLauncher(
+                    type = PickerType.File(extensions = listOf("deck"))
+                ) { file ->
+                    /* what to do with the chosen file */
+                }
                 IconButton(
-                    onClick = { },
+                    onClick = { openPicker.launch() },
                     enabled = false
                 ) { Icon(Icons.Default.FileOpen, contentDescription = "Open") }
+
+                val savePicker = rememberFileSaverLauncher { file ->
+                    /* what to do with the chosen file */
+                }
                 IconButton(
-                    onClick = { },
+                    onClick = { savePicker.launch(baseName = deck.title, extension = "deck") },
                     enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
+
                 VerticalDivider()
                 IconButton(
                     onClick = { },

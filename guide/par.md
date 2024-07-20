@@ -6,6 +6,7 @@
 
 - Parallel mapping
 - Integration with Raise
+- Uses https://github.com/vinceglb/FileKit
 
 ## Tasks
 

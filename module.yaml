@@ -7,8 +7,9 @@ dependencies:
     - $compose.materialIconsExtended
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
-    - media.kamel:kamel-image:0.9.5
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0
+    - media.kamel:kamel-image:0.9.5
+    - io.github.vinceglb:filekit-compose:0.7.0
     - io.arrow-kt:arrow-core:1.2.4
     - io.arrow-kt:arrow-fx-coroutines:1.2.4
     - io.arrow-kt:arrow-resilience:1.2.4

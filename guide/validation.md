@@ -4,7 +4,7 @@
 
 Handling errors is one of the scenarios where a functional approach shines. Using types like `Either` and contexts like `Raise`, we can easily compose larger validations from smaller ones.
 
-This topic is well documented in the official Arrow documentations, we suggest the reader to check the following material:
+This topic is well documented in the official Arrow documentation, we suggest the reader to check the following material:
 
 - [Working with typed errors](https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/)
 - [Validation](https://arrow-kt.io/learn/typed-errors/validation/)

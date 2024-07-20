@@ -182,7 +182,7 @@
                         <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
 <p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on.</p>
 <blockquote>
-<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Download or clone it, and you should be ready to go.</p>
+<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Download or clone it, and you should be ready to go. We recommend that you load <code>fonts/pokemon-rs.ttf</code> in your system for the extra 2000's vibes.</p>
 </blockquote>
 <p>This book assumes that you know your way around <a href="https://kotlinlang.org">Kotlin</a>, but previous experience with functional programming or <a href="https://arrow-kt.io">Arrow</a>, or with Compose Multiplatform, is not required.</p>
 <div id="admonition-compose-is-multi-plaftorm" class="admonition admonish-note" role="note" aria-labelledby="admonition-compose-is-multi-plaftorm-title">
@@ -414,7 +414,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <p><strong>Topics</strong>: validation, <code>Raise</code>, error accumulation</p>
 </blockquote>
 <p>Handling errors is one of the scenarios where a functional approach shines. Using types like <code>Either</code> and contexts like <code>Raise</code>, we can easily compose larger validations from smaller ones.</p>
-<p>This topic is well documented in the official Arrow documentations, we suggest the reader to check the following material:</p>
+<p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the following material:</p>
 <ul>
 <li><a href="https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/">Working with typed errors</a></li>
 <li><a href="https://arrow-kt.io/learn/typed-errors/validation/">Validation</a></li>
@@ -540,22 +540,12 @@ The rest of the guide is divided into a series of more or less independent secti
 <blockquote>
 <p><strong>Topics</strong>: resilience, <code>Schedule</code>, circuit breaker, memoization</p>
 </blockquote>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Wrap the service using resilience
-<ul>
-<li>Retries</li>
-<li>Circuit breakers</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"/>
-Memoize the different services
-<ul>
-<li>Use cache4k</li>
-</ul>
-</li>
-</ul>
+<p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
+<p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the <a href="https://arrow-kt.io/learn/resilience/intro/">Resilience section</a>, both the introduction and the pages describing <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/"><code>Schedule</code></a> and <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/"><code>CircuitBreaker</code></a>.</p>
+<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
+<h2 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h2>
+<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
+<p>Cache4k</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: parallel operations</p>
@@ -564,8 +554,9 @@ Memoize the different services
 <ul>
 <li>Parallel mapping</li>
 <li>Integration with Raise</li>
+<li>Uses https://github.com/vinceglb/FileKit</li>
 </ul>
-<h2 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h2>
+<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Load and store decks using identifiers
@@ -580,7 +571,7 @@ Move from exceptions to <code>Raise</code> to deal with missing cards</li>
 <blockquote>
 <p><strong>Topics</strong>: resource management, <code>SuspendApp</code></p>
 </blockquote>
-<h2 id="tasks-2"><a class="header" href="#tasks-2">Tasks</a></h2>
+<h2 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Initialize the application correctly</li>
@@ -594,7 +585,7 @@ Initialize the application correctly</li>
 <li>UI with Compose Multiplatform</li>
 <li>Navigation</li>
 </ul>
-<h2 id="tasks-3"><a class="header" href="#tasks-3">Tasks</a></h2>
+<h2 id="tasks-2"><a class="header" href="#tasks-2">Tasks</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Add more options to search</li>

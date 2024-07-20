@@ -182,22 +182,12 @@
 <blockquote>
 <p><strong>Topics</strong>: resilience, <code>Schedule</code>, circuit breaker, memoization</p>
 </blockquote>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Wrap the service using resilience
-<ul>
-<li>Retries</li>
-<li>Circuit breakers</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"/>
-Memoize the different services
-<ul>
-<li>Use cache4k</li>
-</ul>
-</li>
-</ul>
+<p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
+<p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the <a href="https://arrow-kt.io/learn/resilience/intro/">Resilience section</a>, both the introduction and the pages describing <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/"><code>Schedule</code></a> and <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/"><code>CircuitBreaker</code></a>.</p>
+<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
+<h2 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h2>
+<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
+<p>Cache4k</p>
 
                     </main>
 

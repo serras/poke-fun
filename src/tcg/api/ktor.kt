@@ -1,3 +1,4 @@
+@file:Suppress("PLUGIN_IS_NOT_ENABLED")
 package tcg.api
 
 import io.ktor.client.*
