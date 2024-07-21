@@ -27,7 +27,7 @@ import utils.VerticalSplitPaneSplitter
 @OptIn(ExperimentalSplitPaneApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
-    Column {
+    Column(modifier) {
         TopAppBar(
             title = {
                 BasicTextField(

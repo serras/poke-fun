@@ -49,7 +49,7 @@ fun Card.view(
                 modifier = Modifier.fillMaxWidth().padding(2.dp)
             )
             KamelImage(
-                resource = imageResource,
+                resource = { imageResource },
                 contentDescription = identifier,
                 modifier = Modifier.padding(5.dp)
             )
