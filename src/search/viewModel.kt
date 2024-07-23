@@ -15,11 +15,13 @@ import tcg.api.PokemonTcgApi
 
 sealed interface SearchStatus {
     data class Loading(val job: Job) : SearchStatus
-    data class Ok(val results: List<Card>) : SearchStatus
+    data class Ok(val results: List<Card>) : SearchStatus {
+        val isEmpty: Boolean = results.isEmpty()
+    }
     data object Error : SearchStatus
 }
 
-class SearchModel(
+class SearchViewModel(
     private val api: PokemonTcgApi = KtorPokemonTcgApi()
 ) : ViewModel() {
     private val _options = mutableStateOf(SearchOptions.INITIAL)

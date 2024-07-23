@@ -14,6 +14,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
 import io.github.vinceglb.filekit.compose.rememberFileSaverLauncher
@@ -21,17 +22,20 @@ import io.github.vinceglb.filekit.core.PickerType
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.VerticalSplitPane
 import org.jetbrains.compose.splitpane.rememberSplitPaneState
-import tcg.view
+import tcg.MultipleCards
 import utils.VerticalSplitPaneSplitter
 
 @OptIn(ExperimentalSplitPaneApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
+fun DeckPane(
+    deck: DeckViewModel,
+    modifier: Modifier = Modifier
+) {
     Column(modifier) {
         TopAppBar(
             title = {
                 BasicTextField(
-                    deck.title,
+                    deck.deck.title,
                     onValueChange = deck::changeTitle,
                     textStyle = MaterialTheme.typography.headlineMedium,
                     singleLine = true
@@ -56,7 +60,7 @@ fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
                     /* what to do with the chosen file */
                 }
                 IconButton(
-                    onClick = { savePicker.launch(baseName = deck.title, extension = "deck") },
+                    onClick = { savePicker.launch(baseName = deck.deck.title, extension = "deck") },
                     enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
 
@@ -76,10 +80,16 @@ fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize().padding(5.dp)
         ) {
             first {
-                deck.deck.sorted().view(Modifier.fillMaxSize())
+                MultipleCards(
+                    cards = deck.deck.cards.sorted(),
+                    modifier = Modifier.fillMaxSize()
+                )
             }
-            second(50.dp) {
-                deck.problems.problems()
+            second(60.dp) {
+                when (val problems = deck.problems) {
+                    null -> DeckProblemLine("Everything is fine :)", fontStyle = FontStyle.Italic)
+                    else -> DeckProblems(problems)
+                }
             }
             splitter {
                 VerticalSplitPaneSplitter()
@@ -89,17 +99,24 @@ fun DeckView(deck: DeckModel, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun List<String>.problems() {
-    Box {
+fun DeckProblems(problems: List<String>, modifier: Modifier = Modifier) {
+    Box(modifier) {
         val scrollState = rememberScrollState()
         Column(
             modifier = Modifier.verticalScroll(scrollState).fillMaxSize()
         ) {
-            forEach { Text(it, modifier = Modifier.padding(2.dp)) }
+            for (problem in problems) {
+                DeckProblemLine(problem)
+            }
         }
         VerticalScrollbar(
             modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
             adapter = rememberScrollbarAdapter(scrollState)
         )
     }
+}
+
+@Composable
+fun DeckProblemLine(problem: String, fontStyle: FontStyle? = null, modifier: Modifier = Modifier) {
+    Text(problem, fontStyle = fontStyle, modifier = modifier.padding(2.dp))
 }

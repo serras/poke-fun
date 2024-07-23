@@ -10,13 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import deck.DeckModel
-import tcg.view
+import deck.DeckViewModel
+import tcg.MultipleCards
 
 @Composable
-fun SearchView(
-    deck: DeckModel,
-    search: SearchModel = viewModel<SearchModel>(),
+fun SearchPane(
+    deck: DeckViewModel,
+    search: SearchViewModel = viewModel<SearchViewModel>(),
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
@@ -39,26 +39,25 @@ fun SearchView(
                         color = MaterialTheme.colorScheme.error,
                         modifier = Modifier.padding(10.dp)
                     )
-                is SearchStatus.Ok ->
-                    if (result.results.isEmpty()) {
-                        Text(
+                is SearchStatus.Ok -> when {
+                    result.isEmpty -> Text(
                         "No match found",
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(10.dp)
                     )
-                    } else {
-                        result.results.view(
-                            modifier = Modifier.fillMaxSize()
-                        ) { card ->
-                            TextButton(
-                                onClick = { deck.add(card) },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                Icon(Icons.Filled.Add, contentDescription = "Add ${card.name}")
-                                Text("Add", color = MaterialTheme.colorScheme.primary)
-                            }
+                    else -> MultipleCards(
+                        cards = result.results,
+                        modifier = Modifier.fillMaxSize()
+                    ) { card ->
+                        TextButton(
+                            onClick = { deck.add(card) },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = "Add ${card.name}")
+                            Text("Add", color = MaterialTheme.colorScheme.primary)
                         }
                     }
+                }
             }
         }
     }

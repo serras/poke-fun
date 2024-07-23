@@ -5,6 +5,15 @@ import androidx.compose.ui.graphics.painter.Painter
 import io.kamel.image.asyncPainterResource
 import io.kamel.core.Resource as KamelResource
 
+data class Deck(
+    val title: String,
+    val cards: List<Card>
+) {
+    companion object {
+        val INITIAL: Deck = Deck("Awesome Deck", emptyList())
+    }
+}
+
 data class Card(
     val name: String,
     val identifier: String,

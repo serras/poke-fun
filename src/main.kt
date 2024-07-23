@@ -7,11 +7,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.lifecycle.viewmodel.compose.viewModel
-import deck.DeckModel
-import deck.DeckView
+import deck.DeckViewModel
+import deck.DeckPane
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.HorizontalSplitPane
-import search.SearchView
+import search.SearchPane
 import theme.AppTheme
 import utils.HorizontalSplitPaneSplitter
 
@@ -22,16 +22,16 @@ fun main() = application {
             title = "Poké-Fun",
             onCloseRequest = ::exitApplication
         ) {
-            val sharedDeckModel = viewModel { DeckModel() }
+            val sharedDeckModel = viewModel { DeckViewModel() }
 
             HorizontalSplitPane(
                 modifier = Modifier.background(MaterialTheme.colorScheme.background)
             ) {
                 first(320.dp) {
-                    SearchView(sharedDeckModel, modifier = Modifier.padding(10.dp).fillMaxSize())
+                    SearchPane(sharedDeckModel, modifier = Modifier.padding(10.dp).fillMaxSize())
                 }
                 second {
-                    DeckView(sharedDeckModel, modifier = Modifier.fillMaxSize())
+                    DeckPane(sharedDeckModel, modifier = Modifier.fillMaxSize())
                 }
                 splitter {
                     HorizontalSplitPaneSplitter()
