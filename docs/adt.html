@@ -208,7 +208,7 @@
 <a class="admonition-anchor-link" href="#admonition-sealed-hierarchies-are-everywhere"></a>
 </div>
 <div>
-<p>The <code>SearchStatus</code> type used in <code>search/model.kt</code> is quite similar to <code>Result</code> above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
+<p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 </div>
 </div>
 <p>One nice advantage of using Compose is that it naturally leads to a more immutable representation of state. In the following tasks we focus on the precision of our domain model.</p>
@@ -234,6 +234,11 @@
 <li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
 </ul>
+<div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody>
+<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks do not use that energy (since it's forbidden). However, they both use <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
+</tbody></table>
+</div>
 <p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
 <h2 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h2>
 <p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
@@ -245,11 +250,25 @@
 <a class="admonition-anchor-link" href="#admonition-one-direction-does-not-imply-the-other"></a>
 </div>
 <div>
-<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Poliwhirl may evolve into Poliwrath and Politoed, with Eevee having record eight different evolutions.</p>
+<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having record eight different evolutions.</p>
 </div>
+</div>
+<div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody>
+<tr><td><img src="https://images.pokemontcg.io/sv3pt5/43_hires.png" alt="Oddish" /></td><td><img src="https://images.pokemontcg.io/sv3pt5/44_hires.png" alt="Gloom" /></td><td><img src="https://images.pokemontcg.io/sv3pt5/45_hires.png" alt="Vileplume" /></td><td><img src="https://images.pokemontcg.io/sv3/3_hires.png" alt="Bellossom" /></td></tr>
+</tbody></table>
 </div>
 <p>Your <strong>task</strong> is to refine the domain model to include this information. You need to also update the <code>KtorPokemonTcgApi</code> implementation to account for this extra attribute, check the <a href="https://docs.pokemontcg.io/">Pokémon TCG API docs</a> for the place where it appears.</p>
-<p>TODO: link to kotlinx.serialization</p>
+<div id="admonition-kotlinxserialization" class="admonition admonish-info" role="note" aria-labelledby="admonition-kotlinxserialization-title">
+<div class="admonition-title">
+<div id="admonition-kotlinxserialization-title">
+<p>kotlinx.serialization</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-kotlinxserialization"></a>
+</div>
+<div>
+<p>The code uses <code>kotlinx.serialization</code> to transform the JSON returned by the API into Kotlin data classes. For more information, check the <a href="https://kotlinlang.org/docs/serialization.html#serialize-and-deserialize-json">introduction</a> and the <a href="https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/basic-serialization.md">basic guide</a>.</p>
+</div>
+</div>
 <p>As an <strong>additional task</strong>, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together.</p>
 
                     </main>

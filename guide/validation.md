@@ -13,7 +13,7 @@ Feel free to use any style that you prefer in this section. When in doubt, using
 
 ## Legal decks
 
-Your **task** in this section is to implement the rules for a _legal_ deck, that is, one that can be used to play Pokémon TCG. The `DeckModel` class (in `search/model.kt`) contains a barebones implementation of `validate`, which simply checks the number of cards in the deck.
+Your **task** in this section is to implement the rules for a _legal_ deck, that is, one that can be used to play Pokémon TCG. The `tcg/validation.kt` file contains a barebones implementation of `validate`, which simply checks the number of cards in the deck, and a non-empty title.
 
 The main rules for the legality of a deck are:
 
@@ -29,7 +29,7 @@ Implement this validation using `Either` or `Raise`, and try to break the proces
 
 ## Problems tied to specific cards
 
-This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your **task** here is introduce an _error hierarchy_ that represents each possible problem with the deck. The transformation to string should now happen in the `DeckView` instead.
+This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your **task** here is introduce an _error hierarchy_ that represents each possible problem with the deck. The transformation to string should now happen in the `DeckPane` view instead.
 
 **Extra task**: show problems related to specific cards directly on them. For example, by showing the name in the `MaterialTheme.colorScheme.error` color. Think about how the information required in the error hierarchy.
 

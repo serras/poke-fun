@@ -207,13 +207,13 @@
 <li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
 <li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
 </ul>
-<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter.</p>
+<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a>.</p>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
   // 1. define a state, starting with 0
   private val _count = mutableStateOf(0)
 
   // 2. expose the state in a read-only manner
-  val count: Int = _count.value
+  val count: Int by _count
 
   // 3. operations to change the state
   fun increment() {

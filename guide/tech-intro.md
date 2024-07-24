@@ -28,7 +28,7 @@ Compose applications are typically built from two components:
 - _View models_ keep (part of) the state of the application, and communicate with the outside world.
 - _Views_ define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by `@Composable` functions.
 
-Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter.
+Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use [property delegation](https://kotlinlang.org/docs/delegated-properties.html).
 
 ```kotlin
 class Counter: ViewModel() {
@@ -36,7 +36,7 @@ class Counter: ViewModel() {
   private val _count = mutableStateOf(0)
 
   // 2. expose the state in a read-only manner
-  val count: Int = _count.value
+  val count: Int by _count
 
   // 3. operations to change the state
   fun increment() {

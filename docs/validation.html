@@ -190,7 +190,7 @@
 </ul>
 <p>Feel free to use any style that you prefer in this section. When in doubt, using <code>Raise</code> (as opposed to <code>Either</code>) is the preferred option when using Arrow.</p>
 <h2 id="legal-decks"><a class="header" href="#legal-decks">Legal decks</a></h2>
-<p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>DeckModel</code> class (in <code>search/model.kt</code>) contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck.</p>
+<p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>tcg/validation.kt</code> file contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck, and a non-empty title.</p>
 <p>The main rules for the legality of a deck are:</p>
 <ul>
 <li>The deck must contain exactly 60 cards,</li>
@@ -205,7 +205,7 @@
 <p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
 <p><strong>Extra task</strong>: implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <h2 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h2>
-<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckView</code> instead.</p>
+<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
 <p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
 <h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
 <p>The current implementation has a potential problem: you need to update <code>_problems</code> every time you update <code>_deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using <code>MutableState</code>.</p>

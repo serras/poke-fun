@@ -33,7 +33,7 @@ Now the compiler guarantees that the right information is present at each point.
 
 ```admonish tip title="Sealed hierarchies are everywhere"
 
-The `SearchStatus` type used in `search/model.kt` is quite similar to `Result` above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.
+The `SearchStatus` type used in `search/viewModel.kt` is quite similar to `Result` above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.
 
 ```
 
@@ -57,6 +57,11 @@ Even the previous refinement is not completely true. In fact, two types have som
 - _Dragon_ may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.
 - When _colorless_ energy appears in a cost, it may be paid by _any_ type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.
 
+| | | |
+|---|---|--|
+| ![Koraidon](https://images.pokemontcg.io/svp/91_hires.png) | ![Miraidon](https://images.pokemontcg.io/svp/92_hires.png) | These cards are of _dragon_ <img src="images/dragon.png" height="15px" /> type, but their attacks do not use that energy (since it's forbidden). However, they both use _colorless_ <img src="images/colorless.png" height="15px" /> energy. |
+| ![Chatot](https://images.pokemontcg.io/sv5/181_hires.png) | ![Snorlax](https://images.pokemontcg.io/svp/51_hires.png) | These cards are of _colorless_ type. They are used in every type of deck, since their attack cost can be paid using any energy. |
+
 Your **task** is to refine the given _Type_ to account for these nuances. However, your solution should _not_ be just two or more different types; by using inheritance you can create several subsets of types and share common cases.
 
 ## Information about evolution
@@ -65,12 +70,20 @@ One of the most important features of the Pokémon franchise is that Pokémon _e
 
 ```admonish bug title="One direction does not imply the other"
 
-Every Stage 1 or Stage 2 Pokémon evolves _from exactly one_ Pokémon. However, the converse is not true: a single Pokémon may evolve _to more than one_ Pokémon (or none). For example, Poliwhirl may evolve into Poliwrath and Politoed, with Eevee having record eight different evolutions.
+Every Stage 1 or Stage 2 Pokémon evolves _from exactly one_ Pokémon. However, the converse is not true: a single Pokémon may evolve _to more than one_ Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having record eight different evolutions.
 
 ```
 
+| | | | |
+|--|--|--|--|
+| ![Oddish](https://images.pokemontcg.io/sv3pt5/43_hires.png) | ![Gloom](https://images.pokemontcg.io/sv3pt5/44_hires.png) | ![Vileplume](https://images.pokemontcg.io/sv3pt5/45_hires.png) | ![Bellossom](https://images.pokemontcg.io/sv3/3_hires.png) |
+
 Your **task** is to refine the domain model to include this information. You need to also update the `KtorPokemonTcgApi` implementation to account for this extra attribute, check the [Pokémon TCG API docs](https://docs.pokemontcg.io/) for the place where it appears.
 
-TODO: link to kotlinx.serialization
+```admonish info title="kotlinx.serialization"
+
+The code uses `kotlinx.serialization` to transform the JSON returned by the API into Kotlin data classes. For more information, check the [introduction](https://kotlinlang.org/docs/serialization.html#serialize-and-deserialize-json) and the [basic guide](https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/basic-serialization.md).
+
+```
 
 As an **additional task**, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together.

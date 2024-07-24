@@ -278,13 +278,13 @@ The rest of the guide is divided into a series of more or less independent secti
 <li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
 <li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
 </ul>
-<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter.</p>
+<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a>.</p>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
   // 1. define a state, starting with 0
   private val _count = mutableStateOf(0)
 
   // 2. expose the state in a read-only manner
-  val count: Int = _count.value
+  val count: Int by _count
 
   // 3. operations to change the state
   fun increment() {
@@ -306,36 +306,36 @@ The rest of the guide is divided into a series of more or less independent secti
 <h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
 <p>The <code>tcg</code> module gives access to cards and their information.</p>
 <ul>
-<li>The <code>tcg.kt</code> file defines a set of types that represent the information of a single card, including their name, identifier, category, and type. We shall delve on these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
-<li>The <code>api.kt</code> file implements a service for searching a particular identifier or a set of cards, based on the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>. The current implementation is very basic, but after finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a>, we'll have some respectable code.</li>
+<li>The <code>tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve on these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
+<li>Basic validation is implemented in <code>validation.kt</code>. In the <a href="./validation.html"><em>Validation</em></a> section we'll improve this functionality.</li>
 </ul>
 <h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
 <p>The diagram below roughly represents how Poké-Fun is architected.</p>
 <pre class="mermaid">graph LR;
   PokemonTcgApi;
-  SearchModel;
-  PokemonTcgApi &lt;-.- SearchModel;
-  DeckModel;
+  SearchViewModel;
+  PokemonTcgApi &lt;-.- SearchViewModel;
+  DeckViewModel;
   subgraph View [SplitPane]
-    SearchView;
-    DeckView;
+    SearchPane;
+    DeckPane;
   end
-  SearchModel --- SearchView;
-  DeckModel --- SearchView;
-  DeckModel --- DeckView;
+  SearchViewModel --- SearchPane;
+  DeckViewModel --- SearchPane;
+  DeckViewModel --- DeckPane;
 </pre>
 <p>In the center we find two different view models, which serve different purposes:</p>
 <ul>
-<li><code>DeckModel</code> (in <code>deck/model.kt</code>) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.</li>
-<li><code>SearchModel</code> (in <code>search/model.kt</code>) keeps track of the state of search, and is responsible for communicating with the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>.</li>
+<li><code>DeckViewModel</code> (in <code>deck/viewModel.kt</code>) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.</li>
+<li><code>SearchViewModel</code> (in <code>search/viewModel.kt</code>) keeps track of the state of search, and is responsible for communicating with the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>.</li>
 </ul>
-<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using <a href="https://ktor.io">Ktor</a>, and a "fake" one with a few predefined cards.</p>
+<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using <a href="https://ktor.io">Ktor</a>, and a "fake" one with a few predefined cards. After finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a> section, we'll have some respectable code.</p>
 <p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
 <ul>
-<li>On the left-hand side we have the <code>SearchView</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckModel</code>.</li>
-<li>On the right-hand side we have the <code>DeckView</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
+<li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
+<li>On the right-hand side we have the <code>DeckPane</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
-<p>Both view make use of common component to show a single <code>Card</code> and a list of <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
+<p>Both view make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-a-deck"><a class="header" href="#what-is-a-deck">What is a deck</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: sealed hierachies, data classes, immutability</p>
@@ -366,7 +366,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <a class="admonition-anchor-link" href="adt.html#admonition-sealed-hierarchies-are-everywhere"></a>
 </div>
 <div>
-<p>The <code>SearchStatus</code> type used in <code>search/model.kt</code> is quite similar to <code>Result</code> above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
+<p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 </div>
 </div>
 <p>One nice advantage of using Compose is that it naturally leads to a more immutable representation of state. In the following tasks we focus on the precision of our domain model.</p>
@@ -392,6 +392,11 @@ The rest of the guide is divided into a series of more or less independent secti
 <li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
 </ul>
+<div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody>
+<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks do not use that energy (since it's forbidden). However, they both use <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
+</tbody></table>
+</div>
 <p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
 <h2 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h2>
 <p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
@@ -403,11 +408,25 @@ The rest of the guide is divided into a series of more or less independent secti
 <a class="admonition-anchor-link" href="adt.html#admonition-one-direction-does-not-imply-the-other"></a>
 </div>
 <div>
-<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Poliwhirl may evolve into Poliwrath and Politoed, with Eevee having record eight different evolutions.</p>
+<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having record eight different evolutions.</p>
 </div>
+</div>
+<div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody>
+<tr><td><img src="https://images.pokemontcg.io/sv3pt5/43_hires.png" alt="Oddish" /></td><td><img src="https://images.pokemontcg.io/sv3pt5/44_hires.png" alt="Gloom" /></td><td><img src="https://images.pokemontcg.io/sv3pt5/45_hires.png" alt="Vileplume" /></td><td><img src="https://images.pokemontcg.io/sv3/3_hires.png" alt="Bellossom" /></td></tr>
+</tbody></table>
 </div>
 <p>Your <strong>task</strong> is to refine the domain model to include this information. You need to also update the <code>KtorPokemonTcgApi</code> implementation to account for this extra attribute, check the <a href="https://docs.pokemontcg.io/">Pokémon TCG API docs</a> for the place where it appears.</p>
-<p>TODO: link to kotlinx.serialization</p>
+<div id="admonition-kotlinxserialization" class="admonition admonish-info" role="note" aria-labelledby="admonition-kotlinxserialization-title">
+<div class="admonition-title">
+<div id="admonition-kotlinxserialization-title">
+<p>kotlinx.serialization</p>
+</div>
+<a class="admonition-anchor-link" href="adt.html#admonition-kotlinxserialization"></a>
+</div>
+<div>
+<p>The code uses <code>kotlinx.serialization</code> to transform the JSON returned by the API into Kotlin data classes. For more information, check the <a href="https://kotlinlang.org/docs/serialization.html#serialize-and-deserialize-json">introduction</a> and the <a href="https://github.com/Kotlin/kotlinx.serialization/blob/master/docs/basic-serialization.md">basic guide</a>.</p>
+</div>
+</div>
 <p>As an <strong>additional task</strong>, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="law-abiding-decks"><a class="header" href="#law-abiding-decks">Law-abiding decks</a></h1>
 <blockquote>
@@ -421,7 +440,7 @@ The rest of the guide is divided into a series of more or less independent secti
 </ul>
 <p>Feel free to use any style that you prefer in this section. When in doubt, using <code>Raise</code> (as opposed to <code>Either</code>) is the preferred option when using Arrow.</p>
 <h2 id="legal-decks"><a class="header" href="#legal-decks">Legal decks</a></h2>
-<p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>DeckModel</code> class (in <code>search/model.kt</code>) contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck.</p>
+<p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>tcg/validation.kt</code> file contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck, and a non-empty title.</p>
 <p>The main rules for the legality of a deck are:</p>
 <ul>
 <li>The deck must contain exactly 60 cards,</li>
@@ -436,7 +455,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
 <p><strong>Extra task</strong>: implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <h2 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h2>
-<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckView</code> instead.</p>
+<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
 <p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
 <h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
 <p>The current implementation has a potential problem: you need to update <code>_problems</code> every time you update <code>_deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using <code>MutableState</code>.</p>
@@ -460,7 +479,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>Let's look at the components of the <code>DeckViewModel</code>:</p>
 <ul>
 <li>An <em>initial</em> state, comprised of <code>Awesome Deck</code> as title and an empty list of cards,</li>
-<li>A series of <em>operations</em> (<code>add</code>, <code>changeTitle</code>, <code>clear</code>) which transform this state.</li>
+<li>A series of <em>operations</em> (<code>changeTitle</code>, <code>clear</code>, <code>add</code>) which transform this state.</li>
 </ul>
 <p>Using these two elements, we can understand the whole lifetime of the application as consecutive steps, each transforming the previous state.</p>
 <pre class="mermaid">graph LR;
@@ -473,7 +492,7 @@ The rest of the guide is divided into a series of more or less independent secti
   State2 --&gt;|add| State3;
   State3 --&gt;|add| State4;
 </pre>
-<p>To understand why we call this the <em>reducer</em> model, let's take a small leap of faith, and assume we somehow model the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the <em>current</em> state of the system is define using the <code>fold</code> operation over the list of transformations until that point.</p>
+<p>To understand why we call this the <em>reducer</em> model, let's take a small leap of faith, and assume we somehow represent the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the <em>current</em> state of the system is define using the <code>fold</code> operation over the list of transformations until that point.</p>
 <pre><code class="language-kotlin">val currentState =
   transformationsUntilNow.fold(initialState) { state, transformation -&gt;
     transformation.apply(state)

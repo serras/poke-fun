@@ -7,7 +7,7 @@ This section dives a bit more in how we can see a view model from the lenses of 
 Let's look at the components of the `DeckViewModel`:
 
 - An _initial_ state, comprised of `Awesome Deck` as title and an empty list of cards,
-- A series of _operations_ (`add`, `changeTitle`, `clear`) which transform this state.
+- A series of _operations_ (`changeTitle`, `clear`, `add`) which transform this state.
 
 Using these two elements, we can understand the whole lifetime of the application as consecutive steps, each transforming the previous state.
 
@@ -23,7 +23,7 @@ graph LR;
   State3 -->|add| State4;
 ```
 
-To understand why we call this the _reducer_ model, let's take a small leap of faith, and assume we somehow model the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the _current_ state of the system is define using the `fold` operation over the list of transformations until that point.
+To understand why we call this the _reducer_ model, let's take a small leap of faith, and assume we somehow represent the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the _current_ state of the system is define using the `fold` operation over the list of transformations until that point.
 
 ```kotlin
 val currentState =

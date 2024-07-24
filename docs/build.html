@@ -186,7 +186,7 @@
 <p>Let's look at the components of the <code>DeckViewModel</code>:</p>
 <ul>
 <li>An <em>initial</em> state, comprised of <code>Awesome Deck</code> as title and an empty list of cards,</li>
-<li>A series of <em>operations</em> (<code>add</code>, <code>changeTitle</code>, <code>clear</code>) which transform this state.</li>
+<li>A series of <em>operations</em> (<code>changeTitle</code>, <code>clear</code>, <code>add</code>) which transform this state.</li>
 </ul>
 <p>Using these two elements, we can understand the whole lifetime of the application as consecutive steps, each transforming the previous state.</p>
 <pre class="mermaid">graph LR;
@@ -199,7 +199,7 @@
   State2 --&gt;|add| State3;
   State3 --&gt;|add| State4;
 </pre>
-<p>To understand why we call this the <em>reducer</em> model, let's take a small leap of faith, and assume we somehow model the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the <em>current</em> state of the system is define using the <code>fold</code> operation over the list of transformations until that point.</p>
+<p>To understand why we call this the <em>reducer</em> model, let's take a small leap of faith, and assume we somehow represent the sequence of transformations as a list (no worries, we are making this real in a few paragraphs). Then the <em>current</em> state of the system is define using the <code>fold</code> operation over the list of transformations until that point.</p>
 <pre><code class="language-kotlin">val currentState =
   transformationsUntilNow.fold(initialState) { state, transformation -&gt;
     transformation.apply(state)
