@@ -471,6 +471,12 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>An intuitive understanding for this operation arises if we look at a <code>MutableState</code> as a <em>list</em> of all the values as the time flows. In that way, the problems arise as <code>map</code>ping the validation over each element of that list.</p>
 </div>
 </div>
+<h2 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge">Gym Leader Challenge</a></h2>
+<p>The rules described above correspond to the <em>Standard</em> format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like <a href="https://gymleaderchallenge.com/">Gym Leader Challenge</a> (GLC). As an <strong>extra task</strong>, you may implement <a href="https://gymleaderchallenge.com/rules">GLC rules</a>.</p>
+<ul>
+<li>You may need to add some UI element to specify the format your deck is in.</li>
+<li>GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.</li>
+</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deck-building"><a class="header" href="#deck-building">Deck building</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: reducers, actions as data</p>
@@ -561,36 +567,82 @@ The rest of the guide is divided into a series of more or less independent secti
 </blockquote>
 <p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
 <p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the <a href="https://arrow-kt.io/learn/resilience/intro/">Resilience section</a>, both the introduction and the pages describing <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/"><code>Schedule</code></a> and <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/"><code>CircuitBreaker</code></a>.</p>
+<div id="admonition-decorator" class="admonition admonish-tip" role="note" aria-labelledby="admonition-decorator-title">
+<div class="admonition-title">
+<div id="admonition-decorator-title">
+<p>Decorator</p>
+</div>
+<a class="admonition-anchor-link" href="resilience.html#admonition-decorator"></a>
+</div>
+<div>
+<p>We strongly recommend to use the <a href="https://refactoring.guru/design-patterns/decorator">Decorator pattern</a> in the following tasks. For a good introduction, fully in Kotlin, check <a href="https://www.youtube.com/watch?v=erWsXSqQ-CM">this video</a> by Dave Leeds.</p>
+</div>
+</div>
 <h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
-<h2 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h2>
-<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
-<p>Cache4k</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
+<p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
+<h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
+<p>Improve the previous soltuion with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
+<p>As described in the <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">documentation</a>, the best option for resilience is to combine both approaches.</p>
 <blockquote>
-<p><strong>Topics</strong>: parallel operations</p>
+<p>A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. <code>Schedule</code> is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.</p>
 </blockquote>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
-<ul>
-<li>Parallel mapping</li>
-<li>Integration with Raise</li>
-<li>Uses https://github.com/vinceglb/FileKit</li>
-</ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Load and store decks using identifiers
-<ul>
-<li>Loading information about cards should be done in parallel</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"/>
-Move from exceptions to <code>Raise</code> to deal with missing cards</li>
-</ul>
+<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
+<p>The given implementation queries the Pokémon TCG API service for <em>every</em> search and every card. However, cards with an existing identifier almost never change (except for errata), so there is no need to get them over and over. Searches also change rarely: new sets with additional cards only appear every 3 months, and we do not expect our users to stay that long in the application.</p>
+<p>Introducing a <em>cache</em> improves performance, and also makes our application more resilient, since fewer calls need to communicate outside. Your <strong>task</strong> is to introduce <a href="https://reactivecircus.github.io/cache4k/">Cache4k</a>, a nice Kotlin Multiplatform option for this matter.</p>
+<div id="admonition-caching-and-memoization" class="admonition admonish-info" role="note" aria-labelledby="admonition-caching-and-memoization-title">
+<div class="admonition-title">
+<div id="admonition-caching-and-memoization-title">
+<p>Caching and memoization</p>
+</div>
+<a class="admonition-anchor-link" href="resilience.html#admonition-caching-and-memoization"></a>
+</div>
+<div>
+<p><em>Memoization</em> is a concept in functional programming very related to caching. If you have a completely <em>pure</em> function — no other effect except computation — then every run with the same input argument should give you the same output. As a result, there is no need to run the function twice. This becomes especially relevant for recursive functions like Fibonacci. Arrow comes with <a href="https://arrow-kt.io/learn/collections-functions/recursive/#memoized-recursive-functions"><code>MemoizedDeepRecursiveFunction</code></a>, which improved over the usual deep recursion support in Kotlin.</p>
+<p>The task at hand, however, is not really in the realm of memoization. First of all, we do not have a pure computation, but rather data coming from external sources. In addition, recursion is completely absent from API calls.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: parallel operations, <code>Raise</code> + exceptions + concurrency</p>
+</blockquote>
+<p>Poké-Fun as provided has a very big limitation. You can only work on your deck in one go: if you want to devote several sessions to it, you must either (1) not close the application, or (2) write down your cards in a piece of paper and add them back the next time. In this section we add support for loading and saving <em>deck files</em>, and learn about high-level parallelism on the way.</p>
+<h2 id="load-and-store"><a class="header" href="#load-and-store">Load and store</a></h2>
+<p>The first <strong>task</strong> is to implement saving the deck as a file, and being able to read it back afterward. Feel free to choose whatever format you like, from the list of identifiers separated by new lines, to some sort of JSON.</p>
+<p>The code provided in <code>deck/view.kt</code> integrates <a href="https://github.com/vinceglb/FileKit">FileKit</a> to show the file picker of the platform the application is running on. The button are disabled, remember to set <code>enabled = true</code> in the call to <code>IconButton</code>.</p>
+<p>Saving the deck is easy, but loading it potentially involves getting the information from each of them. You should use the <code>getById</code> method from <code>PokemonTcgApi</code> to retrieve the <code>Card</code> corresponding to a given identifier.</p>
+<p>In a first approximation, using <code>map</code> over the sequence of identifiers should be enough. Albeit simple, that solution lacks performance. Arrow provides <a href="https://arrow-kt.io/learn/coroutines/parallel/"><em>high-level concurrency</em></a> which solves the problem quite succintly. Use <a href="https://arrow-kt.io/learn/coroutines/parallel/#independently-in-parallel"><code>parMap</code></a> to turn the sequential iteration into a concurrent set of operations.</p>
+<p>Another problem with the simple approach, depending on how you store the data from a deck, is that you may ask information about the same card more than once. One potential solution is to group the cards by identifier, but a more general approach is to use <a href="./resilience.html#introduce-a-cache">caching</a> that works independently of the number of consumers.</p>
+<h2 id="from-exceptions-to-raise"><a class="header" href="#from-exceptions-to-raise">From exceptions to <code>Raise</code></a></h2>
+<p>Problems may arise during the retrieval of card information, but the current code is not prepared for that eventuality. In this section we improve the situation by using <code>Raise</code>.</p>
+<div id="admonition-about-raise" class="admonition admonish-info" role="note" aria-labelledby="admonition-about-raise-title">
+<div class="admonition-title">
+<div id="admonition-about-raise-title">
+<p>About Raise</p>
+</div>
+<a class="admonition-anchor-link" href="par.html#admonition-about-raise"></a>
+</div>
+<div>
+<p>It is strongly recommended to read the <a href="./validation.html"><em>Law-abiding decks</em></a> section, which introduces the basics of <code>Raise</code>, before attempting the following task.</p>
+<p>The integration of <code>parMap</code> (and <code>parZip</code>) with <code>Raise</code> and error accumulation is discussed in the <a href="https://arrow-kt.io/learn/coroutines/parallel/#integration-with-typed-errors">Arrow documentation</a>. Although the TL;DR is simply "replace <code>mapOrAccumulate</code> with <code>parMapOrAccumulate</code> and enjoy".</p>
+</div>
+</div>
+<p>Your <strong>task</strong> is to use <a href="https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/#from-exceptions"><code>Either.catch</code></a> to capture any potential exceptions, and transform then into <code>Either</code>. As hinted in the <a href="./validation.html"><em>Law-abiding decks</em></a> section, you need to define an error hierarchy to represent those problems.</p>
+<div id="admonition-several-error-hierarchies" class="admonition admonish-tip" role="note" aria-labelledby="admonition-several-error-hierarchies-title">
+<div class="admonition-title">
+<div id="admonition-several-error-hierarchies-title">
+<p>Several error hierarchies</p>
+</div>
+<a class="admonition-anchor-link" href="par.html#admonition-several-error-hierarchies"></a>
+</div>
+<div>
+<p>It is <em>not</em> necessary to have a single error hierarchy for the entire domain. You only need a common parent whenever you may be mixing those in a single function, which means your error hierarchy is actually shared by two parts of the domain.</p>
+</div>
+</div>
+<p>By default, using the <code>either</code> builder means following a fail-first approach to errors. If you have not done it directly on the previous task, change the behavior to <em>accumulation</em>. In other words, you should report every problem you find loading a file, not only the first identifier you fail to obtain.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="better-architecture"><a class="header" href="#better-architecture">Better architecture</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: resource management, <code>SuspendApp</code></p>
 </blockquote>
-<h2 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h2>
+<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Initialize the application correctly</li>
@@ -599,12 +651,12 @@ Initialize the application correctly</li>
 <blockquote>
 <p><strong>Topics</strong>: Compose, navigation</p>
 </blockquote>
-<h2 id="topics-1"><a class="header" href="#topics-1">Topics</a></h2>
+<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
 <ul>
 <li>UI with Compose Multiplatform</li>
 <li>Navigation</li>
 </ul>
-<h2 id="tasks-2"><a class="header" href="#tasks-2">Tasks</a></h2>
+<h2 id="tasks-1"><a class="header" href="#tasks-1">Tasks</a></h2>
 <ul>
 <li><input disabled="" type="checkbox"/>
 Add more options to search</li>

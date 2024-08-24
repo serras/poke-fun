@@ -180,25 +180,42 @@
                     <main>
                         <h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
 <blockquote>
-<p><strong>Topics</strong>: parallel operations</p>
+<p><strong>Topics</strong>: parallel operations, <code>Raise</code> + exceptions + concurrency</p>
 </blockquote>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
-<ul>
-<li>Parallel mapping</li>
-<li>Integration with Raise</li>
-<li>Uses https://github.com/vinceglb/FileKit</li>
-</ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Load and store decks using identifiers
-<ul>
-<li>Loading information about cards should be done in parallel</li>
-</ul>
-</li>
-<li><input disabled="" type="checkbox"/>
-Move from exceptions to <code>Raise</code> to deal with missing cards</li>
-</ul>
+<p>Poké-Fun as provided has a very big limitation. You can only work on your deck in one go: if you want to devote several sessions to it, you must either (1) not close the application, or (2) write down your cards in a piece of paper and add them back the next time. In this section we add support for loading and saving <em>deck files</em>, and learn about high-level parallelism on the way.</p>
+<h2 id="load-and-store"><a class="header" href="#load-and-store">Load and store</a></h2>
+<p>The first <strong>task</strong> is to implement saving the deck as a file, and being able to read it back afterward. Feel free to choose whatever format you like, from the list of identifiers separated by new lines, to some sort of JSON.</p>
+<p>The code provided in <code>deck/view.kt</code> integrates <a href="https://github.com/vinceglb/FileKit">FileKit</a> to show the file picker of the platform the application is running on. The button are disabled, remember to set <code>enabled = true</code> in the call to <code>IconButton</code>.</p>
+<p>Saving the deck is easy, but loading it potentially involves getting the information from each of them. You should use the <code>getById</code> method from <code>PokemonTcgApi</code> to retrieve the <code>Card</code> corresponding to a given identifier.</p>
+<p>In a first approximation, using <code>map</code> over the sequence of identifiers should be enough. Albeit simple, that solution lacks performance. Arrow provides <a href="https://arrow-kt.io/learn/coroutines/parallel/"><em>high-level concurrency</em></a> which solves the problem quite succintly. Use <a href="https://arrow-kt.io/learn/coroutines/parallel/#independently-in-parallel"><code>parMap</code></a> to turn the sequential iteration into a concurrent set of operations.</p>
+<p>Another problem with the simple approach, depending on how you store the data from a deck, is that you may ask information about the same card more than once. One potential solution is to group the cards by identifier, but a more general approach is to use <a href="./resilience.html#introduce-a-cache">caching</a> that works independently of the number of consumers.</p>
+<h2 id="from-exceptions-to-raise"><a class="header" href="#from-exceptions-to-raise">From exceptions to <code>Raise</code></a></h2>
+<p>Problems may arise during the retrieval of card information, but the current code is not prepared for that eventuality. In this section we improve the situation by using <code>Raise</code>.</p>
+<div id="admonition-about-raise" class="admonition admonish-info" role="note" aria-labelledby="admonition-about-raise-title">
+<div class="admonition-title">
+<div id="admonition-about-raise-title">
+<p>About Raise</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-about-raise"></a>
+</div>
+<div>
+<p>It is strongly recommended to read the <a href="./validation.html"><em>Law-abiding decks</em></a> section, which introduces the basics of <code>Raise</code>, before attempting the following task.</p>
+<p>The integration of <code>parMap</code> (and <code>parZip</code>) with <code>Raise</code> and error accumulation is discussed in the <a href="https://arrow-kt.io/learn/coroutines/parallel/#integration-with-typed-errors">Arrow documentation</a>. Although the TL;DR is simply "replace <code>mapOrAccumulate</code> with <code>parMapOrAccumulate</code> and enjoy".</p>
+</div>
+</div>
+<p>Your <strong>task</strong> is to use <a href="https://arrow-kt.io/learn/typed-errors/working-with-typed-errors/#from-exceptions"><code>Either.catch</code></a> to capture any potential exceptions, and transform then into <code>Either</code>. As hinted in the <a href="./validation.html"><em>Law-abiding decks</em></a> section, you need to define an error hierarchy to represent those problems.</p>
+<div id="admonition-several-error-hierarchies" class="admonition admonish-tip" role="note" aria-labelledby="admonition-several-error-hierarchies-title">
+<div class="admonition-title">
+<div id="admonition-several-error-hierarchies-title">
+<p>Several error hierarchies</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-several-error-hierarchies"></a>
+</div>
+<div>
+<p>It is <em>not</em> necessary to have a single error hierarchy for the entire domain. You only need a common parent whenever you may be mixing those in a single function, which means your error hierarchy is actually shared by two parts of the domain.</p>
+</div>
+</div>
+<p>By default, using the <code>either</code> builder means following a fail-first approach to errors. If you have not done it directly on the previous task, change the behavior to <em>accumulation</em>. In other words, you should report every problem you find loading a file, not only the first identifier you fail to obtain.</p>
 
                     </main>
 

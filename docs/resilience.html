@@ -184,11 +184,40 @@
 </blockquote>
 <p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
 <p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the <a href="https://arrow-kt.io/learn/resilience/intro/">Resilience section</a>, both the introduction and the pages describing <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/"><code>Schedule</code></a> and <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/"><code>CircuitBreaker</code></a>.</p>
+<div id="admonition-decorator" class="admonition admonish-tip" role="note" aria-labelledby="admonition-decorator-title">
+<div class="admonition-title">
+<div id="admonition-decorator-title">
+<p>Decorator</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-decorator"></a>
+</div>
+<div>
+<p>We strongly recommend to use the <a href="https://refactoring.guru/design-patterns/decorator">Decorator pattern</a> in the following tasks. For a good introduction, fully in Kotlin, check <a href="https://www.youtube.com/watch?v=erWsXSqQ-CM">this video</a> by Dave Leeds.</p>
+</div>
+</div>
 <h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
-<h2 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h2>
+<p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
+<h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
+<p>Improve the previous soltuion with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
+<p>As described in the <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">documentation</a>, the best option for resilience is to combine both approaches.</p>
+<blockquote>
+<p>A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. <code>Schedule</code> is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.</p>
+</blockquote>
 <h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
-<p>Cache4k</p>
-
+<p>The given implementation queries the Pokémon TCG API service for <em>every</em> search and every card. However, cards with an existing identifier almost never change (except for errata), so there is no need to get them over and over. Searches also change rarely: new sets with additional cards only appear every 3 months, and we do not expect our users to stay that long in the application.</p>
+<p>Introducing a <em>cache</em> improves performance, and also makes our application more resilient, since fewer calls need to communicate outside. Your <strong>task</strong> is to introduce <a href="https://reactivecircus.github.io/cache4k/">Cache4k</a>, a nice Kotlin Multiplatform option for this matter.</p>
+<div id="admonition-caching-and-memoization" class="admonition admonish-info" role="note" aria-labelledby="admonition-caching-and-memoization-title">
+<div class="admonition-title">
+<div id="admonition-caching-and-memoization-title">
+<p>Caching and memoization</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-caching-and-memoization"></a>
+</div>
+<div>
+<p><em>Memoization</em> is a concept in functional programming very related to caching. If you have a completely <em>pure</em> function — no other effect except computation — then every run with the same input argument should give you the same output. As a result, there is no need to run the function twice. This becomes especially relevant for recursive functions like Fibonacci. Arrow comes with <a href="https://arrow-kt.io/learn/collections-functions/recursive/#memoized-recursive-functions"><code>MemoizedDeepRecursiveFunction</code></a>, which improved over the usual deep recursion support in Kotlin.</p>
+<p>The task at hand, however, is not really in the realm of memoization. First of all, we do not have a pure computation, but rather data coming from external sources. In addition, recursion is completely absent from API calls.</p>
+</div>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

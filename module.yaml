@@ -20,6 +20,7 @@ dependencies:
     - io.ktor:ktor-client-content-negotiation:3.0.0-beta-2
     - io.ktor:ktor-serialization-kotlinx-json:3.0.0-beta-2
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
+    - io.github.reactivecircus.cache4k:cache4k:0.13.0
 
 settings:
     compose:

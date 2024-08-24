@@ -44,3 +44,10 @@ Your **task** is to replace each update to the `_problems` mutable state with a 
 An intuitive understanding for this operation arises if we look at a `MutableState` as a _list_ of all the values as the time flows. In that way, the problems arise as `map`ping the validation over each element of that list.
 
 ```
+
+## Gym Leader Challenge
+
+The rules described above correspond to the _Standard_ format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like [Gym Leader Challenge](https://gymleaderchallenge.com/) (GLC). As an **extra task**, you may implement [GLC rules](https://gymleaderchallenge.com/rules).
+
+- You may need to add some UI element to specify the format your deck is in.
+- GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.
