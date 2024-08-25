@@ -182,11 +182,44 @@
 <blockquote>
 <p><strong>Topics</strong>: resource management, <code>SuspendApp</code></p>
 </blockquote>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Initialize the application correctly</li>
-</ul>
+<p>Not all the work you do in an application directly translates into new features. Ensuring that the code remains understandable at the macro and micro level is an important task of a good developer.</p>
+<div id="admonition-scouts-rule" class="admonition admonish-quote" role="note" aria-labelledby="admonition-scouts-rule-title">
+<div class="admonition-title">
+<div id="admonition-scouts-rule-title">
+<p>Scouts rule</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-scouts-rule"></a>
+</div>
+<div>
+<p><em>Leave something slightly better of than you found it.</em></p>
+</div>
+</div>
+<h2 id="as-explicit-as-possible"><a class="header" href="#as-explicit-as-possible">As explicit as possible</a></h2>
+<p>One of the mottos of the style of functional programming we promote is making explicit as much of the function behavior as possible. In statically-typed languages like Kotlin, <em>explicit</em> means <em>in the function signature</em>. The information we want to explicit in functions are, among others:</p>
+<ol>
+<li>Services and resources required to execute the function. Those may be provided as simple arguments, or using <em>extension receivers</em> (and in the future, with <a href="https://github.com/Kotlin/KEEP/blob/context-parameters/proposals/context-parameters.md"><em>context parameters</em></a>).</li>
+<li>Whether the function is pure (in other words, it is just computation) or may perform side effects. In the latter case, we mark the function with <code>suspend</code>.</li>
+</ol>
+<p>A longer explanation, including more examples of the usage of receivers, can be found in the <a href="https://arrow-kt.io/learn/design/effects-contexts/">Arrow documentation</a>.</p>
+<p>One downside which is often mentioned of that style is that dependencies need to be <em>manually</em> injected. That is, the developer creates the instances of every service used by the application, as opposed to using a dependency injection (DI) framework like <a href="https://insert-koin.io/">Koin</a> and <a href="https://developer.android.com/training/dependency-injection/hilt-android">Hilt</a>. However, we don't see this as a downside: by taking control of the creation of services we end up with simpler logic, minimize the amount of inter-dependencies, and avoid runtime or compile-time costs associated to DI frameworks.</p>
+<h2 id="resource-management"><a class="header" href="#resource-management">Resource management</a></h2>
+<p>One of the challenges with this style of programming is managing the acquisition and release of resources and services. One of the problems is too much <em>nesting</em> in their creation,</p>
+<pre><code class="language-kotlin">HttpClient().use { client -&gt;
+  KtorPokemonTcgApi(client).use { api -&gt;
+    // now start the application
+  }
+}
+</code></pre>
+<p>Arrow solves this problem with <a href="https://arrow-kt.io/learn/coroutines/resource-safety/"><code>resourceScope</code> blocks</a>. The code above can be rewritten with any nesting, given that they implement <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/"><code>AutoCloseable</code></a>.</p>
+<pre><code class="language-kotlin">resourceScope {
+  val client = autoCloseable { HttpClient() }
+  val api = autoCloseable { KtorPokemonTcgApi(client) }
+  // now start the application
+}
+</code></pre>
+<p>One step further is <a href="https://arrow-kt.io/ecosystem/suspendapp/">SuspendApp</a>, which adds graceful shutdown to the whole application. By combining <a href="https://arrow-kt.io/ecosystem/suspendapp/#suspendapp-arrows-resource">SuspendApp with Resource</a>, you can ensure that finalizers runs correctly, even when the application is terminated.</p>
+<h3 id="poké-resources"><a class="header" href="#poké-resources">Poké-Resources</a></h3>
+<p>Your <strong>task</strong> is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the <code>HttpClient</code> for <code>KtorPokemonTcpApi</code> explicitly.</p>
 
                     </main>
 

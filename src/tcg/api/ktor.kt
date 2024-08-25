@@ -57,15 +57,17 @@ data class JsonMultipleResult(
     val data: List<JsonCard>
 )
 
-class KtorPokemonTcgApi: PokemonTcgApi {
-    private val httpClient = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-            })
-        }
+fun HttpClientWithJson(): HttpClient = HttpClient {
+    install(ContentNegotiation) {
+        json(Json {
+            ignoreUnknownKeys = true
+        })
     }
+}
 
+class KtorPokemonTcgApi(
+    private val httpClient: HttpClient = HttpClientWithJson()
+): PokemonTcgApi {
     override suspend fun search(name: String): List<Card> {
         if (name.isBlank()) return emptyList()
         return request<JsonMultipleResult>("https://api.pokemontcg.io/v2/cards") {

@@ -1,6 +1,6 @@
 # Deal with bad internet
 
-> **Topics**: resilience, `Schedule`, circuit breaker, memoization
+> **Topics**: resilience, `Schedule`, circuit breaker, caching
 
 The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term _resilience_ to all those techniques which help in providing a better experience in problematic scenarios.
 
