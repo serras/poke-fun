@@ -9,6 +9,7 @@ import androidx.compose.ui.window.application
 import androidx.lifecycle.viewmodel.compose.viewModel
 import deck.DeckViewModel
 import deck.DeckPane
+import deck.DeckPaneWithDetails
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.HorizontalSplitPane
 import search.SearchPane
@@ -32,6 +33,8 @@ fun main() = application {
                 }
                 second {
                     DeckPane(sharedDeckModel, modifier = Modifier.fillMaxSize())
+                    // use this to introduce navigation
+                    // DeckPaneWithDetails(sharedDeckModel, modifier = Modifier.fillMaxSize())
                 }
                 splitter {
                     HorizontalSplitPaneSplitter()

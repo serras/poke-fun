@@ -182,19 +182,39 @@
 <blockquote>
 <p><strong>Topics</strong>: Compose, navigation</p>
 </blockquote>
-<h2 id="topics"><a class="header" href="#topics">Topics</a></h2>
+<p>Compose Multiplatform is a great UI library based of functional principles. Although more tutorials and guides are slowly hitting the shelves, most of the material about Jetpack Compose (the Android version) still applies here. In this section we propose a couple of tasks in case you want to dive further in the UI side of things.</p>
+<h2 id="better-search"><a class="header" href="#better-search">Better search</a></h2>
+<p>Right now Poké-Fun only searches cards by name. However, the API has <a href="https://docs.pokemontcg.io/api-reference/cards/search-cards/">many more options</a>, so you can filter with respect to the different attributes in a card. For example, the player may want to look for cards of a specific type to build a thematic deck.</p>
+<p>Your <strong>task</strong> is to provide an <em>advanced</em> search view (you can look at the <a href="https://www.pokemon.com/us/pokemon-tcg/pokemon-cards/">official card database</a> for inspiration). This requires changes in a few places:</p>
 <ul>
-<li>UI with Compose Multiplatform</li>
-<li>Navigation</li>
+<li>You have to extend <code>search</code> method in the <code>PokemonTcgApi</code> interface to take the additional information as input.</li>
+<li>You have to modify the Ktor implementation to generate the correct query string.</li>
+<li>You have to provide additional UI elements for the player to change the filters.</li>
 </ul>
-<h2 id="tasks"><a class="header" href="#tasks">Tasks</a></h2>
-<ul>
-<li><input disabled="" type="checkbox"/>
-Add more options to search</li>
-<li><input disabled="" type="checkbox"/>
-Details view for a card</li>
-</ul>
-
+<p>To help with the UI side of things, the provided <code>Type</code> enumeration already contains the URL of the image corresponding to each of the types.</p>
+<h2 id="card-detail-view"><a class="header" href="#card-detail-view">Card detail view</a></h2>
+<p>Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an <em>overview</em> of the deck. Your <strong>task</strong> is to add a way to show a detailed view; for example, when the card is (double) clicked.</p>
+<p>We encourage you to use the <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which may hold some arguments. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
+<pre><code class="language-kotlin">composable("main") {
+  DeckPane(deck, modifier)
+}
+composable("detail/{cardId}") { entry -&gt;
+  // get the value of the argument
+  val cardId = entry.arguments?.getString("cardId")
+  // build the UI from this information
+}
+</code></pre>
+<div id="admonition-type-safe-routes" class="admonition admonish-info" role="note" aria-labelledby="admonition-type-safe-routes-title">
+<div class="admonition-title">
+<div id="admonition-type-safe-routes-title">
+<p>Type safe routes</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-type-safe-routes"></a>
+</div>
+<div>
+<p>Newer versions of Jetpack Compose no longer use strings to define routes, they use <a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation">serializable classes instead</a>. At the moment of writing this feature is only available in alpha builds of Compose Multiplatform.</p>
+</div>
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

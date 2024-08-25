@@ -8,6 +8,7 @@ dependencies:
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.0
+    - org.jetbrains.androidx.navigation:navigation-compose:2.7.0-alpha07
     - media.kamel:kamel-image-default:1.0.0-beta.7
     - io.github.vinceglb:filekit-compose:0.8.1
     - io.arrow-kt:arrow-core:1.2.4
