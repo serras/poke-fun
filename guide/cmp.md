@@ -38,3 +38,9 @@ composable("detail/{cardId}") { entry ->
 Newer versions of Jetpack Compose no longer use strings to define routes, they use [serializable classes instead](https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation). At the moment of writing this feature is only available in alpha builds of Compose Multiplatform.
 
 ```
+
+## Debouncing
+
+The current implementation initiates a search everytime the user types something in the corresponding field. In practice, though, people type a few characters in a row, so every connection before the last one is wasted time. Most applications implement _debouncing_ as a strategy for providing good user experience but prevent needless work.
+
+Your **task** is to apply that technique to Poké-Fun. There are several options to do so, [this guide](https://xinkev.com/note/androiddev/debouncing-textfields-in-compose/) discusses the most straightforward ones in the context of Compose.

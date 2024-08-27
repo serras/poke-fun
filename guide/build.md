@@ -72,6 +72,12 @@ Actions as data is the beginning of a journey to _domain specific languages_ (DS
 
 Your **task** is to finish the conversion of the given code into an actions-as-data-based approach. That is, copy (and extend if necessary) the `DeckOperation` type given above, and change the view model to use a single point of entry `apply` to every transformation.
 
+```admonish warning title="Keeping the current state"
+
+Even though you can keep just the list of actions that were performed, and apply them whenever the current state is required, this choice usually leads to bad performance. We strongly recommend that you keep the same `MutableState` as you have now.
+
+```
+
 ## Remove a card
 
 Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your **task** is to implement functionality to _remove_ a card from the deck: this involes changes in _both_ view model and view.
