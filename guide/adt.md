@@ -2,9 +2,9 @@
 
 > **Topics**: sealed hierachies, data classes, immutability
 
-One of the key differences between a _functional_ approach to programming, as opposed to a more _object-oriented_ one, is the ingredients we use to **model** the data. In other words, how we represent the information we care about throughout the execution of our application.
+One of the key components in the _functional_ approach to programming we promote is how we **model** the data. In other words, how we represent the information we care about throughout the execution of our application.
 
-We prefer a **immutable** representation to one where mutation is available. This has a number of performance benefits but the main gain is at the level of _reasoning_. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.
+We prefer a **immutable** representation to one where mutation is available. This main benefit is at the level of _reasoning_, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.
 
 This property alone has a profound impact on our data types. Since there is no mutation, the values are **stateless**. Instead of thinking about modification, for example with `person.setName("me")`, we think in terms of transformation and copying, `person.copy(name = "me")`. Functional programmers are usually proud of their **anemic** domain models, in which operations always exist as transformations of data.
 

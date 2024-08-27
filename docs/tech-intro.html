@@ -205,7 +205,7 @@
 <p>Compose applications are typically built from two components:</p>
 <ul>
 <li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
-<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
+<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views are defined as functions with the <code>@Composable</code> annotation, which is required for the framework to be able to run them whenever the state (or part of it) changes.</li>
 </ul>
 <p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a>.</p>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
@@ -228,7 +228,7 @@
   }
 }
 </code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. The <code>@Composable</code> annotation is the magic that makes this link work.</p>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 
                     </main>

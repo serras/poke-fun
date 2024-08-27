@@ -33,7 +33,7 @@ In the center we find two different view models, which serve different purposes:
 - `DeckViewModel` (in `deck/viewModel.kt`) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.
 - `SearchViewModel` (in `search/viewModel.kt`) keeps track of the state of search, and is responsible for communicating with the [Pokémon TCG API](https://docs.pokemontcg.io/).
 
-Access to the Pokémon TCG API is mediated by the `PokemonTcgApi` interface (in the `tcg/api` folder), for which we give a "real" implementation talking over the network using [Ktor](https://ktor.io), and a "fake" one with a few predefined cards. After finishing the [_Deal with bad internet_](./resilience.md) section, we'll have some respectable code.
+Access to the Pokémon TCG API is mediated by the `PokemonTcgApi` interface (in the `tcg/api` folder), for which we give a "real" implementation talking over the network using Ktor's [client module](https://ktor.io/docs/client-create-new-application.html), and a "fake" one with a few predefined cards. After finishing the [_Deal with bad internet_](./resilience.md) section, we'll have some respectable code.
 
 Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a `SplitPane`, one of the [desktop-specific components](https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop) offered by Compose Multiplatform.
 

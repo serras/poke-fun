@@ -70,22 +70,21 @@ class KtorPokemonTcgApi(
 ): PokemonTcgApi {
     override suspend fun search(name: String): List<Card> {
         if (name.isBlank()) return emptyList()
-        return request<JsonMultipleResult>("https://api.pokemontcg.io/v2/cards") {
-            // bound the search to the newest regulation mark (do not show old cards)
-            parameters.append("q", "name:\"*$name*\" (regulationMark:G OR set.id:sve)")
-            parameters.append("orderBy", "name")
-            parameters.append("pageSize", "30")
-        }?.data.orEmpty().map { it.tcg }
+        val response = httpClient.get("https://api.pokemontcg.io/v2/cards") {
+            url {
+                // bound the search to the newest regulation mark (do not show old cards)
+                parameters.append("q", "name:\"*$name*\" (regulationMark:G OR set.id:sve)")
+                parameters.append("orderBy", "name")
+                parameters.append("pageSize", "30")
+            }
+        }
+        if (response.status != HttpStatusCode.OK) return emptyList()
+        return response.body<JsonMultipleResult>().data.map { it.tcg }
     }
 
-    override suspend fun getById(identifier: String): Card? =
-        request<JsonSingleResult>("https://api.pokemontcg.io/v2/cards/$identifier")?.data?.tcg
-
-    private suspend inline fun <reified A: Any> request(url: String, crossinline extra: URLBuilder.() -> Unit = { }): A? {
-        val response = httpClient.get(url) {
-            url { extra() }
-        }
+    override suspend fun getById(identifier: String): Card? {
+        val response = httpClient.get("https://api.pokemontcg.io/v2/cards/$identifier")
         if (response.status != HttpStatusCode.OK) return null
-        return response.body<A>()
+        return response.body<JsonSingleResult>().data.tcg
     }
 }

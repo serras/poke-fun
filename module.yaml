@@ -1,6 +1,7 @@
 product: jvm/app
 
 dependencies:
+    - org.slf4j:slf4j-simple:2.0.16
     - org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.8.1
     - $compose.foundation
     - $compose.material3

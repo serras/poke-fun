@@ -276,7 +276,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>Compose applications are typically built from two components:</p>
 <ul>
 <li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
-<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by <code>@Composable</code> functions.</li>
+<li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views are defined as functions with the <code>@Composable</code> annotation, which is required for the framework to be able to run them whenever the state (or part of it) changes.</li>
 </ul>
 <p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a>.</p>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
@@ -299,7 +299,7 @@ The rest of the guide is divided into a series of more or less independent secti
   }
 }
 </code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. The <code>@Composable</code> annotation is the magic that makes this link work.</p>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
 <p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
@@ -329,7 +329,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <li><code>DeckViewModel</code> (in <code>deck/viewModel.kt</code>) keeps track of the current status of the deck, including the cards contained in it, and the (potential) problems with that choice of cards.</li>
 <li><code>SearchViewModel</code> (in <code>search/viewModel.kt</code>) keeps track of the state of search, and is responsible for communicating with the <a href="https://docs.pokemontcg.io/">Pokémon TCG API</a>.</li>
 </ul>
-<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using <a href="https://ktor.io">Ktor</a>, and a "fake" one with a few predefined cards. After finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a> section, we'll have some respectable code.</p>
+<p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using Ktor's <a href="https://ktor.io/docs/client-create-new-application.html">client module</a>, and a "fake" one with a few predefined cards. After finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a> section, we'll have some respectable code.</p>
 <p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
 <ul>
 <li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
@@ -340,8 +340,8 @@ The rest of the guide is divided into a series of more or less independent secti
 <blockquote>
 <p><strong>Topics</strong>: sealed hierachies, data classes, immutability</p>
 </blockquote>
-<p>One of the key differences between a <em>functional</em> approach to programming, as opposed to a more <em>object-oriented</em> one, is the ingredients we use to <strong>model</strong> the data. In other words, how we represent the information we care about throughout the execution of our application.</p>
-<p>We prefer a <strong>immutable</strong> representation to one where mutation is available. This has a number of performance benefits but the main gain is at the level of <em>reasoning</em>. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
+<p>One of the key components in the <em>functional</em> approach to programming we promote is how we <strong>model</strong> the data. In other words, how we represent the information we care about throughout the execution of our application.</p>
+<p>We prefer a <strong>immutable</strong> representation to one where mutation is available. This main benefit is at the level of <em>reasoning</em>, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
 <p>This property alone has a profound impact on our data types. Since there is no mutation, the values are <strong>stateless</strong>. Instead of thinking about modification, for example with <code>person.setName("me")</code>, we think in terms of transformation and copying, <code>person.copy(name = "me")</code>. Functional programmers are usually proud of their <strong>anemic</strong> domain models, in which operations always exist as transformations of data.</p>
 <p>We also strive for a <strong>precise</strong> representation, which captures every possible <em>invariant</em> (domain rule) in our data. A prime example from the UI world is data which may also be loading or have errors while obtaining. One potential representation is given by</p>
 <pre><code class="language-kotlin">class Result(

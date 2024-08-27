@@ -26,7 +26,7 @@ There is still not much documentation about Compose Multiplatform, but most of t
 Compose applications are typically built from two components:
 
 - _View models_ keep (part of) the state of the application, and communicate with the outside world.
-- _Views_ define how this state is mapped into a set of UI elements laid out in the screen. Views as defined by `@Composable` functions.
+- _Views_ define how this state is mapped into a set of UI elements laid out in the screen. Views are defined as functions with the `@Composable` annotation, which is required for the framework to be able to run them whenever the state (or part of it) changes.
 
 Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use [property delegation](https://kotlinlang.org/docs/delegated-properties.html).
 
@@ -55,6 +55,6 @@ The view consumes this view model, and shows a button with a text indicating the
 }
 ```
 
-What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `_count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. The `@Composable` annotation is the magic that makes this link work.
+What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `_count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. As discussed above, the `@Composable` annotation (alongside the Compose compiler) is the magic that makes this link work.
 
 Armed with this knowledge, you can read the [introduction](./intro.md) to Poké-Fun.
