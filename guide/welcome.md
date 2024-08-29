@@ -17,7 +17,13 @@ The starting point introduces the domain and the main components of the technolo
 - If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the [introduction to the domain](./tcg.md);
 - If you are new to Amper or Compose Multiplatform, start with [the technology](./tech-intro.md),
 
-Afterward, the [introduction](./intro.md) describes the main components of the given code.
+```admonish warning title="Built with Amper"
+
+Poké-Fun uses [Amper](https://github.com/JetBrains/amper) as build tool, as opposed to the most usual Gradle. In particular, you need to install the [corresponding plug-in](https://plugins.jetbrains.com/plugin/23076-amper) if you are using IntelliJ or Android Studio, although we recommend using [Fleet](https://www.jetbrains.com/fleet/).
+
+```
+
+Afterward, the [overview](./intro.md) describes the main components of the given code.
 The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.
 
 - [What is (in) a deck](./adt.md): model data using data classes and sealed hierarchies;

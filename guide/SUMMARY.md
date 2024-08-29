@@ -2,9 +2,14 @@
 
 [Welcome](./welcome.md)
 
+# Introduction
+
 - [Trading Card Games](./tcg.md)
 - [The technology](./tech-intro.md)
-- [Introduction](./intro.md)
+- [Overview of the code](./intro.md)
+
+# Practice
+
 - [What is (in) a deck](./adt.md)
 - [Law-abiding decks](./validation.md)
 - [Deck building](./build.md)

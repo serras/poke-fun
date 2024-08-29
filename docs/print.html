@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -201,7 +201,18 @@
 <li>If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the <a href="./tcg.html">introduction to the domain</a>;</li>
 <li>If you are new to Amper or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
 </ul>
-<p>Afterward, the <a href="./intro.html">introduction</a> describes the main components of the given code.
+<div id="admonition-built-with-amper" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-amper-title">
+<div class="admonition-title">
+<div id="admonition-built-with-amper-title">
+<p>Built with Amper</p>
+</div>
+<a class="admonition-anchor-link" href="welcome.html#admonition-built-with-amper"></a>
+</div>
+<div>
+<p>Poké-Fun uses <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, as opposed to the most usual Gradle. In particular, you need to install the <a href="https://plugins.jetbrains.com/plugin/23076-amper">corresponding plug-in</a> if you are using IntelliJ or Android Studio, although we recommend using <a href="https://www.jetbrains.com/fleet/">Fleet</a>.</p>
+</div>
+</div>
+<p>Afterward, the <a href="./intro.html">overview</a> describes the main components of the given code.
 The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
 <ul>
 <li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies;</li>
@@ -252,7 +263,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
 <p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
 <p>The one choice which goes out of the ordinary is using <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./amper run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
-<p>We recommend using <a href="https://www.jetbrains.com/fleet/">Fleet</a> or <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> to work on Poké-Fun. If you use the latter, you need the corresponding <a href="https://plugins.jetbrains.com/plugin/23076-amper">Amper plug-in</a>. In both cases, you should see a small play button to run the application from the IDE.</p>
+<p>We recommend using <a href="https://www.jetbrains.com/fleet/">Fleet</a>, <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a>, or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. If you use the latter, you need the corresponding <a href="https://plugins.jetbrains.com/plugin/23076-amper">Amper plug-in</a>. In both cases, you should see a small play button to run the application from the IDE.</p>
 <p><img src="./images/amper-run.png" alt="Run in Amper Fleet" /></p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
 <p>In the recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
@@ -301,7 +312,7 @@ The rest of the guide is divided into a series of more or less independent secti
 </code></pre>
 <p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-code"><a class="header" href="#overview-of-the-code">Overview of the code</a></h1>
 <p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
 <h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
 <p>The <code>tcg</code> module gives access to cards and their information.</p>

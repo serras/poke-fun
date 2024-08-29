@@ -1,4 +1,4 @@
-# Introduction
+# Overview of the code
 
 Now that you know about the [domain](./tcg.md) and the [technology](./tech-intro.md), we can describe the given implementation of Poké-Fun.
 

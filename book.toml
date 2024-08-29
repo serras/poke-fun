@@ -9,8 +9,8 @@ build-dir = "docs"
 
 [preprocessor]
 
-[preprocessor.catppuccin]
-assets_version = "2.1.0" # DO NOT EDIT: Managed by `mdbook-catppuccin install`
+# [preprocessor.catppuccin]
+# assets_version = "2.2.0" # DO NOT EDIT: Managed by `mdbook-catppuccin install`
 
 [preprocessor.admonish]
 command = "mdbook-admonish"
