@@ -20,22 +20,22 @@ To help with the UI side of things, the provided `Type` enumeration already cont
 
 Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an _overview_ of the deck. Your **task** is to add a way to show a detailed view; for example, when the card is (double) clicked.
 
-We encourage you to use the [navigation library](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html) provided by Compose. To help you get started, we provide a very basic version in `deck/navigation.kt`. As you can see, navigation is done via _routes_, which may hold some arguments. Inside each of them, you define how the UI should look like, as we've been doing until now.
+We encourage you to use the [navigation library](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html) provided by Compose. To help you get started, we provide a very basic version in `deck/navigation.kt`. As you can see, navigation is done via _routes_, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.
 
 ```kotlin
-composable("main") {
+composable<Routes.Main> {
   DeckPane(deck, modifier)
 }
-composable("detail/{cardId}") { entry ->
+composable<Routes.Detail> { entry ->
   // get the value of the argument
-  val cardId = entry.arguments?.getString("cardId")
+  val cardId = entry.toRoute<Routes.Detail>().cardId
   // build the UI from this information
 }
 ```
 
 ```admonish info title="Type safe routes"
 
-Newer versions of Jetpack Compose no longer use strings to define routes, they use [serializable classes instead](https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation). At the moment of writing this feature is only available in alpha builds of Compose Multiplatform.
+Versions of Compose Navigation prior to 2.8.0 (which corresponds to Compose Multiplatform 1.7.0) used strings instead of serializable objects to define routes. One more instance where [type safety](https://developer.android.com/guide/navigation/design/type-safety) is a welcome addition.
 
 ```
 

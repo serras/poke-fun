@@ -718,13 +718,13 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>To help with the UI side of things, the provided <code>Type</code> enumeration already contains the URL of the image corresponding to each of the types.</p>
 <h2 id="card-detail-view"><a class="header" href="#card-detail-view">Card detail view</a></h2>
 <p>Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an <em>overview</em> of the deck. Your <strong>task</strong> is to add a way to show a detailed view; for example, when the card is (double) clicked.</p>
-<p>We encourage you to use the <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which may hold some arguments. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
-<pre><code class="language-kotlin">composable("main") {
+<p>We encourage you to use the <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
+<pre><code class="language-kotlin">composable&lt;Routes.Main&gt; {
   DeckPane(deck, modifier)
 }
-composable("detail/{cardId}") { entry -&gt;
+composable&lt;Routes.Detail&gt; { entry -&gt;
   // get the value of the argument
-  val cardId = entry.arguments?.getString("cardId")
+  val cardId = entry.toRoute&lt;Routes.Detail&gt;().cardId
   // build the UI from this information
 }
 </code></pre>
@@ -736,7 +736,7 @@ composable("detail/{cardId}") { entry -&gt;
 <a class="admonition-anchor-link" href="cmp.html#admonition-type-safe-routes"></a>
 </div>
 <div>
-<p>Newer versions of Jetpack Compose no longer use strings to define routes, they use <a href="https://developer.android.com/codelabs/basic-android-kotlin-compose-navigation">serializable classes instead</a>. At the moment of writing this feature is only available in alpha builds of Compose Multiplatform.</p>
+<p>Versions of Compose Navigation prior to 2.8.0 (which corresponds to Compose Multiplatform 1.7.0) used strings instead of serializable objects to define routes. One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
 </div>
 </div>
 <h2 id="debouncing"><a class="header" href="#debouncing">Debouncing</a></h2>
