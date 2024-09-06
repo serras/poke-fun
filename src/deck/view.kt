@@ -1,11 +1,8 @@
 package deck
 
-import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Undo
@@ -37,8 +34,8 @@ fun DeckPane(
                 BasicTextField(
                     deck.deck.title,
                     onValueChange = deck::changeTitle,
-                    textStyle = MaterialTheme.typography.headlineMedium,
-                    singleLine = true
+                    textStyle = MaterialTheme.typography.headlineMedium.copy(color = MaterialTheme.colorScheme.primary),
+                    singleLine = true,
                 )
             },
             actions = {
@@ -88,7 +85,10 @@ fun DeckPane(
             second(60.dp) {
                 when (val problems = deck.problems) {
                     null -> DeckProblemLine("Everything is fine :)", fontStyle = FontStyle.Italic)
-                    else -> DeckProblems(problems)
+                    else -> DeckProblems(
+                        problems,
+                        Modifier.background(MaterialTheme.colorScheme.background)
+                    )
                 }
             }
             splitter {
@@ -100,19 +100,21 @@ fun DeckPane(
 
 @Composable
 fun DeckProblems(problems: List<String>, modifier: Modifier = Modifier) {
-    Box(modifier) {
-        val scrollState = rememberScrollState()
-        Column(
-            modifier = Modifier.verticalScroll(scrollState).fillMaxSize()
-        ) {
-            for (problem in problems) {
-                DeckProblemLine(problem)
+    Surface(modifier) {
+        Box(modifier) {
+            val scrollState = rememberScrollState()
+            Column(
+                modifier = Modifier.verticalScroll(scrollState).fillMaxSize()
+            ) {
+                for (problem in problems) {
+                    DeckProblemLine(problem)
+                }
             }
+            VerticalScrollbar(
+                modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                adapter = rememberScrollbarAdapter(scrollState)
+            )
         }
-        VerticalScrollbar(
-            modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
-            adapter = rememberScrollbarAdapter(scrollState)
-        )
     }
 }
 
