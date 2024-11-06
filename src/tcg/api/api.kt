@@ -1,6 +1,5 @@
 package tcg.api
 
-import arrow.core.MemoizedDeepRecursiveFunction
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.delay
 import tcg.Card

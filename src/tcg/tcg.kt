@@ -2,8 +2,8 @@ package tcg
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import io.kamel.image.asyncPainterResource
-import io.kamel.core.Resource as KamelResource
+import coil3.compose.AsyncImagePainter
+import coil3.compose.rememberAsyncImagePainter
 
 data class Deck(
     val title: String,
@@ -26,8 +26,8 @@ data class Card(
             return "https://images.pokemontcg.io/$set/${id}_hires.png"
         }
 
-    val imageResource: KamelResource<Painter>
-      @Composable get() = asyncPainterResource(data = imageUrl)
+    val imageResource: AsyncImagePainter
+      @Composable get() = rememberAsyncImagePainter(imageUrl)
 
     override fun compareTo(other: Card): Int {
         if (this.category != other.category) return this.category.compareTo(other.category)
@@ -89,6 +89,6 @@ enum class Type(private val imageUrl: String) {
     Metal("https://archives.bulbagarden.net/media/upload/thumb/6/64/Metal-attack.png/40px-Metal-attack.png"),
     Dragon("https://archives.bulbagarden.net/media/upload/thumb/8/8a/Dragon-attack.png/40px-Dragon-attack.png");
     
-    val imageResource: KamelResource<Painter>
-      @Composable get() = asyncPainterResource(data = imageUrl)
+    val imageResource: AsyncImagePainter
+      @Composable get() = rememberAsyncImagePainter(imageUrl)
 }

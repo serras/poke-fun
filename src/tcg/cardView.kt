@@ -1,19 +1,15 @@
 package tcg
 
-import androidx.compose.foundation.VerticalScrollbar
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.rememberScrollbarAdapter
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
+import androidx.compose.material3.Card as Material3Card
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import io.kamel.image.KamelImage
-import androidx.compose.material3.Card as Material3Card
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -53,8 +49,8 @@ fun SingleCard(
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.fillMaxWidth().padding(2.dp)
             )
-            KamelImage(
-                resource = { card.imageResource },
+            Image(
+                painter = card.imageResource,
                 contentDescription = card.identifier,
                 modifier = Modifier.padding(5.dp)
             )

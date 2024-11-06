@@ -7,9 +7,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.lifecycle.viewmodel.compose.viewModel
-import deck.DeckViewModel
 import deck.DeckPane
-import deck.DeckPaneWithDetails
+import deck.DeckViewModel
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.HorizontalSplitPane
 import search.SearchPane

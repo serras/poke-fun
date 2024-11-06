@@ -1,19 +1,14 @@
 package theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.platform.SystemFont
+import androidx.compose.ui.text.platform.Font
 
-@OptIn(ExperimentalTextApi::class)
-val bodyFontFamily = FontFamily(
-    SystemFont("Pokemon RS")
-)
+// should be FontFamily(Font(Res.font.pokemon_rs))
+val pokemonRs = FontFamily(Font("composeResources/resources/font/pokemon-rs.ttf"))
 
-@OptIn(ExperimentalTextApi::class)
-val displayFontFamily = FontFamily(
-    SystemFont("Pokemon RS")
-)
+val bodyFontFamily = pokemonRs
+val displayFontFamily = pokemonRs
 
 // Default Material 3 typography values
 val baseline = Typography()
