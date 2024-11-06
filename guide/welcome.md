@@ -2,7 +2,7 @@
 
 Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on.
 
-> The source code is available in [this repository](https://github.com/serras/poke-fun). Download or clone it, and you should be ready to go. We recommend that you load `fonts/pokemon-rs.ttf` in your system for the extra 2000's vibes.
+> The source code is available in [this repository](https://github.com/serras/poke-fun). Download or clone it, and you should be ready to go.
 
 This book assumes that you know your way around [Kotlin](https://kotlinlang.org), but previous experience with functional programming or [Arrow](https://arrow-kt.io), or with Compose Multiplatform, is not required.
 
