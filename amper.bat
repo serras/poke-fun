@@ -16,9 +16,9 @@
 setlocal
 
 @rem The version of the Amper distribution to provision and use
-set amper_version=0.5.0
+set amper_version=0.6.0
 @rem Establish chain of trust from here by specifying exact checksum of Amper distribution to be run
-set amper_sha256=054f8a3a009d1f5bd749efff7fc97fb3c773d3ad6505120eb320ddb2ed17fb9b
+set amper_sha256=82565f92c3dbe1090d4191c02ade83fb0ea463013dc966b0274c377b14ae29b9
 
 if not defined AMPER_DOWNLOAD_ROOT set AMPER_DOWNLOAD_ROOT=https://packages.jetbrains.team/maven/p/amper/amper
 if not defined AMPER_JRE_DOWNLOAD_ROOT set AMPER_JRE_DOWNLOAD_ROOT=https:/
@@ -50,6 +50,8 @@ if exist "%flag_file%" (
 @rem  - we need to support both .zip and .tar.gz archives (for the Amper distribution and the JBR)
 @rem  - tar should be present in all Windows machines since 2018 (and usable from both cmd and powershell)
 @rem  - tar requires the destination dir to exist
+@rem  - We use (New-Object Net.WebClient).DownloadFile instead of Invoke-WebRequest for performance. See the issue
+@rem    https://github.com/PowerShell/PowerShell/issues/16914, which is still not fixed in Windows PowerShell 5.1
 @rem  - DownloadFile requires the directories in the destination file's path to exist
 set download_and_extract_ps1= ^
 Set-StrictMode -Version 3.0; ^
@@ -68,11 +70,17 @@ try { ^
         [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; ^
         Write-Host 'Downloading %moniker%... (only happens on the first run of this version)'; ^
         [void](New-Item '%AMPER_BOOTSTRAP_CACHE_DIR%' -ItemType Directory -Force); ^
-        (New-Object Net.WebClient).DownloadFile('%url%', $temp_file); ^
+        if (Get-Command curl.exe -errorAction SilentlyContinue) { ^
+            curl.exe -L --silent --show-error --fail --output $temp_file '%url%'; ^
+        } else { ^
+            (New-Object Net.WebClient).DownloadFile('%url%', $temp_file); ^
+        } ^
  ^
         $actualSha = (Get-FileHash -Algorithm SHA%sha_size% -Path $temp_file).Hash.ToString(); ^
         if ($actualSha -ne '%sha%') { ^
-          throw ('Checksum mismatch for ' + $temp_file + ' (downloaded from %url%): expected checksum %sha% but got ' + $actualSha); ^
+            $writeErr = if ($Host.Name -eq 'ConsoleHost') { [Console]::Error.WriteLine } else { $host.ui.WriteErrorLine } ^
+            $writeErr.Invoke(\"ERROR: Checksum mismatch for $temp_file (downloaded from %url%): expected checksum %sha% but got $actualSha\"); ^
+            exit 1; ^
         } ^
  ^
         if (Test-Path '%target_dir%') { ^
@@ -119,18 +127,32 @@ REM ********** Provision JRE for Amper **********
 if defined AMPER_JAVA_HOME goto jre_provisioned
 
 @rem Auto-updated from syncVersions.main.kts, do not modify directly here
-set jbr_version=21.0.4
-set jbr_build=b509.26
+set jbr_version=21.0.6
+set jbr_build=b895.97
 if "%PROCESSOR_ARCHITECTURE%"=="ARM64" (
     set jbr_arch=aarch64
-    set jbr_sha512=9fd2333f3d55f0d40649435fc27e5ab97ad44962f54c1c6513e66f89224a183cd0569b9a3994d840b253060d664630610f82a02f45697e5e6c0b4ee250dd1857
+    set jbr_sha512=188bb92c35bc31b8ec9596701b498797c6578fb8513f1a854a2c8501ff3d2883a1fc74d24c45322526cdaaeb86940fffaf9729f39ba8dd52dd0f2b6f63da35fe
 ) else if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
     set jbr_arch=x64
-    set jbr_sha512=6a639d23039b83cf1b0ed57d082bb48a9bff6acae8964192a1899e8a1c0915453199b501b498e5874bc57c9996d871d49f438054b3c86f643f1c1c4f178026a3
+    set jbr_sha512=7e71a463327a92e6974b3d1013efde00f9d852660d5a18eae5765534b6d3cf0de471f72fd30d3caae910253b8b0df7202e2a76f0435e84ad80d13fb298a84c48
 ) else (
     echo Unknown Windows architecture %PROCESSOR_ARCHITECTURE% >&2
     goto fail
 )
+
+REM !! DO NOT REMOVE !!
+REM                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         exit /b %ERRORLEVEL%
+REM
+REM The above comment is strategically placed to compensate for a bug in the update command in Amper 0.5.0.
+REM During the update, the wrapper script is overwritten in-place while running. The problem is that cmd.exe doesn't
+REM buffer the original script as a whole, and instead reloads it after every command, and tries to resume at the same
+REM byte offset as before.
+REM In the 0.5.0 script, the java command running Amper is followed by the command 'exit /b %ERRORLEVEL%', which is
+REM exactly at the byte offset 6826. So, when the java command finishes, cmd.exe wants to run this exit command, but
+REM it first reloads the file and gets the new content (this one) before trying to run whatever is at offset 6826.
+REM We must place an exit command right at that offset to allow 0.5.0 to complete properly.
+REM Since there are version/checksum placeholders at the top of this template wrapper file, we need to dynamically
+REM adjust the position of the exit command, hence the padding placeholder.
 
 @rem URL for JBR (vanilla) - see https://github.com/JetBrains/JetBrainsRuntime/releases
 set jbr_url=%AMPER_JRE_DOWNLOAD_ROOT%/cache-redirector.jetbrains.com/intellij-jbr/jbr-%jbr_version%-windows-%jbr_arch%-%jbr_build%.tar.gz
@@ -149,5 +171,5 @@ if not exist "%AMPER_JAVA_HOME%\bin\java.exe" (
 REM ********** Launch Amper **********
 
 set jvm_args=-ea -XX:+EnableDynamicAgentLoading %AMPER_JAVA_OPTIONS%
-"%AMPER_JAVA_HOME%\bin\java.exe" "-Damper.wrapper.dist.sha256=%amper_sha256%" %jvm_args% -cp "%amper_target_dir%\lib\*" org.jetbrains.amper.cli.MainKt %*
+"%AMPER_JAVA_HOME%\bin\java.exe" "-Damper.wrapper.dist.sha256=%amper_sha256%" "-Damper.wrapper.path=%~f0" %jvm_args% -cp "%amper_target_dir%\lib\*" org.jetbrains.amper.cli.MainKt %*
 exit /B %ERRORLEVEL%

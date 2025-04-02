@@ -1,42 +1,43 @@
 product: jvm/app
 
 dependencies:
-    - org.slf4j:slf4j-simple:2.0.16
+    - org.slf4j:slf4j-simple:2.0.17
     - org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.1
     - $kotlin.serialization.json
     - $compose.foundation
     - $compose.components.resources
     - $compose.material3
-    - $compose.materialIconsExtended
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
-    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4
-    - org.jetbrains.androidx.navigation:navigation-compose:2.8.0-alpha11
-    - io.coil-kt.coil3:coil-compose:3.0.4
-    - io.coil-kt.coil3:coil-network-ktor3:3.0.4
+    # - $compose.materialIconsExtended
+    - org.jetbrains.compose.material:material-icons-extended:1.7.3
+    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0-alpha05
+    - org.jetbrains.androidx.navigation:navigation-compose:2.9.0-alpha15
+    - io.coil-kt.coil3:coil-compose:3.1.0
+    - io.coil-kt.coil3:coil-network-ktor3:3.1.0
     - io.github.vinceglb:filekit-compose:0.8.8
     - io.arrow-kt:arrow-core:2.0.1
     - io.arrow-kt:arrow-fx-coroutines:2.0.1
     - io.arrow-kt:arrow-resilience:2.0.1
     - io.arrow-kt:arrow-optics:2.0.1
     - io.arrow-kt:suspendapp:0.5.0
-    - io.ktor:ktor-client:3.0.3
-    - io.ktor:ktor-client-cio:3.0.3
-    - io.ktor:ktor-client-content-negotiation:3.0.3
-    - io.ktor:ktor-serialization-kotlinx-json:3.0.3
+    - io.ktor:ktor-client:3.1.2
+    - io.ktor:ktor-client-cio:3.1.2
+    - io.ktor:ktor-client-content-negotiation:3.1.2
+    - io.ktor:ktor-serialization-kotlinx-json:3.1.2
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
     - io.github.reactivecircus.cache4k:cache4k:0.14.0
 
 settings:
     compose:
         enabled: true
-        version: 1.7.3
+        version: 1.8.0-beta01
         resources:
             packageName: resources
     kotlin:
         serialization:
             format: json
-            version: 1.8.0
+            version: 1.8.1
         ksp:
             processors:
             - io.arrow-kt:arrow-optics-ksp-plugin:2.0.1
