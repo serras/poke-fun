@@ -14,29 +14,36 @@ import org.jetbrains.compose.splitpane.HorizontalSplitPane
 import search.SearchPane
 import theme.AppTheme
 import utils.HorizontalSplitPaneSplitter
+import java.lang.System.setProperty
 
 @OptIn(ExperimentalSplitPaneApi::class)
-fun main() = application {
-    AppTheme {
-        Window(
-            title = "Poké-Fun",
-            onCloseRequest = ::exitApplication
-        ) {
-            val sharedDeckModel = viewModel { DeckViewModel() }
-
-            HorizontalSplitPane(
-                modifier = Modifier.background(MaterialTheme.colorScheme.background)
+fun main() {
+    // set application title
+    // https://stackoverflow.com/questions/78097759/how-can-i-change-the-app-name-with-compose-multiplatform-in-macos
+    setProperty("apple.awt.application.name", "Poké-Fun")
+    // start the application proper
+    application {
+        AppTheme {
+            Window(
+                title = "Poké-Fun",
+                onCloseRequest = ::exitApplication
             ) {
-                first(320.dp) {
-                    SearchPane(sharedDeckModel, modifier = Modifier.padding(10.dp).fillMaxSize())
-                }
-                second {
-                    DeckPane(sharedDeckModel, modifier = Modifier.fillMaxSize())
-                    // use this to introduce navigation
-                    // DeckPaneWithDetails(sharedDeckModel, modifier = Modifier.fillMaxSize())
-                }
-                splitter {
-                    HorizontalSplitPaneSplitter()
+                val sharedDeckModel = viewModel { DeckViewModel() }
+
+                HorizontalSplitPane(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                ) {
+                    first(320.dp) {
+                        SearchPane(sharedDeckModel, modifier = Modifier.padding(10.dp).fillMaxSize())
+                    }
+                    second {
+                        DeckPane(sharedDeckModel, modifier = Modifier.fillMaxSize())
+                        // use this to introduce navigation
+                        // DeckPaneWithDetails(sharedDeckModel, modifier = Modifier.fillMaxSize())
+                    }
+                    splitter {
+                        HorizontalSplitPaneSplitter()
+                    }
                 }
             }
         }
