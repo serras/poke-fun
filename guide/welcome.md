@@ -19,7 +19,7 @@ The starting point introduces the domain and the main components of the technolo
 
 ```admonish warning title="Built with Amper"
 
-Poké-Fun uses [Amper](https://github.com/JetBrains/amper) as build tool, as opposed to the most usual Gradle. In particular, you need to install the [corresponding plug-in](https://plugins.jetbrains.com/plugin/23076-amper) if you are using IntelliJ or Android Studio, although we recommend using [Fleet](https://www.jetbrains.com/fleet/).
+Poké-Fun uses [Amper](https://github.com/JetBrains/amper) as build tool, as opposed to the most usual Gradle. In particular, you need to install the [corresponding plug-in](https://plugins.jetbrains.com/plugin/23076-amper) if you are using IntelliJ or Android Studio.
 
 ```
 

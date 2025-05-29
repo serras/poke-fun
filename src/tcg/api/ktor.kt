@@ -73,7 +73,7 @@ class KtorPokemonTcgApi(
         val response = httpClient.get("https://api.pokemontcg.io/v2/cards") {
             url {
                 // bound the search to the newest regulation mark (do not show old cards)
-                parameters.append("q", "name:\"*$name*\" (regulationMark:G OR set.id:sve)")
+                parameters.append("q", "name:\"*$name*\" (regulationMark:G OR regulationMark:H OR regulationMark:I OR set.id:sve)")
                 parameters.append("orderBy", "name")
                 parameters.append("pageSize", "30")
             }

@@ -7,14 +7,9 @@ src = "guide"
 [build]
 build-dir = "docs"
 
-[preprocessor]
-
-# [preprocessor.catppuccin]
-# assets_version = "2.2.0" # DO NOT EDIT: Managed by `mdbook-catppuccin install`
-
 [preprocessor.admonish]
 command = "mdbook-admonish"
-assets_version = "3.0.2" # do not edit: managed by `mdbook-admonish install`
+assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
 
 [preprocessor.mermaid]
 command = "mdbook-mermaid"
@@ -22,5 +17,5 @@ command = "mdbook-mermaid"
 [output]
 
 [output.html]
-additional-css = ["./theme/catppuccin.css", "./theme/catppuccin-admonish.css", "./theme/mdbook-admonish.css"]
+additional-css = ["./theme/highlight.css", "./theme/mdbook-admonish.css"]
 additional-js = ["./theme/mermaid.min.js", "./theme/mermaid-init.js"]

@@ -4,9 +4,7 @@ Poké-Fun is implemented using [Kotlin](https://kotlinlang.org/), [Arrow](https:
 
 The one choice which goes out of the ordinary is using [Amper](https://github.com/JetBrains/amper) as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the `module.yaml` file, but for the tasks you won't need to touch it. To start the application you can run `./amper run` in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.
 
-We recommend using [Fleet](https://www.jetbrains.com/fleet/), [IntelliJ IDEA](https://www.jetbrains.com/idea/), or [Android Studio](https://developer.android.com/studio) to work on Poké-Fun. If you use the latter, you need the corresponding [Amper plug-in](https://plugins.jetbrains.com/plugin/23076-amper). In both cases, you should see a small play button to run the application from the IDE.
-
-![Run in Amper Fleet](./images/amper-run.png)
+We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio) to work on Poké-Fun. You need at least the corresponding [Amper plug-in](https://plugins.jetbrains.com/plugin/23076-amper), and the [Kotlin Multiplatform plug-in](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform) is highly recommended. In both cases, you should see a small play button to run the application from the IDE.
 
 ## Compose Multiplatform
 
