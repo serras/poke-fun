@@ -9,9 +9,8 @@ dependencies:
     - $compose.material3
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
-    # - $compose.materialIconsExtended
-    - org.jetbrains.compose.material:material-icons-extended:1.7.3
-    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.0
+    - $compose.materialIconsExtended
+    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.1
     - org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta02
     - io.coil-kt.coil3:coil-compose:3.2.0
     - io.coil-kt.coil3:coil-network-ktor3:3.2.0
@@ -21,17 +20,17 @@ dependencies:
     - io.arrow-kt:arrow-resilience:2.1.2
     - io.arrow-kt:arrow-optics:2.1.2
     - io.arrow-kt:suspendapp:2.1.2
-    - io.ktor:ktor-client:3.1.3
-    - io.ktor:ktor-client-cio:3.1.3
-    - io.ktor:ktor-client-content-negotiation:3.1.3
-    - io.ktor:ktor-serialization-kotlinx-json:3.1.3
+    - io.ktor:ktor-client:3.2.0
+    - io.ktor:ktor-client-cio:3.2.0
+    - io.ktor:ktor-client-content-negotiation:3.2.0
+    - io.ktor:ktor-serialization-kotlinx-json:3.2.0
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
     - io.github.reactivecircus.cache4k:cache4k:0.14.0
 
 settings:
     compose:
         enabled: true
-        version: 1.8.1
+        version: 1.8.2
         resources:
             packageName: resources
     kotlin:
@@ -40,4 +39,4 @@ settings:
             version: 1.8.1
         ksp:
             processors:
-            - io.arrow-kt:arrow-optics-ksp-plugin:2.1.1
+            - io.arrow-kt:arrow-optics-ksp-plugin:2.1.2
