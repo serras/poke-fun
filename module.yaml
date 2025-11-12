@@ -6,38 +6,42 @@ dependencies:
     - $kotlin.serialization.json
     - $compose.foundation
     - $compose.components.resources
-    # - $compose.material3
-    - org.jetbrains.compose.material3:material3:1.9.0-beta03
     - $compose.desktop.currentOs
     - $compose.desktop.components.splitPane
-    - $compose.materialIconsExtended
-    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.9.3
-    - org.jetbrains.androidx.navigation:navigation-compose:2.9.0-rc01
+    - org.jetbrains.compose.material3:material3:1.10.0-alpha04
+    - org.jetbrains.compose.material:material-icons-extended:1.7.3
+    - org.jetbrains.androidx.navigation3:navigation3-ui:1.0.0-alpha04
+    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0-alpha04
+    - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3:2.10.0-alpha04
     - io.coil-kt.coil3:coil-compose:3.3.0
     - io.coil-kt.coil3:coil-network-ktor3:3.3.0
     - io.github.vinceglb:filekit-compose:0.8.8
-    - io.arrow-kt:arrow-core:2.1.2
-    - io.arrow-kt:arrow-fx-coroutines:2.1.2
-    - io.arrow-kt:arrow-resilience:2.1.2
-    - io.arrow-kt:arrow-optics:2.1.2
-    - io.arrow-kt:suspendapp:2.1.2
-    - io.ktor:ktor-client:3.2.3
-    - io.ktor:ktor-client-cio:3.2.3
-    - io.ktor:ktor-client-content-negotiation:3.2.3
-    - io.ktor:ktor-serialization-kotlinx-json:3.2.3
+    - io.arrow-kt:arrow-core:2.2.0
+    - io.arrow-kt:arrow-fx-coroutines:2.2.0
+    - io.arrow-kt:arrow-resilience:2.2.0
+    - io.arrow-kt:arrow-optics:2.2.0
+    - io.arrow-kt:suspendapp:2.2.0
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
     - io.github.reactivecircus.cache4k:cache4k:0.14.0
+    - $ktor.client
+    - $ktor.client.cio
+    - $ktor.client.contentNegotiation
+    - $ktor.serialization.kotlinx.json
 
 settings:
-    compose:
-        enabled: true
-        version: 1.9.0-rc01
-        resources:
-            packageName: resources
     kotlin:
+        version: 2.2.21
         serialization:
             format: json
             version: 1.9.0
         ksp:
             processors:
-            - io.arrow-kt:arrow-optics-ksp-plugin:2.1.2
+                - io.arrow-kt:arrow-optics-ksp-plugin:2.2.0
+    compose:
+        enabled: true
+        version: 1.10.0-beta01
+        resources:
+            packageName: resources
+    ktor:
+        enabled: true
+        version: 3.3.2

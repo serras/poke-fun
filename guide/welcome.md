@@ -30,6 +30,7 @@ The rest of the guide is divided into a series of more or less independent secti
 - [Law-abiding decks](./validation.md): check that the deck follows the rules, and learn about `Raise` along the way;
 - [Deck building](./build.md): design a good `ViewModel` using functional principles, and design undo/redo with actions-as-data;
 - [Deal with bad internet](./resilience.md): improve the experience with `Schedule` and `CircuitBreaker`, and cache results using memoization;
+- [Using local data](./local.md): use local storage for card data, using optics to query it;
 - [Loading and saving](./par.md): store your work locally, and learn about parallel combinators in Arrow Fx;
 - [Better architecture](./architecture.md): introduce resource management, and overall nicer design;
 - [Nicer UI](./cmp.md): implement more visual feedback using Compose Multiplatform.

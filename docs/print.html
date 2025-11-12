@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -218,6 +218,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way;</li>
 <li><a href="./build.html">Deck building</a>: design a good <code>ViewModel</code> using functional principles, and design undo/redo with actions-as-data;</li>
 <li><a href="./resilience.html">Deal with bad internet</a>: improve the experience with <code>Schedule</code> and <code>CircuitBreaker</code>, and cache results using memoization;</li>
+<li><a href="./local.html">Using local data</a>: use local storage for card data, using optics to query it;</li>
 <li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx;</li>
 <li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design;</li>
 <li><a href="./cmp.html">Nicer UI</a>: implement more visual feedback using Compose Multiplatform.</li>
@@ -598,6 +599,19 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>We strongly recommend to use the <a href="https://refactoring.guru/design-patterns/decorator">Decorator pattern</a> in the following tasks. For a good introduction, fully in Kotlin, check <a href="https://www.youtube.com/watch?v=erWsXSqQ-CM">this video</a> by Dave Leeds.</p>
 </div>
 </div>
+<div id="admonition-pokémon-tcg-api-is-down" class="admonition admonish-warning" role="note" aria-labelledby="admonition-pokémon-tcg-api-is-down-title">
+<div class="admonition-title">
+<div id="admonition-pokémon-tcg-api-is-down-title">
+<p>Pokémon TCG API is down</p>
+</div>
+<a class="admonition-anchor-link" href="resilience.html#admonition-pokémon-tcg-api-is-down"></a>
+</div>
+<div>
+<p>Unfortunately, the <a href="https://pokemontcg.io/">Pokémon TCG API</a> we use for this exercise is routinely down.
+For that reason, the current code uses the <a href="./local.html">local variant</a> by default.
+If you want to run the code against the remote API, change the constructor for <code>SearchViewModel</code>.</p>
+</div>
+</div>
 <h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
 <p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
 <h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
@@ -620,7 +634,15 @@ The rest of the guide is divided into a series of more or less independent secti
 <p><em>Memoization</em> is a concept in functional programming very related to caching. If you have a completely <em>pure</em> function — no other effect except computation — then every run with the same input argument should give you the same output. As a result, there is no need to run the function twice. This becomes especially relevant for recursive functions like Fibonacci. Arrow comes with <a href="https://arrow-kt.io/learn/collections-functions/recursive/#memoized-recursive-functions"><code>MemoizedDeepRecursiveFunction</code></a>, which improved over the usual deep recursion support in Kotlin.</p>
 <p>The task at hand, however, is not really in the realm of memoization. First of all, we do not have a pure computation, but rather data coming from external sources. In addition, recursion is completely absent from API calls.</p>
 </div>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="using-local-data"><a class="header" href="#using-local-data">Using local data</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: optics, JSON manipulation</p>
+</blockquote>
+<p>Until this point we have focused on requesting data from a remote API. In some scenarios such requests are not possible or desirable, and a local data source is a better option. When you clone the repository for these exercises, you should find a <code>pokemon-tcg-data</code> submodule that contains a <a href="https://github.com/PokemonTCG/pokemon-tcg-data">copy of the data for the remote API</a>.</p>
+<h2 id="targeting-data-with-optics"><a class="header" href="#targeting-data-with-optics">Targeting data with optics</a></h2>
+<p>The current implementation is extremely inefficient: it transforms every card in every <code>.json</code> file into a <code>Card</code> object, and then filters the results. A better solution is to perform the query directly on the JSON document, and only transform the data if it matches.</p>
+<h2 id="understanding-foreachcard"><a class="header" href="#understanding-foreachcard">Understanding <code>forEachCard</code></a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="loading-and-saving"><a class="header" href="#loading-and-saving">Loading and saving</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: parallel operations, <code>Raise</code> + exceptions + concurrency</p>
 </blockquote>
@@ -716,14 +738,15 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>To help with the UI side of things, the provided <code>Type</code> enumeration already contains the URL of the image corresponding to each of the types.</p>
 <h2 id="card-detail-view"><a class="header" href="#card-detail-view">Card detail view</a></h2>
 <p>Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an <em>overview</em> of the deck. Your <strong>task</strong> is to add a way to show a detailed view; for example, when the card is (double) clicked.</p>
-<p>We encourage you to use the <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
-<pre><code class="language-kotlin">composable&lt;Routes.Main&gt; {
+<p>We encourage you to use the <a href="https://developer.android.com/guide/navigation/navigation-3">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
+<pre><code class="language-kotlin">entry&lt;Routes.Main&gt; { 
   DeckPane(deck, modifier)
 }
-composable&lt;Routes.Detail&gt; { entry -&gt;
-  // get the value of the argument
-  val cardId = entry.toRoute&lt;Routes.Detail&gt;().cardId
-  // build the UI from this information
+entry&lt;Routes.Detail&gt; {
+  // get the cardId from the argument
+  val cardId = it.cardId
+  // build the UI from this information 
+  Text("Card with id $cardId")
 }
 </code></pre>
 <div id="admonition-type-safe-routes" class="admonition admonish-info" role="note" aria-labelledby="admonition-type-safe-routes-title">
@@ -734,7 +757,9 @@ composable&lt;Routes.Detail&gt; { entry -&gt;
 <a class="admonition-anchor-link" href="cmp.html#admonition-type-safe-routes"></a>
 </div>
 <div>
-<p>Versions of Compose Navigation prior to 2.8.0 (which corresponds to Compose Multiplatform 1.7.0) used strings instead of serializable objects to define routes. One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
+<p>The Compose Navigation3 library uses serializable objects to define values.
+In the previous iteration of this navigation, prior to 2.8.0, you used strings instead.
+One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
 </div>
 </div>
 <h2 id="debouncing"><a class="header" href="#debouncing">Debouncing</a></h2>

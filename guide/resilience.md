@@ -12,6 +12,14 @@ We strongly recommend to use the [Decorator pattern](https://refactoring.guru/de
 
 ```
 
+```admonish warning title="Pokémon TCG API is down"
+
+Unfortunately, the [Pokémon TCG API](https://pokemontcg.io/) we use for this exercise is routinely down.
+For that reason, the current code uses the [local variant](./local.md) by default.
+If you want to run the code against the remote API, change the constructor for `SearchViewModel`.
+
+```
+
 ## Retry if fails
 
 The task here is to create a wrapper that adds retry capabilities to an inner `PokemonTcgApi` instance. Explore different variations of the [`Schedule`](https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy), from a simple fixed repetition, to exponential backoff policies.

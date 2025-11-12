@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Better architecture</title>
+        <title>Using local data</title>
 
 
         <!-- Custom HTML head -->
@@ -177,58 +177,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="better-architecture"><a class="header" href="#better-architecture">Better architecture</a></h1>
+                        <h1 id="using-local-data"><a class="header" href="#using-local-data">Using local data</a></h1>
 <blockquote>
-<p><strong>Topics</strong>: resource management, <code>SuspendApp</code></p>
+<p><strong>Topics</strong>: optics, JSON manipulation</p>
 </blockquote>
-<p>Not all the work you do in an application directly translates into new features. Ensuring that the code remains understandable at the macro and micro level is an important task of a good developer.</p>
-<div id="admonition-scouts-rule" class="admonition admonish-quote" role="note" aria-labelledby="admonition-scouts-rule-title">
-<div class="admonition-title">
-<div id="admonition-scouts-rule-title">
-<p>Scouts rule</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-scouts-rule"></a>
-</div>
-<div>
-<p><em>Leave something slightly better of than you found it.</em></p>
-</div>
-</div>
-<h2 id="as-explicit-as-possible"><a class="header" href="#as-explicit-as-possible">As explicit as possible</a></h2>
-<p>One of the mottos of the style of functional programming we promote is making explicit as much of the function behavior as possible. In statically-typed languages like Kotlin, <em>explicit</em> means <em>in the function signature</em>. The information we want to explicit in functions are, among others:</p>
-<ol>
-<li>Services and resources required to execute the function. Those may be provided as simple arguments, or using <em>extension receivers</em> (and in the future, with <a href="https://github.com/Kotlin/KEEP/blob/context-parameters/proposals/context-parameters.md"><em>context parameters</em></a>).</li>
-<li>Whether the function is pure (in other words, it is just computation) or may perform side effects. In the latter case, we mark the function with <code>suspend</code>.</li>
-</ol>
-<p>A longer explanation, including more examples of the usage of receivers, can be found in the <a href="https://arrow-kt.io/learn/design/effects-contexts/">Arrow documentation</a>.</p>
-<p>One downside which is often mentioned of that style is that dependencies need to be <em>manually</em> injected. That is, the developer creates the instances of every service used by the application, as opposed to using a dependency injection (DI) framework like <a href="https://insert-koin.io/">Koin</a> and <a href="https://developer.android.com/training/dependency-injection/hilt-android">Hilt</a>. However, we don't see this as a downside: by taking control of the creation of services we end up with simpler logic, minimize the amount of inter-dependencies, and avoid runtime or compile-time costs associated to DI frameworks.</p>
-<h2 id="resource-management"><a class="header" href="#resource-management">Resource management</a></h2>
-<p>One of the challenges with this style of programming is managing the acquisition and release of resources and services. One of the problems is too much <em>nesting</em> in their creation,</p>
-<pre><code class="language-kotlin">HttpClient().use { client -&gt;
-  KtorPokemonTcgApi(client).use { api -&gt;
-    // now start the application
-  }
-}
-</code></pre>
-<p>Arrow solves this problem with <a href="https://arrow-kt.io/learn/coroutines/resource-safety/"><code>resourceScope</code> blocks</a>. The code above can be rewritten with any nesting, given that they implement <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/"><code>AutoCloseable</code></a>.</p>
-<pre><code class="language-kotlin">resourceScope {
-  val client = autoCloseable { HttpClient() }
-  val api = autoCloseable { KtorPokemonTcgApi(client) }
-  // now start the application
-}
-</code></pre>
-<p>One step further is <a href="https://arrow-kt.io/ecosystem/suspendapp/">SuspendApp</a>, which adds graceful shutdown to the whole application. By combining <a href="https://arrow-kt.io/ecosystem/suspendapp/#suspendapp-arrows-resource">SuspendApp with Resource</a>, you can ensure that finalizers runs correctly, even when the application is terminated.</p>
-<h3 id="poké-resources"><a class="header" href="#poké-resources">Poké-Resources</a></h3>
-<p>Your <strong>task</strong> is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the <code>HttpClient</code> for <code>KtorPokemonTcpApi</code> explicitly.</p>
+<p>Until this point we have focused on requesting data from a remote API. In some scenarios such requests are not possible or desirable, and a local data source is a better option. When you clone the repository for these exercises, you should find a <code>pokemon-tcg-data</code> submodule that contains a <a href="https://github.com/PokemonTCG/pokemon-tcg-data">copy of the data for the remote API</a>.</p>
+<h2 id="targeting-data-with-optics"><a class="header" href="#targeting-data-with-optics">Targeting data with optics</a></h2>
+<p>The current implementation is extremely inefficient: it transforms every card in every <code>.json</code> file into a <code>Card</code> object, and then filters the results. A better solution is to perform the query directly on the JSON document, and only transform the data if it matches.</p>
+<h2 id="understanding-foreachcard"><a class="header" href="#understanding-foreachcard">Understanding <code>forEachCard</code></a></h2>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="par.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="resilience.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="cmp.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="par.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -238,11 +204,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="par.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="resilience.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="cmp.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="par.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

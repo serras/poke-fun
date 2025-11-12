@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">8.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">9.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">10.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -193,14 +193,15 @@
 <p>To help with the UI side of things, the provided <code>Type</code> enumeration already contains the URL of the image corresponding to each of the types.</p>
 <h2 id="card-detail-view"><a class="header" href="#card-detail-view">Card detail view</a></h2>
 <p>Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an <em>overview</em> of the deck. Your <strong>task</strong> is to add a way to show a detailed view; for example, when the card is (double) clicked.</p>
-<p>We encourage you to use the <a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-navigation-routing.html">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
-<pre><code class="language-kotlin">composable&lt;Routes.Main&gt; {
+<p>We encourage you to use the <a href="https://developer.android.com/guide/navigation/navigation-3">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
+<pre><code class="language-kotlin">entry&lt;Routes.Main&gt; { 
   DeckPane(deck, modifier)
 }
-composable&lt;Routes.Detail&gt; { entry -&gt;
-  // get the value of the argument
-  val cardId = entry.toRoute&lt;Routes.Detail&gt;().cardId
-  // build the UI from this information
+entry&lt;Routes.Detail&gt; {
+  // get the cardId from the argument
+  val cardId = it.cardId
+  // build the UI from this information 
+  Text("Card with id $cardId")
 }
 </code></pre>
 <div id="admonition-type-safe-routes" class="admonition admonish-info" role="note" aria-labelledby="admonition-type-safe-routes-title">
@@ -211,7 +212,9 @@ composable&lt;Routes.Detail&gt; { entry -&gt;
 <a class="admonition-anchor-link" href="#admonition-type-safe-routes"></a>
 </div>
 <div>
-<p>Versions of Compose Navigation prior to 2.8.0 (which corresponds to Compose Multiplatform 1.7.0) used strings instead of serializable objects to define routes. One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
+<p>The Compose Navigation3 library uses serializable objects to define values.
+In the previous iteration of this navigation, prior to 2.8.0, you used strings instead.
+One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
 </div>
 </div>
 <h2 id="debouncing"><a class="header" href="#debouncing">Debouncing</a></h2>

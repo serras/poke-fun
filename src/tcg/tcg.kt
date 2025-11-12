@@ -1,7 +1,6 @@
 package tcg
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.painter.Painter
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 
@@ -18,7 +17,8 @@ data class Card(
     val name: String,
     val identifier: String,
     val category: Category,
-    val type: Type?
+    val type: Type?,
+    val regulationMark: String?,
 ): Comparable<Card> {
     val imageUrl: String
         get() {
@@ -62,7 +62,8 @@ sealed interface Category: Comparable<Category> {
 enum class PokemonStage {
     Basic,
     Stage1,
-    Stage2;
+    Stage2,
+    Other;
 }
 
 enum class EnergyCategory {
@@ -74,7 +75,8 @@ enum class TrainerCategory {
     Item,
     Tool,
     Supporter,
-    Stadium;
+    Stadium,
+    Other;
 }
 
 enum class Type(private val imageUrl: String) {
@@ -87,7 +89,8 @@ enum class Type(private val imageUrl: String) {
     Psychic("https://archives.bulbagarden.net/media/upload/thumb/e/ef/Psychic-attack.png/40px-Psychic-attack.png"),
     Darkness("https://archives.bulbagarden.net/media/upload/thumb/a/ab/Darkness-attack.png/40px-Darkness-attack.png"),
     Metal("https://archives.bulbagarden.net/media/upload/thumb/6/64/Metal-attack.png/40px-Metal-attack.png"),
-    Dragon("https://archives.bulbagarden.net/media/upload/thumb/8/8a/Dragon-attack.png/40px-Dragon-attack.png");
+    Dragon("https://archives.bulbagarden.net/media/upload/thumb/8/8a/Dragon-attack.png/40px-Dragon-attack.png"),
+    Fairy("https://archives.bulbagarden.net/media/upload/thumb/4/40/Fairy-attack.png/40px-Fairy-attack.png");
     
     val imageResource: AsyncImagePainter
       @Composable get() = rememberAsyncImagePainter(imageUrl)

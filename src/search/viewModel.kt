@@ -11,6 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tcg.Card
 import tcg.api.KtorPokemonTcgApi
+import tcg.api.LocalPokemonTcgApi
 import tcg.api.PokemonTcgApi
 
 sealed interface SearchStatus {
@@ -22,7 +23,7 @@ sealed interface SearchStatus {
 }
 
 class SearchViewModel(
-    private val api: PokemonTcgApi = KtorPokemonTcgApi()
+    private val api: PokemonTcgApi = LocalPokemonTcgApi() // KtorPokemonTcgApi()
 ) : ViewModel() {
     private val _options = mutableStateOf(SearchOptions.INITIAL)
     val options: SearchOptions by _options
