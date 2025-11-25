@@ -30,16 +30,18 @@ dependencies:
 
 settings:
     kotlin:
-        version: 2.2.21
+        version: 2.3.0-RC
         serialization:
             format: json
             version: 1.9.0
+        freeCompilerArgs:
+            - "-Xreturn-value-checker=check"
         ksp:
             processors:
                 - io.arrow-kt:arrow-optics-ksp-plugin:2.2.0
     compose:
         enabled: true
-        version: 1.10.0-beta01
+        version: 1.10.0-beta02
         resources:
             packageName: resources
     ktor:
