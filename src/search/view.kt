@@ -16,7 +16,7 @@ import tcg.MultipleCards
 @Composable
 fun SearchPane(
     deck: DeckViewModel,
-    search: SearchViewModel = viewModel<SearchViewModel>(),
+    search: SearchViewModel = viewModel { SearchViewModel() },
     modifier: Modifier = Modifier
 ) {
     Box(modifier) {
