@@ -13,9 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import io.github.vinceglb.filekit.compose.rememberFilePickerLauncher
-import io.github.vinceglb.filekit.compose.rememberFileSaverLauncher
-import io.github.vinceglb.filekit.core.PickerType
+import io.github.vinceglb.filekit.dialogs.FileKitDialogSettings
+import io.github.vinceglb.filekit.dialogs.FileKitType
+import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
+import io.github.vinceglb.filekit.dialogs.compose.rememberFileSaverLauncher
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.VerticalSplitPane
 import org.jetbrains.compose.splitpane.rememberSplitPaneState
@@ -44,7 +45,7 @@ fun DeckPane(
                 ) { Icon(Icons.Default.Delete, contentDescription = "Clear") }
 
                 val openPicker = rememberFilePickerLauncher(
-                    type = PickerType.File(extensions = listOf("deck"))
+                    type = FileKitType.File(extensions = listOf("deck"))
                 ) { file ->
                     /* what to do with the chosen file */
                 }
@@ -53,11 +54,15 @@ fun DeckPane(
                     enabled = false
                 ) { Icon(Icons.Default.FileOpen, contentDescription = "Open") }
 
-                val savePicker = rememberFileSaverLauncher { file ->
-                    /* what to do with the chosen file */
+                val savePicker = rememberFileSaverLauncher(
+                    dialogSettings = FileKitDialogSettings.createDefault()
+                ) { file ->
+                    if (file != null) {
+                        /* what to do with the chosen file */
+                    }
                 }
                 IconButton(
-                    onClick = { savePicker.launch(baseName = deck.deck.title, extension = "deck") },
+                    onClick = { savePicker.launch(suggestedName = deck.deck.title, extension = "deck") },
                     enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
 

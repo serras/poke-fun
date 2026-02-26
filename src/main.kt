@@ -21,6 +21,8 @@ fun main() {
     // set application title
     // https://stackoverflow.com/questions/78097759/how-can-i-change-the-app-name-with-compose-multiplatform-in-macos
     setProperty("apple.awt.application.name", "Poké-Fun")
+    // required, see https://filekit.mintlify.app/dialogs/file-picker
+    setProperty("apple.awt.application.appearance", "system")
     // start the application proper
     application {
         AppTheme {
