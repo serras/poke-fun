@@ -16,11 +16,11 @@ dependencies:
     - io.coil-kt.coil3:coil-compose:3.4.0
     - io.coil-kt.coil3:coil-network-ktor3:3.4.0
     - io.github.vinceglb:filekit-dialogs-compose:0.13.0
-    - io.arrow-kt:arrow-core:2.2.1.1
-    - io.arrow-kt:arrow-fx-coroutines:2.2.1.1
-    - io.arrow-kt:arrow-resilience:2.2.1.1
-    - io.arrow-kt:arrow-optics:2.2.1.1
-    - io.arrow-kt:suspendapp:2.2.1.1
+    - io.arrow-kt:arrow-core:2.2.2.1
+    - io.arrow-kt:arrow-fx-coroutines:2.2.2.1
+    - io.arrow-kt:arrow-resilience:2.2.2.1
+    - io.arrow-kt:arrow-optics:2.2.2.1
+    - io.arrow-kt:suspendapp:2.2.2.1
     - io.github.nomisrev:kotlinx-serialization-jsonpath:1.0.0
     - io.github.reactivecircus.cache4k:cache4k:0.14.0
     - $ktor.client
@@ -30,20 +30,20 @@ dependencies:
 
 settings:
     kotlin:
-        version: 2.3.10
+        version: 2.4.0-Beta2
         serialization:
             format: json
-            version: 1.10.0
+            version: 1.11.0
         freeCompilerArgs:
             - "-Xreturn-value-checker=check"
         ksp:
             processors:
-                - io.arrow-kt:arrow-optics-ksp-plugin:2.2.1.1
+                - io.arrow-kt:arrow-optics-ksp-plugin:2.2.2.1
     compose:
         enabled: true
-        version: 1.10.1
+        version: 1.10.3
         resources:
             packageName: resources
     ktor:
         enabled: true
-        version: 3.4.0
+        version: 3.4.3
