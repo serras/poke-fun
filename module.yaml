@@ -36,6 +36,7 @@ settings:
             version: 1.11.0
         freeCompilerArgs:
             - "-Xreturn-value-checker=check"
+            - "-Xexplicit-backing-fields"
         ksp:
             processors:
                 - io.arrow-kt:arrow-optics-ksp-plugin:2.2.2.1

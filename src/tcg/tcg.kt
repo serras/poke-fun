@@ -1,9 +1,11 @@
 package tcg
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 
+@Immutable
 data class Deck(
     val title: String,
     val cards: List<Card>
@@ -13,6 +15,7 @@ data class Deck(
     }
 }
 
+@Immutable
 data class Card(
     val name: String,
     val identifier: String,
@@ -36,6 +39,7 @@ data class Card(
     }
 }
 
+@Immutable
 sealed interface Category: Comparable<Category> {
     data class Pokemon(val stage: PokemonStage) : Category
     data class Energy(val category: EnergyCategory) : Category

@@ -1,16 +1,16 @@
 package search
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import arrow.core.Either
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import tcg.Card
-import tcg.api.KtorPokemonTcgApi
 import tcg.api.LocalPokemonTcgApi
 import tcg.api.PokemonTcgApi
 
@@ -25,26 +25,25 @@ sealed interface SearchStatus {
 class SearchViewModel(
     private val api: PokemonTcgApi = LocalPokemonTcgApi() // KtorPokemonTcgApi()
 ) : ViewModel() {
-    private val _options = mutableStateOf(SearchOptions.INITIAL)
-    val options: SearchOptions by _options
+    val options: StateFlow<SearchOptions>
+        field: MutableStateFlow<SearchOptions> = MutableStateFlow(SearchOptions.INITIAL)
 
-    private val _result = mutableStateOf<SearchStatus>(SearchStatus.Ok(emptyList()))
-    val result: SearchStatus by _result
+    val result: StateFlow<SearchStatus>
+        field: MutableStateFlow<SearchStatus> = MutableStateFlow(SearchStatus.Ok(emptyList()))
 
     fun updateText(newText: String) {
-        _options.value = _options.value.copy(text = newText)
+        options.update { it.copy(text = newText) }
 
         // cancel previous job if loading
-        (_result.value as? SearchStatus.Loading)?.job?.cancel()
+        (result.value as? SearchStatus.Loading)?.job?.cancel()
         // now start the new job
-        _result.value = SearchStatus.Loading(
+        result.value = SearchStatus.Loading(
             viewModelScope.launch {
-                // give time for the previous job to cancel
                 delay(500.milliseconds)
                 Either.catch { api.search(newText) }
                     .fold(
-                        ifLeft = { _result.value = SearchStatus.Error },
-                        ifRight = { _result.value = SearchStatus.Ok(it) }
+                        ifLeft = { result.value = SearchStatus.Error },
+                        ifRight = { result.value = SearchStatus.Ok(it) }
                     )
             }
         )

@@ -9,6 +9,9 @@ import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontStyle
@@ -29,11 +32,15 @@ fun DeckPane(
     deck: DeckViewModel,
     modifier: Modifier = Modifier
 ) {
+    val deckState by deck.deck.collectAsState()
+    val problems by deck.problems.collectAsState()
+    val sortedCards = remember(deckState.cards) { deckState.cards.sorted() }
+
     Column(modifier) {
         TopAppBar(
             title = {
                 BasicTextField(
-                    deck.deck.title,
+                    deckState.title,
                     onValueChange = deck::changeTitle,
                     textStyle = MaterialTheme.typography.headlineMedium.copy(color = MaterialTheme.colorScheme.primary),
                     singleLine = true,
@@ -62,7 +69,7 @@ fun DeckPane(
                     }
                 }
                 IconButton(
-                    onClick = { savePicker.launch(suggestedName = deck.deck.title, extension = "deck") },
+                    onClick = { savePicker.launch(suggestedName = deckState.title, extension = "deck") },
                     enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
 
@@ -83,12 +90,12 @@ fun DeckPane(
         ) {
             first {
                 MultipleCards(
-                    cards = deck.deck.cards.sorted(),
+                    cards = sortedCards,
                     modifier = Modifier.fillMaxSize()
                 )
             }
             second(60.dp) {
-                when (val problems = deck.problems) {
+                when (val problems = problems) {
                     null -> DeckProblemLine("Everything is fine :)", fontStyle = FontStyle.Italic)
                     else -> DeckProblems(
                         problems,
@@ -106,7 +113,7 @@ fun DeckPane(
 @Composable
 fun DeckProblems(problems: List<String>, modifier: Modifier = Modifier) {
     Surface(modifier) {
-        Box(modifier) {
+        Box(Modifier.fillMaxSize()) {
             val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier.verticalScroll(scrollState).fillMaxSize()

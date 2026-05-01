@@ -36,7 +36,7 @@ fun main() {
                     modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 ) {
                     first(320.dp) {
-                        SearchPane(sharedDeckModel, modifier = Modifier.padding(10.dp).fillMaxSize())
+                        SearchPane(sharedDeckModel::add, modifier = Modifier.padding(10.dp).fillMaxSize())
                     }
                     second {
                         DeckPane(sharedDeckModel, modifier = Modifier.fillMaxSize())
