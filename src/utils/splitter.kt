@@ -9,7 +9,7 @@ import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.splitpane.ExperimentalSplitPaneApi
 import org.jetbrains.compose.splitpane.SplitterScope
-import org.jetbrains.skiko.Cursor
+import java.awt.Cursor
 
 @OptIn(ExperimentalSplitPaneApi::class)
 fun SplitterScope.HorizontalSplitPaneSplitter() {
