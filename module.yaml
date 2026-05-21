@@ -2,7 +2,7 @@ product: jvm/app
 
 dependencies:
     - org.slf4j:slf4j-simple:2.0.17
-    - org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2
+    - org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.11.0
     - $kotlin.serialization.json
     - $compose.foundation
     - $compose.components.resources
@@ -47,4 +47,4 @@ settings:
             packageName: resources
     ktor:
         enabled: true
-        version: 3.4.3
+        version: 3.5.0
