@@ -26,7 +26,7 @@ import org.jetbrains.compose.splitpane.rememberSplitPaneState
 import tcg.MultipleCards
 import utils.VerticalSplitPaneSplitter
 
-@OptIn(ExperimentalSplitPaneApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalSplitPaneApi::class)
 @Composable
 fun DeckPane(
     deck: DeckViewModel,
@@ -69,7 +69,7 @@ fun DeckPane(
                     }
                 }
                 IconButton(
-                    onClick = { savePicker.launch(suggestedName = deckState.title, extension = "deck") },
+                    onClick = { savePicker.launch(suggestedName = deckState.title, defaultExtension = "deck") },
                     enabled = false,
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
 
