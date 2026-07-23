@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,7 +178,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
-<p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on.</p>
+<p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on. Following the spirit of these times, we also hint at using (local) AI in the application.</p>
 <blockquote>
 <p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Download or clone it, and you should be ready to go.</p>
 </blockquote>
@@ -197,30 +197,32 @@
 <p>The starting point introduces the domain and the main components of the technology.</p>
 <ul>
 <li>If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the <a href="./tcg.html">introduction to the domain</a>;</li>
-<li>If you are new to Amper or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
+<li>If you are new to the Kotlin Toolchain or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
+<li>If you are new to local LLMs for AI, follow the <a href="./ai-setup.html">local AI setup</a> instructions.</li>
 </ul>
-<div id="admonition-built-with-amper" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-amper-title">
+<div id="admonition-built-with-the-kotlin-toolchain" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-the-kotlin-toolchain-title">
 <div class="admonition-title">
-<div id="admonition-built-with-amper-title">
-<p>Built with Amper</p>
+<div id="admonition-built-with-the-kotlin-toolchain-title">
+<p>Built with the Kotlin Toolchain</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-built-with-amper"></a>
+<a class="admonition-anchor-link" href="#admonition-built-with-the-kotlin-toolchain"></a>
 </div>
 <div>
-<p>Poké-Fun uses <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, as opposed to the most usual Gradle. In particular, you need to install the <a href="https://plugins.jetbrains.com/plugin/23076-amper">corresponding plug-in</a> if you are using IntelliJ or Android Studio.</p>
+<p>Poké-Fun uses the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, as opposed to the most usual Gradle. In particular, you need to install the <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">corresponding plug-in</a> if you are using IntelliJ or Android Studio.</p>
 </div>
 </div>
 <p>Afterward, the <a href="./intro.html">overview</a> describes the main components of the given code.
 The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
 <ul>
-<li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies;</li>
-<li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way;</li>
-<li><a href="./build.html">Deck building</a>: design a good <code>ViewModel</code> using functional principles, and design undo/redo with actions-as-data;</li>
-<li><a href="./resilience.html">Deal with bad internet</a>: improve the experience with <code>Schedule</code> and <code>CircuitBreaker</code>, and cache results using memoization;</li>
-<li><a href="./local.html">Using local data</a>: use local storage for card data, using optics to query it;</li>
-<li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx;</li>
-<li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design;</li>
+<li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies.</li>
+<li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way.</li>
+<li><a href="./build.html">Deck building</a>: design a good <code>ViewModel</code> using functional principles, and design undo/redo with actions-as-data.</li>
+<li><a href="./resilience.html">Deal with bad internet</a>: improve the experience with <code>Schedule</code> and <code>CircuitBreaker</code>, and cache results using memoization.</li>
+<li><a href="./local.html">Using local data</a>: use local storage for card data, using optics to query it.</li>
+<li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx.</li>
+<li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design.</li>
 <li><a href="./cmp.html">Nicer UI</a>: implement more visual feedback using Compose Multiplatform.</li>
+<li><a href="./ai-use.html">Using AI for decks</a>: use some simple AI functionality to spice the application.</li>
 </ul>
 <div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
 <div class="admonition-title">
@@ -256,6 +258,22 @@ The rest of the guide is divided into a series of more or less independent secti
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

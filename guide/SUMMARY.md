@@ -18,3 +18,8 @@
 - [Loading and saving](./par.md)
 - [Better architecture](./architecture.md)
 - [Nicer UI](./cmp.md)
+
+# A bit of AI
+
+- [Local AI setup](./ai-setup.md)
+- [Using AI for decks](./ai-use.md)

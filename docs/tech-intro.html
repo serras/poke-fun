@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -178,11 +178,11 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
-<p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
-<p>The one choice which goes out of the ordinary is using <a href="https://github.com/JetBrains/amper">Amper</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./amper run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
-<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/23076-amper">Amper plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
+<p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, <a href="https://docs.koog.ai/">Koog</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
+<p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./kotlin run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
+<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In the recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
 <div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
 <div class="admonition-title">
 <div id="admonition-more-about-compose-multiplatform-title">
@@ -258,6 +258,22 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

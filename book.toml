@@ -1,7 +1,6 @@
 [book]
 authors = ["Alejandro Serrano Mena"]
 language = "en"
-multilingual = false
 src = "guide"
 
 [build]
