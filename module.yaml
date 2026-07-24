@@ -29,6 +29,7 @@ dependencies:
     - $ktor.client.contentNegotiation
     - $ktor.serialization.kotlinx.json
     - ai.koog:koog-agents:1.1.1
+    - ai.koog:prompt-executor-ollama-client:1.1.1
 
 settings:
     kotlin:

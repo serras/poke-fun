@@ -1,10 +1,13 @@
 package deck
 
+import ai.*
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import arrow.core.NonEmptyList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import tcg.Card
 import tcg.Deck
 import tcg.validate
@@ -24,4 +27,13 @@ class DeckViewModel : ViewModel() {
     fun changeTitle(newTitle: String) { updateDeck { it.copy(title = newTitle) } }
     fun clear() { updateDeck { it.copy(cards = emptyList()) } }
     fun add(card: Card) { updateDeck { it.copy(cards = it.cards + card) } }
+
+    fun suggestTitle() {
+        viewModelScope.launch {
+            val title = Titler.Simple.suggest(deck.value)
+            // val title = BasicAITitler().suggest(deck.value)
+            // val title = ToolAITitler().suggest(deck.value)
+            changeTitle(title)
+        }
+    }
 }

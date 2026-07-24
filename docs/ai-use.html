@@ -178,6 +178,33 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="using-ai-for-decks"><a class="header" href="#using-ai-for-decks">Using AI for decks</a></h1>
+<blockquote>
+<p><strong>Topics</strong>: simple requests, tools</p>
+</blockquote>
+<p>As you may have hinted from the UI, our first goal using AI is to suggest titles for decks.
+The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog</a>, a Kotlin-first library to work with AI agents, but the concepts behind them are pretty similar in other AI libraries, even within other ecosystems.</p>
+<div id="admonition-learn-more-about-koog" class="admonition admonish-tip" role="note" aria-labelledby="admonition-learn-more-about-koog-title">
+<div class="admonition-title">
+<div id="admonition-learn-more-about-koog-title">
+<p>Learn more about Koog</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-learn-more-about-koog"></a>
+</div>
+<div>
+<p>Apart from the <a href="https://docs.koog.ai/">official documentation</a>, the following resources may help you learn more about Koog, especially if your goal is to integrate them in larger systems.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=RBMGnOAaf6A"><em>Koog your own AI!</em> at Devoxx UK</a></li>
+<li><a href="https://www.youtube.com/watch?v=0ttH-wnawtA"><em>Full-Stack Kotlin AI</em> at KotlinConf 2026</a></li>
+</ul>
+</div>
+</div>
+<h2 id="improving-the-basic-titler"><a class="header" href="#improving-the-basic-titler">Improving the basic titler</a></h2>
+<p>In the <code>deck/viewModel.kt</code> file we are currently using a very simple <code>Titler</code> to suggest titles. In fact, it always returns <code>"Awesome Deck"</code>. If instead of <code>Titler.Simple</code> you use the <code>BasicAITitler</code>, the request is given to an AI agent instead, so you will get different titles every time.</p>
+<p>Still, the titles tend to be very generic. The problem is that you are not introducing any <em>contextual</em> information into the query. You <strong>task</strong> is to improve the request used by <code>suggest</code> in <code>BasicAITitler</code> to have that additional information. Potential candidates are the names of cards in the decks, the previous title, and even the date the request is sent!</p>
+<h2 id="using-tools"><a class="header" href="#using-tools">Using tools</a></h2>
+<p>Although you can craft your prompts directly, AI agents support a better strategy: using <a href="https://docs.koog.ai/tools/"><em>tools</em></a>. We no longer have a one-shot call, instead there's a <em>reasoning loop</em> in which the AI agent may request additional information, knowing which data is available from the tools. This is the best way to inject contextual information, but also to provide behavior which is better coded separately (think of performing basic arithmetic).</p>
+<p>The <code>ai/tool.kt</code> file provides a blueprint of how you can introduce tools in Koog. Your <strong>task</strong> is to add new functions to <code>DeckInformation</code>, and mark them with the corresponding annotations, so that more information about your deck is available to the AI agent.</p>
+<p>Tools do not work on their own, though, the definition of the <code>AIAgent</code> now introduces a <em>strategy</em> (in particular, the <a href="https://docs.koog.ai/predefined-agent-strategies/#react-strategy">ReAct strategy</a>). This strategy describes an interaction between our client and the AI model itself, so that there can be a back-and-forth of messages requesting and providing information. The code provides a few hooks so you can see when each event is happening: feel free to introduce more information there if you're interested on the actual conversation happening under the hood.</p>
 
                     </main>
 
@@ -202,22 +229,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

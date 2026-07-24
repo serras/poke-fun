@@ -74,6 +74,7 @@ fun DeckPane(
                 ) { Icon(Icons.Default.Save, contentDescription = "Save") }
 
                 VerticalDivider()
+
                 IconButton(
                     onClick = { },
                     enabled = false
@@ -82,6 +83,12 @@ fun DeckPane(
                     onClick = { },
                     enabled = false
                 ) { Icon(Icons.AutoMirrored.Filled.Redo, contentDescription = "Redo") }
+
+                VerticalDivider()
+
+                IconButton(
+                    onClick = { deck.suggestTitle() }
+                ) { Icon(Icons.Default.Diamond, contentDescription = "Suggest Title") }
             }
         )
         VerticalSplitPane(
