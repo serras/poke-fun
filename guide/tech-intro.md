@@ -8,7 +8,7 @@ We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) or [Android 
 
 ## Compose Multiplatform
 
-In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include [React](https://react.dev/) for web, [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, and [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android. [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).
+In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include [React](https://react.dev/) for web, [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, and [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android. [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).
 
 ```admonish info title="More about Compose Multiplatform"
 
@@ -16,7 +16,7 @@ There is still not much documentation about Compose Multiplatform, but most of t
 
 - [Android Basics with Compose](https://developer.android.com/courses/android-basics-compose/course),
 - [Jetpack Compose guides](https://developer.android.com/develop/ui/compose/documentation) from Google,
-- [Create a Compose Multiplarform app](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html),
+- [Create a Compose Multiplatform app](https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html),
 - [Philipp Lackner](https://www.youtube.com/@PhilippLackner/videos) has videos covering Compose Multiplarform.
 
 ```
@@ -33,15 +33,15 @@ Let us look at the simplest application: a button which counts how many times it
 
 ```kotlin
 class Counter: ViewModel() {
-    // 1. define a state that evolves over time
-    val count: StateFlow<Int>
-        // 2. private state, starting at 0
-        field = MutableStateFlow(0)
+  // 1. define a state that evolves over time
+  val count: StateFlow<Int>
+    // 2. private state, starting at 0
+    field = MutableStateFlow(0)
 
-    // 3. operations to change the state
-    fun increment() {
-        count.update { it + 1 }
-    }
+  // 3. operations to change the state
+  fun increment() {
+    count.update { it + 1 }
+  }
 }
 ```
 
@@ -67,5 +67,7 @@ If you want to use the value of a `StateFlow` several times, it's better to use 
   }
 }
 ```
+
+The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the `main` entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.
 
 Armed with this knowledge, you can read the [introduction](./intro.md) to Poké-Fun.

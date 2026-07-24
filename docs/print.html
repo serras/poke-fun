@@ -213,7 +213,8 @@
 </div>
 </div>
 <p>Afterward, the <a href="./intro.html">overview</a> describes the main components of the given code.
-The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
+The rest of the guide is divided into a series of largely independent sections, so you can choose what you want to work on.
+Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
 <ul>
 <li><a href="./adt.html">What is (in) a deck</a>: model data using data classes and sealed hierarchies.</li>
 <li><a href="./validation.html">Law-abiding decks</a>: check that the deck follows the rules, and learn about <code>Raise</code> along the way.</li>
@@ -237,16 +238,16 @@ The rest of the guide is divided into a series of more or less independent secti
 </div>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="trading-card-games"><a class="header" href="#trading-card-games">Trading Card Games</a></h1>
 <p>The application in which we are going to work on, Poké-Fun, helps in the process of building decks for the Pokémon Trading Card Game (TCG). As usual in any software project, we first need to understand what all the words in the previous sentence mean; in other words, we need to dive into the <em>domain</em>.</p>
-<p>In general, a <em>Trading Card Game</em> is a card game in which the set of cards is not fixed, as in Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of card; this is known as their <em>deck</em>. The <em>trading</em> in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.</p>
-<p>Most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function with at least one basic Pokémon.</p>
-<p>Once again we find a bunch of terms from the domain, what DDD practitioners call the <em>Ubiquituous Language</em>, so let's dive a bit more. Pokémon cards are divided in three big groups.</p>
+<p>In general, a <em>Trading Card Game</em> is a card game in which the set of cards is not fixed, as in Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of cards; this is known as their <em>deck</em>. The <em>trading</em> in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.</p>
+<p>Most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function without at least one basic Pokémon.</p>
+<p>Once again we find a bunch of terms from the domain, what DDD practitioners call the <em>Ubiquitous Language</em>, so let's dive a bit more. Pokémon cards are divided in three big groups.</p>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody>
 <tr><td><img src="https://images.pokemontcg.io/svp/46_hires.png" alt="Bulbasaur" /></td><td><em>Pokémon</em> cards represent little monsters that fight against those of your opponent. Each Pokémon has one or more <em>attacks</em>, and <em>health points</em> (HP), which define how much damage they can take before fainting.</td></tr>
 <tr><td><img src="https://images.pokemontcg.io/sve/1_hires.png" alt="Grass Energy" /></td><td><em>Energy</em> cards are needed to power the attacks of Pokémon.</td></tr>
 <tr><td><img src="https://images.pokemontcg.io/sv2/183_hires.png" alt="Great Ball" /></td><td><em>Trainer</em> cards provide additional effects that you can use to help in the battle.</td></tr>
 </tbody></table>
 </div>
-<p>Pokémon and energies also have a <em>type</em>. There are currently 8 different types in the Pokémon TCG — grass <img src="images/grass.png" height="15px" />, fire <img src="images/fire.png" height="15px" />, water <img src="images/water.png" height="15px" />, lightning <img src="images/lightning.png" height="15px" />, fighting <img src="images/fighting.png" height="15px" />, psychic <img src="images/psychic.png" height="15px" />, metal <img src="images/metal.png" height="15px" />, darkness <img src="images/darkness.png" height="15px" />, and dragon <img src="images/dragon.png" height="15px" /> — alongside a special colorless <img src="images/colorless.png" height="15px" /> type. In most cases a Pokémon of a certain type requires energy of the same type, but this is not a rule.</p>
+<p>Pokémon and energies also have a <em>type</em>. There are currently ten different types in the Pokémon TCG — grass <img src="images/grass.png" height="15px" />, fire <img src="images/fire.png" height="15px" />, water <img src="images/water.png" height="15px" />, lightning <img src="images/lightning.png" height="15px" />, fighting <img src="images/fighting.png" height="15px" />, psychic <img src="images/psychic.png" height="15px" />, metal <img src="images/metal.png" height="15px" />, darkness <img src="images/darkness.png" height="15px" />, dragon <img src="images/dragon.png" height="15px" />, and the deprecated fairy <img src="images/fairy.png" height="15px" /> — alongside a special colorless <img src="images/colorless.png" height="15px" /> type. In most cases a Pokémon of a certain type requires energy of the same type, but this is not a rule.</p>
 <p>One key component of the Pokémon world is that the little monsters <em>evolve</em>, that is, the turn into bigger and more powerful creatures. In the TCG this is reflected by having to begin with <em>basic</em> Pokémon (hence the implicit requirement to have at least one in your deck), which then may turn into <em>stage 1</em>, and eventually in <em>stage 2</em>.</p>
 <p>Apart from the type, one key attribute of cards is their <em>name</em>, since the rules have explicit restrictions on the amount of cards you can have with the same name. However, this does not mean that all cards with the same name are the same; for that reason each of them has an <em>identifier</em> to uniquely point to it.</p>
 <div id="admonition-example" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-title">
@@ -267,7 +268,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./kotlin run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
 <p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
 <div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
 <div class="admonition-title">
 <div id="admonition-more-about-compose-multiplatform-title">
@@ -280,7 +281,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <ul>
 <li><a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>,</li>
 <li><a href="https://developer.android.com/develop/ui/compose/documentation">Jetpack Compose guides</a> from Google,</li>
-<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplarform app</a>,</li>
+<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplatform app</a>,</li>
 <li><a href="https://www.youtube.com/@PhilippLackner/videos">Philipp Lackner</a> has videos covering Compose Multiplarform.</li>
 </ul>
 </div>
@@ -296,15 +297,15 @@ The rest of the guide is divided into a series of more or less independent secti
 <li>We provide <em>operations</em> like <code>increment</code> with the different use cases for updating the state.</li>
 </ul>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
-    // 1. define a state that evolves over time
-    val count: StateFlow&lt;Int&gt;
-        // 2. private state, starting at 0
-        field = MutableStateFlow(0)
+  // 1. define a state that evolves over time
+  val count: StateFlow&lt;Int&gt;
+    // 2. private state, starting at 0
+    field = MutableStateFlow(0)
 
-    // 3. operations to change the state
-    fun increment() {
-        count.update { it + 1 }
-    }
+  // 3. operations to change the state
+  fun increment() {
+    count.update { it + 1 }
+  }
 }
 </code></pre>
 <p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
@@ -323,13 +324,14 @@ The rest of the guide is divided into a series of more or less independent secti
   }
 }
 </code></pre>
+<p>The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the <code>main</code> entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-code"><a class="header" href="#overview-of-the-code">Overview of the code</a></h1>
 <p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
 <h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
 <p>The <code>tcg</code> module gives access to cards and their information.</p>
 <ul>
-<li>The <code>tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve on these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
+<li>The <code>tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
 <li>Basic validation is implemented in <code>validation.kt</code>. In the <a href="./validation.html"><em>Validation</em></a> section we'll improve this functionality.</li>
 </ul>
 <h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
@@ -358,7 +360,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
 <li>On the right-hand side we have the <code>DeckPane</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
-<p>Both view make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
+<p>Both views make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-in-a-deck"><a class="header" href="#what-is-in-a-deck">What is (in) a deck</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: sealed hierachies, data classes, immutability</p>
@@ -481,8 +483,8 @@ The rest of the guide is divided into a series of more or less independent secti
 <p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
 <p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
 <h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
-<p>The current implementation has a potential problem: you need to update <code>_problems</code> every time you update <code>_deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using <code>MutableState</code>.</p>
-<p>Your <strong>task</strong> is to replace each update to the <code>_problems</code> mutable state with a new definition based on <code>_deck</code>. You can use the function <code>map</code> in <code>utils/mutableState.kt</code>.</p>
+<p>The current implementation has a potential problem: you need to update <code>problems</code> every time you update <code>deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using a <code>StateFlow</code>.</p>
+<p>Your <strong>task</strong> is to replace each update to the <code>problems</code> mutable state with a new definition based on <code>deck</code>. You can use the function <code>map</code> in <code>utils/flow.kt</code>.</p>
 <div id="admonition-map-as-in-lists" class="admonition admonish-info" role="note" aria-labelledby="admonition-map-as-in-lists-title">
 <div class="admonition-title">
 <div id="admonition-map-as-in-lists-title">

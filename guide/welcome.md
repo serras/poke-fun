@@ -25,7 +25,8 @@ Poké-Fun uses the [Kotlin Toolchain](https://kotlin-toolchain.org/) as build to
 ```
 
 Afterward, the [overview](./intro.md) describes the main components of the given code.
-The rest of the guide is divided into a series of more or less independent sections, so you can choose what you want to work on. Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.
+The rest of the guide is divided into a series of largely independent sections, so you can choose what you want to work on.
+Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.
 
 - [What is (in) a deck](./adt.md): model data using data classes and sealed hierarchies.
 - [Law-abiding decks](./validation.md): check that the deck follows the rules, and learn about `Raise` along the way.

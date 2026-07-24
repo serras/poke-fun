@@ -15,7 +15,7 @@ interface PokemonTcgApi {
 object FakePokemonTcgApi: PokemonTcgApi {
     override suspend fun search(name: String): List<Card> {
         delay(3.seconds)
-        return FakeCards.filter { name.contains(name, ignoreCase = true) }
+        return FakeCards.filter { it.name.contains(name, ignoreCase = true) }
     }
 
     override suspend fun getById(identifier: String): Card? {

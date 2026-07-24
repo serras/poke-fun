@@ -182,7 +182,7 @@
 <p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./kotlin run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
 <p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed everytime the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
 <div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
 <div class="admonition-title">
 <div id="admonition-more-about-compose-multiplatform-title">
@@ -195,7 +195,7 @@
 <ul>
 <li><a href="https://developer.android.com/courses/android-basics-compose/course">Android Basics with Compose</a>,</li>
 <li><a href="https://developer.android.com/develop/ui/compose/documentation">Jetpack Compose guides</a> from Google,</li>
-<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplarform app</a>,</li>
+<li><a href="https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-multiplatform-getting-started.html">Create a Compose Multiplatform app</a>,</li>
 <li><a href="https://www.youtube.com/@PhilippLackner/videos">Philipp Lackner</a> has videos covering Compose Multiplarform.</li>
 </ul>
 </div>
@@ -211,15 +211,15 @@
 <li>We provide <em>operations</em> like <code>increment</code> with the different use cases for updating the state.</li>
 </ul>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
-    // 1. define a state that evolves over time
-    val count: StateFlow&lt;Int&gt;
-        // 2. private state, starting at 0
-        field = MutableStateFlow(0)
+  // 1. define a state that evolves over time
+  val count: StateFlow&lt;Int&gt;
+    // 2. private state, starting at 0
+    field = MutableStateFlow(0)
 
-    // 3. operations to change the state
-    fun increment() {
-        count.update { it + 1 }
-    }
+  // 3. operations to change the state
+  fun increment() {
+    count.update { it + 1 }
+  }
 }
 </code></pre>
 <p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
@@ -238,6 +238,7 @@
   }
 }
 </code></pre>
+<p>The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the <code>main</code> entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 
                     </main>

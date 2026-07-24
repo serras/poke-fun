@@ -35,9 +35,9 @@ This first task simply gives back a list of string for each problem, but this ap
 
 ## Reactive problems
 
-The current implementation has a potential problem: you need to update `_problems` every time you update `_deck`. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like [RxJava](https://github.com/ReactiveX/RxJava) allow expressing this connection directly, and we can easily do the same using `MutableState`.
+The current implementation has a potential problem: you need to update `problems` every time you update `deck`. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like [RxJava](https://github.com/ReactiveX/RxJava) allow expressing this connection directly, and we can easily do the same using a `StateFlow`.
 
-Your **task** is to replace each update to the `_problems` mutable state with a new definition based on `_deck`. You can use the function `map` in `utils/mutableState.kt`.
+Your **task** is to replace each update to the `problems` mutable state with a new definition based on `deck`. You can use the function `map` in `utils/flow.kt`.
 
 ```admonish info title="Map as in lists"
 

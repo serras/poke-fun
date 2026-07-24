@@ -6,7 +6,7 @@ Now that you know about the [domain](./tcg.md) and the [technology](./tech-intro
 
 The `tcg` module gives access to cards and their information.
 
-- The `tcg.kt` file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve on these types in the [_What is (in) a deck_](./adt.md) section.
+- The `tcg.kt` file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the [_What is (in) a deck_](./adt.md) section.
 - Basic validation is implemented in `validation.kt`. In the [_Validation_](./validation.md) section we'll improve this functionality.
 
 ## General design
@@ -40,4 +40,4 @@ Two different views represent the data of the view models in a graphical manner.
 - On the left-hand side we have the `SearchPane` (in `search/view.kt`), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the `DeckViewModel`.
 - On the right-hand side we have the `DeckPane` (in `deck/view.kt`), which simply shows the cards and problems.
 
-Both view make use of common component to show a single `Card` and multiple `Card`s, found in `tcg/cardView.kt`. These components have an `extra` parameter which is used to provide the different elements required in each of the views (for example, the _Add_ button in the search pane).
+Both views make use of common component to show a single `Card` and multiple `Card`s, found in `tcg/cardView.kt`. These components have an `extra` parameter which is used to provide the different elements required in each of the views (for example, the _Add_ button in the search pane).
