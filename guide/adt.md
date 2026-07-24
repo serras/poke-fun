@@ -1,4 +1,4 @@
-# What is a deck
+# What is (in) a deck
 
 > **Topics**: sealed hierachies, data classes, immutability
 

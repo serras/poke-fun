@@ -26,33 +26,46 @@ Compose applications are typically built from two components:
 - _View models_ keep (part of) the state of the application, and communicate with the outside world.
 - _Views_ define how this state is mapped into a set of UI elements laid out in the screen. Views are defined as functions with the `@Composable` annotation, which is required for the framework to be able to run them whenever the state (or part of it) changes.
 
-Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use [property delegation](https://kotlinlang.org/docs/delegated-properties.html).
+Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter that changes over time. Values that change over time are represented in Kotlin as `StateFlow`s. At this point, we need to be careful to not over-expose implementation details:
+
+- The `count` is defined with [explicit backing field](https://www.youtube.com/watch?v=PU-VdH8HhVA) of type `MutableStateFlow`. That means that within the `Counter` we can update the value, but publicly we only expose the read-only `StateFlow`;
+- We provide _operations_ like `increment` with the different use cases for updating the state.
 
 ```kotlin
 class Counter: ViewModel() {
-  // 1. define a state, starting with 0
-  private val _count = mutableStateOf(0)
+    // 1. define a state that evolves over time
+    val count: StateFlow<Int>
+        // 2. private state, starting at 0
+        field = MutableStateFlow(0)
 
-  // 2. expose the state in a read-only manner
-  val count: Int by _count
-
-  // 3. operations to change the state
-  fun increment() {
-    _count.value++
-  }
+    // 3. operations to change the state
+    fun increment() {
+        count.update { it + 1 }
+    }
 }
 ```
 
-The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked.
+The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the `.increment()` function in the view model is tied to the use case in the view.
 
 ```kotlin
 @Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
-    Text("Clicked ${counter.count} times")
+    Text("Clicked ${counter.count.value} times")
   }
 }
 ```
 
-What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `_count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. As discussed above, the `@Composable` annotation (alongside the Compose compiler) is the magic that makes this link work.
+What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. As discussed above, the `@Composable` annotation (alongside the Compose compiler) is the magic that makes this link work.
+
+If you want to use the value of a `StateFlow` several times, it's better to use a combination of [property delegation](https://kotlinlang.org/docs/delegated-properties.html) and `.collectAsState()`.
+
+```kotlin
+@Composable fun Screen(counter: Counter) {
+  Button(onClick = { counter.increment() }) {
+    val count by counter.count.collectAsState()
+    Text("Clicked $count times")
+  }
+}
+```
 
 Armed with this knowledge, you can read the [introduction](./intro.md) to Poké-Fun.

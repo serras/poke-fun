@@ -290,28 +290,39 @@ The rest of the guide is divided into a series of more or less independent secti
 <li><em>View models</em> keep (part of) the state of the application, and communicate with the outside world.</li>
 <li><em>Views</em> define how this state is mapped into a set of UI elements laid out in the screen. Views are defined as functions with the <code>@Composable</code> annotation, which is required for the framework to be able to run them whenever the state (or part of it) changes.</li>
 </ul>
-<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter. To define the read-only version we use <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a>.</p>
+<p>Let us look at the simplest application: a button which counts how many times it has been pressed. The state is basically a counter that changes over time. Values that change over time are represented in Kotlin as <code>StateFlow</code>s. At this point, we need to be careful to not over-expose implementation details:</p>
+<ul>
+<li>The <code>count</code> is defined with <a href="https://www.youtube.com/watch?v=PU-VdH8HhVA">explicit backing field</a> of type <code>MutableStateFlow</code>. That means that within the <code>Counter</code> we can update the value, but publicly we only expose the read-only <code>StateFlow</code>;</li>
+<li>We provide <em>operations</em> like <code>increment</code> with the different use cases for updating the state.</li>
+</ul>
 <pre><code class="language-kotlin">class Counter: ViewModel() {
-  // 1. define a state, starting with 0
-  private val _count = mutableStateOf(0)
+    // 1. define a state that evolves over time
+    val count: StateFlow&lt;Int&gt;
+        // 2. private state, starting at 0
+        field = MutableStateFlow(0)
 
-  // 2. expose the state in a read-only manner
-  val count: Int by _count
-
-  // 3. operations to change the state
-  fun increment() {
-    _count.value++
-  }
+    // 3. operations to change the state
+    fun increment() {
+        count.update { it + 1 }
+    }
 }
 </code></pre>
-<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked.</p>
+<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
 <pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
-    Text("Clicked ${counter.count} times")
+    Text("Clicked ${counter.count.value} times")
   }
 }
 </code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>_count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
+<p>If you want to use the value of a <code>StateFlow</code> several times, it's better to use a combination of <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a> and <code>.collectAsState()</code>.</p>
+<pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
+  Button(onClick = { counter.increment() }) {
+    val count by counter.count.collectAsState()
+    Text("Clicked $count times")
+  }
+}
+</code></pre>
 <p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-code"><a class="header" href="#overview-of-the-code">Overview of the code</a></h1>
 <p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
@@ -348,7 +359,7 @@ The rest of the guide is divided into a series of more or less independent secti
 <li>On the right-hand side we have the <code>DeckPane</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
 <p>Both view make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-a-deck"><a class="header" href="#what-is-a-deck">What is a deck</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-in-a-deck"><a class="header" href="#what-is-in-a-deck">What is (in) a deck</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: sealed hierachies, data classes, immutability</p>
 </blockquote>
