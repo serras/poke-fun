@@ -181,7 +181,7 @@
 <blockquote>
 <p><strong>Topics</strong>: resilience, <code>Schedule</code>, circuit breaker, caching</p>
 </blockquote>
-<p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
+<p>The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this task has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term <em>resilience</em> to all those techniques which help in providing a better experience in problematic scenarios.</p>
 <p>This topic is well documented in the official Arrow documentation, we suggest the reader to check the <a href="https://arrow-kt.io/learn/resilience/intro/">Resilience section</a>, both the introduction and the pages describing <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/"><code>Schedule</code></a> and <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/"><code>CircuitBreaker</code></a>.</p>
 <div id="admonition-decorator" class="admonition admonish-tip" role="note" aria-labelledby="admonition-decorator-title">
 <div class="admonition-title">
@@ -204,13 +204,13 @@
 <div>
 <p>Unfortunately, the <a href="https://pokemontcg.io/">Pokémon TCG API</a> we use for this exercise is routinely down.
 For that reason, the current code uses the <a href="./local.html">local variant</a> by default.
-If you want to run the code against the remote API, change the constructor for <code>SearchViewModel</code>.</p>
+To run the code against the remote API, change the constructor for <code>SearchViewModel</code>.</p>
 </div>
 </div>
 <h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
 <p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
 <h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
-<p>Improve the previous soltuion with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
+<p>Improve the previous solution with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
 <p>As described in the <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">documentation</a>, the best option for resilience is to combine both approaches.</p>
 <blockquote>
 <p>A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. <code>Schedule</code> is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.</p>

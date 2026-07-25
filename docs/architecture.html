@@ -190,7 +190,7 @@
 <a class="admonition-anchor-link" href="#admonition-scouts-rule"></a>
 </div>
 <div>
-<p><em>Leave something slightly better of than you found it.</em></p>
+<p><em>Leave something slightly better off than you found it.</em></p>
 </div>
 </div>
 <h2 id="as-explicit-as-possible"><a class="header" href="#as-explicit-as-possible">As explicit as possible</a></h2>
@@ -209,7 +209,7 @@
   }
 }
 </code></pre>
-<p>Arrow solves this problem with <a href="https://arrow-kt.io/learn/coroutines/resource-safety/"><code>resourceScope</code> blocks</a>. The code above can be rewritten with any nesting, given that they implement <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/"><code>AutoCloseable</code></a>.</p>
+<p>Arrow solves this problem with <a href="https://arrow-kt.io/learn/coroutines/resource-safety/"><code>resourceScope</code> blocks</a>. The code above can be rewritten with any nesting, given that they implement <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/"><code>AutoCloseable</code></a>. In the given code <code>KtorPokemonTcgApi</code> does not implement <code>AutoCloseable</code>, you <strong>task</strong> is to do so.</p>
 <pre><code class="language-kotlin">resourceScope {
   val client = autoCloseable { HttpClient() }
   val api = autoCloseable { KtorPokemonTcgApi(client) }
@@ -218,7 +218,7 @@
 </code></pre>
 <p>One step further is <a href="https://arrow-kt.io/ecosystem/suspendapp/">SuspendApp</a>, which adds graceful shutdown to the whole application. By combining <a href="https://arrow-kt.io/ecosystem/suspendapp/#suspendapp-arrows-resource">SuspendApp with Resource</a>, you can ensure that finalizers runs correctly, even when the application is terminated.</p>
 <h3 id="poké-resources"><a class="header" href="#poké-resources">Poké-Resources</a></h3>
-<p>Your <strong>task</strong> is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the <code>HttpClient</code> for <code>KtorPokemonTcpApi</code> explicitly.</p>
+<p>Your <strong>task</strong> is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the <code>HttpClient</code> for <code>KtorPokemonTcgApi</code> explicitly. At the end, the application should thread a single <code>PokemonTcgApi</code>, created in a <code>resourceScope</code> in <code>main</code>, down to the view model.</p>
 
                     </main>
 

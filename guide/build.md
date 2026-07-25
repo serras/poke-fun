@@ -74,13 +74,13 @@ Your **task** is to finish the conversion of the given code into an actions-as-d
 
 ```admonish warning title="Keeping the current state"
 
-Even though you can keep just the list of actions that were performed, and apply them whenever the current state is required, this choice usually leads to bad performance. We strongly recommend that you keep the same `MutableState` as you have now.
+Even though you can keep just the list of actions that were performed, and apply them whenever the current state is required, this choice usually leads to bad performance. We strongly recommend that you keep the same `MutableStateFlow` as you have now.
 
 ```
 
 ## Remove a card
 
-Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your **task** is to implement functionality to _remove_ a card from the deck: this involes changes in _both_ view model and view.
+Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your **task** is to implement functionality to _remove_ a card from the deck: this involves changes in _both_ view model and view.
 
 ```admonish tip
 
@@ -92,4 +92,4 @@ Take a look at `search/view.kt` to see how to add components to each card shown 
 
 One functionality which becomes much easier to implement when operations are reified as data is undo and redo, since you can very easily keep track of what the user has done.
 
-Your **task** is to finish the implementation: the given view contains buttons for the actions, but they do nothing and are never enabled. At the end, the corresponding buttons in the view should only be enabled when there are operations to undo (or redo, respectively).
+Your **task** is to finish the implementation: the given view contains buttons for the actions, but they do nothing and are never enabled. At the end, the corresponding buttons in the view should only be enabled when there are operations to undo (or redo, respectively). Hint: keep _two_ stacks, one for past (undo) and one for future (redo) actions.

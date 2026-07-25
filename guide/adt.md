@@ -1,6 +1,6 @@
 # What is (in) a deck
 
-> **Topics**: sealed hierachies, data classes, immutability
+> **Topics**: sealed hierarchies, data classes, immutability
 
 One of the key components in the _functional_ approach to programming we promote is how we **model** the data. In other words, how we represent the information we care about throughout the execution of our application.
 
@@ -30,12 +30,6 @@ sealed interface Result {
 ```
 
 Now the compiler guarantees that the right information is present at each point. Furthermore, we gain the ability to use `when` to check the current state, and the compiler guarantees that we always handle all possible cases.
-
-```admonish tip title="Sealed hierarchies are everywhere"
-
-The `SearchStatus` type used in `search/viewModel.kt` is quite similar to `Result` above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.
-
-```
 
 One nice advantage of using Compose is that it naturally leads to a more immutable representation of state. In the following tasks we focus on the precision of our domain model.
 
@@ -78,7 +72,9 @@ Every Stage 1 or Stage 2 Pokémon evolves _from exactly one_ Pokémon. However, 
 |--|--|--|--|
 | ![Oddish](https://images.pokemontcg.io/sv3pt5/43_hires.png) | ![Gloom](https://images.pokemontcg.io/sv3pt5/44_hires.png) | ![Vileplume](https://images.pokemontcg.io/sv3pt5/45_hires.png) | ![Bellossom](https://images.pokemontcg.io/sv3/3_hires.png) |
 
-Your **task** is to refine the domain model to include this information. You need to also update the `KtorPokemonTcgApi` implementation to account for this extra attribute, check the [Pokémon TCG API docs](https://docs.pokemontcg.io/) for the place where it appears.
+Your **task** is to refine the domain model to include this information — using `evolvesFrom` as the property name is the best choice because it aligns with serialization, but feel free to choose any other name. This in turns creates a domino effect in other files. This is a _good thing_: it means that the compiler is helping us understand where we need changes to keep everything aligned.
+
+You need to also update the `KtorPokemonTcgApi` implementation to account for this extra attribute, check the [Pokémon TCG API docs](https://docs.pokemontcg.io/) for the place where it appears.
 
 ```admonish info title="kotlinx.serialization"
 
@@ -86,4 +82,13 @@ The code uses `kotlinx.serialization` to transform the JSON returned by the API 
 
 ```
 
-As an **additional task**, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together.
+As an **additional task**, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together. At this point you have two options:
+
+- Make this ordering "inherent" to the `Card` type, and modify its `Comparable` implementation in `tcg/tcg.kt`;
+- Introduce this new ordering only in the `deck/view.kt` file, modifying its call to `sorted` using `sortedBy`.
+
+## New status
+
+The `SearchStatus` type used in `search/viewModel.kt` is quite similar to `Result` describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.
+
+To understand how the exhaustiveness helps, add a new `data object Unavailable : SearchStatus` to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your **task** is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used `else` instead of matching on each of the cases separately.

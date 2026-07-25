@@ -185,6 +185,7 @@
 <li>The <code>tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
 <li>Basic validation is implemented in <code>validation.kt</code>. In the <a href="./validation.html"><em>Validation</em></a> section we'll improve this functionality.</li>
 </ul>
+<p>To get a bit more comfortable with the domain, you can write a <code>Deck</code> by hand, and pass it through the given validation. A throwaway <code>main</code> function, or <a href="https://kotlinlang.org/docs/kotlin-notebook-overview.html">Kotlin Notebooks</a> are simple ways to test them. If you need some help, <code>tcg/api/api.kt</code> contains a few cards used in the mock Pokémon TCG API.</p>
 <h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
 <p>The diagram below roughly represents how Poké-Fun is architected.</p>
 <pre class="mermaid">graph LR;

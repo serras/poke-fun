@@ -25,7 +25,19 @@ The main rules for the legality of a deck are:
 
 Implement this validation using `Either` or `Raise`, and try to break the process in different functions. The notion of [fail-first vs. accumulation](https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation) is important here, so you can squeeze as much information as possible.
 
+```admonish tip title="Return value checker"
+
+The `module.yaml` file enables the (experimental) [return value checker](https://kotlinlang.org/docs/unused-return-value-checker.html). This ensures that every `Either` you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some `.bind()` calls from the code you wrote for the previous tasks, and watch the compiler complaining.
+
+```
+
 **Extra task**: implement a rule to check that you can always _evolve_ every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.
+
+```admonish info title="Nullable non-empty list"
+
+In the given implementation of `deck/viewModel.kt` you may have noticed that `problems` has quite a strange type, namely `NonEmptyList<String>?`. This is equivalent to a simple `List<String>` if you consider "`null` = empty", so why bother with such a complication? Doing so forces us to handle the `null` case (no errors) explicitly, whereas with a `List<String>` we have no such guarantee: you may end up inadvertently showing that the deck has problems, but then showing none. The goal here is to make the compiler catch potential problems before they even arise.
+
+```
 
 ## Problems tied to specific cards
 
@@ -41,7 +53,7 @@ Your **task** is to replace each update to the `problems` mutable state with a n
 
 ```admonish info title="Map as in lists"
 
-An intuitive understanding for this operation arises if we look at a `MutableState` as a _list_ of all the values as the time flows. In that way, the problems arise as `map`ping the validation over each element of that list.
+An intuitive understanding for this operation arises if we look at a `MutableStateFlow` as a _list_ of all the values as the time flows. In that way, the problems arise as `map`ping the validation over each element of that list.
 
 ```
 

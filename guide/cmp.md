@@ -2,7 +2,7 @@
 
 > **Topics**: Compose, navigation
 
-Compose Multiplatform is a great UI library based of functional principles. Although more tutorials and guides are slowly hitting the shelves, most of the material about Jetpack Compose (the Android version) still applies here. In this section we propose a couple of tasks in case you want to dive further in the UI side of things.
+Compose Multiplatform is a great UI library based on functional principles. Although more tutorials and guides are slowly hitting the shelves, most of the material about Jetpack Compose (the Android version) still applies here. In this section we propose a couple of tasks in case you want to dive further in the UI side of things.
 
 ## Better search
 
@@ -41,9 +41,3 @@ In the previous iteration of this navigation, prior to 2.8.0, you used strings i
 One more instance where [type safety](https://developer.android.com/guide/navigation/design/type-safety) is a welcome addition.
 
 ```
-
-## Debouncing
-
-The current implementation initiates a search everytime the user types something in the corresponding field. In practice, though, people type a few characters in a row, so every connection before the last one is wasted time. Most applications implement _debouncing_ as a strategy for providing good user experience but prevent needless work.
-
-Your **task** is to apply that technique to Poké-Fun. There are several options to do so, [this guide](https://xinkev.com/note/androiddev/debouncing-textfields-in-compose/) discusses the most straightforward ones in the context of Compose.

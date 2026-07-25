@@ -2,7 +2,7 @@
 
 > **Topics**: resilience, `Schedule`, circuit breaker, caching
 
-The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this tasks has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term _resilience_ to all those techniques which help in providing a better experience in problematic scenarios.
+The given implementation of Poké-Fun works fine... if the internet connection is fine (extra points for irony if the room where you are working on this task has bad internet). Any realistic application that accesses other services must protect itself against potential disconnections, lags, or services which are down. We refer with the term _resilience_ to all those techniques which help in providing a better experience in problematic scenarios.
 
 This topic is well documented in the official Arrow documentation, we suggest the reader to check the [Resilience section](https://arrow-kt.io/learn/resilience/intro/), both the introduction and the pages describing [`Schedule`](https://arrow-kt.io/learn/resilience/retry-and-repeat/) and [`CircuitBreaker`](https://arrow-kt.io/learn/resilience/circuitbreaker/).
 
@@ -16,7 +16,7 @@ We strongly recommend to use the [Decorator pattern](https://refactoring.guru/de
 
 Unfortunately, the [Pokémon TCG API](https://pokemontcg.io/) we use for this exercise is routinely down.
 For that reason, the current code uses the [local variant](./local.md) by default.
-If you want to run the code against the remote API, change the constructor for `SearchViewModel`.
+To run the code against the remote API, change the constructor for `SearchViewModel`.
 
 ```
 
@@ -26,7 +26,7 @@ The task here is to create a wrapper that adds retry capabilities to an inner `P
 
 ### Use a circuit breaker
 
-Improve the previous soltuion with a [circuit breaker](https://arrow-kt.io/learn/resilience/circuitbreaker/), which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.
+Improve the previous solution with a [circuit breaker](https://arrow-kt.io/learn/resilience/circuitbreaker/), which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.
 
 As described in the [documentation](https://arrow-kt.io/learn/resilience/circuitbreaker/), the best option for resilience is to combine both approaches.
 

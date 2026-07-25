@@ -23,7 +23,6 @@ object FakePokemonTcgApi: PokemonTcgApi {
         return FakeCards.firstOrNull { it.identifier == identifier }
     }
 
-
     val FakeCards: List<Card> = listOf(
         Card("Bulbasaur", "sv3pt5-1", Category.Pokemon(PokemonStage.Basic), Type.Grass, "I"),
         Card("Charmander", "sv3pt5-4", Category.Pokemon(PokemonStage.Basic), Type.Fire, "I"),

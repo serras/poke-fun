@@ -6,7 +6,7 @@ Not all the work you do in an application directly translates into new features.
 
 ```admonish quote title="Scouts rule"
 
-_Leave something slightly better of than you found it._
+_Leave something slightly better off than you found it._
 
 ```
 
@@ -33,7 +33,7 @@ HttpClient().use { client ->
 }
 ```
 
-Arrow solves this problem with [`resourceScope` blocks](https://arrow-kt.io/learn/coroutines/resource-safety/). The code above can be rewritten with any nesting, given that they implement [`AutoCloseable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/).
+Arrow solves this problem with [`resourceScope` blocks](https://arrow-kt.io/learn/coroutines/resource-safety/). The code above can be rewritten with any nesting, given that they implement [`AutoCloseable`](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-auto-closeable/). In the given code `KtorPokemonTcgApi` does not implement `AutoCloseable`, you **task** is to do so.
 
 ```kotlin
 resourceScope {
@@ -47,4 +47,4 @@ One step further is [SuspendApp](https://arrow-kt.io/ecosystem/suspendapp/), whi
 
 ### Poké-Resources
 
-Your **task** is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the `HttpClient` for `KtorPokemonTcpApi` explicitly.
+Your **task** is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the `HttpClient` for `KtorPokemonTcgApi` explicitly. At the end, the application should thread a single `PokemonTcgApi`, created in a `resourceScope` in `main`, down to the view model.
