@@ -31,6 +31,12 @@ dependencies:
     - ai.koog:koog-agents:1.1.1
     - ai.koog:prompt-executor-ollama-client:1.1.1
 
+test-dependencies:
+    - $kotlin.test
+    - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0
+    - io.kotest:kotest-assertions-core:6.2.3
+    - io.kotest:kotest-property:6.2.3
+
 settings:
     kotlin:
         version: 2.4.10

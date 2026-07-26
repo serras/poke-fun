@@ -476,17 +476,6 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li>There must be at least one <em>basic</em> Pokémon.</li>
 </ul>
 <p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
-<div id="admonition-return-value-checker" class="admonition admonish-tip" role="note" aria-labelledby="admonition-return-value-checker-title">
-<div class="admonition-title">
-<div id="admonition-return-value-checker-title">
-<p>Return value checker</p>
-</div>
-<a class="admonition-anchor-link" href="validation.html#admonition-return-value-checker"></a>
-</div>
-<div>
-<p>The <code>module.yaml</code> file enables the (experimental) <a href="https://kotlinlang.org/docs/unused-return-value-checker.html">return value checker</a>. This ensures that every <code>Either</code> you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some <code>.bind()</code> calls from the code you wrote for the previous tasks, and watch the compiler complaining.</p>
-</div>
-</div>
 <p><strong>Extra task</strong>: implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <div id="admonition-nullable-non-empty-list" class="admonition admonish-info" role="note" aria-labelledby="admonition-nullable-non-empty-list-title">
 <div class="admonition-title">
@@ -499,9 +488,29 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>In the given implementation of <code>deck/viewModel.kt</code> you may have noticed that <code>problems</code> has quite a strange type, namely <code>NonEmptyList&lt;String&gt;?</code>. This is equivalent to a simple <code>List&lt;String&gt;</code> if you consider "<code>null</code> = empty", so why bother with such a complication? Doing so forces us to handle the <code>null</code> case (no errors) explicitly, whereas with a <code>List&lt;String&gt;</code> we have no such guarantee: you may end up inadvertently showing that the deck has problems, but then showing none. The goal here is to make the compiler catch potential problems before they even arise.</p>
 </div>
 </div>
-<h2 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h2>
+<div id="admonition-return-value-checker" class="admonition admonish-tip" role="note" aria-labelledby="admonition-return-value-checker-title">
+<div class="admonition-title">
+<div id="admonition-return-value-checker-title">
+<p>Return value checker</p>
+</div>
+<a class="admonition-anchor-link" href="validation.html#admonition-return-value-checker"></a>
+</div>
+<div>
+<p>The <code>module.yaml</code> file enables the (experimental) <a href="https://kotlinlang.org/docs/unused-return-value-checker.html">return value checker</a>. This ensures that every <code>Either</code> you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some <code>.bind()</code> calls from the code you wrote for the previous tasks, and watch the compiler complaining.</p>
+</div>
+</div>
+<h3 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h3>
 <p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
 <p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
+<h3 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge">Gym Leader Challenge</a></h3>
+<p>The rules described above correspond to the <em>Standard</em> format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like <a href="https://gymleaderchallenge.com/">Gym Leader Challenge</a> (GLC). As an <strong>extra task</strong>, you may implement <a href="https://gymleaderchallenge.com/rules">GLC rules</a>.</p>
+<ul>
+<li>You may need to add some UI element to specify the format your deck is in.</li>
+<li>GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.</li>
+</ul>
+<h2 id="property-based-testing"><a class="header" href="#property-based-testing">Property-based testing</a></h2>
+<p>One big advantage of following an immutable approach to modelling decks is that testing becomes much easier, since there are no dependencies to account for. In particular you can use <a href="https://kotest.io/docs/proptest/property-based-testing.html">property-based testing</a>, an approach in which lots of random inputs are generated, and then <em>properties</em> of the result are checked. This raises the level of abstraction: for example, you don't test that a certain deck returns certain error, but rather that "validating every deck with fewer than 60 card contains a <code>NotEnoughCards</code> error among those returned".</p>
+<p>Your <strong>task</strong> is to add more tests to the <code>test/tcg/validation.kt</code> file. This file already contains one test you can use as a template. The project is set up to use <a href="https://kotest.io/">Kotest</a>, in particular using the <a href="https://kotest.io/docs/proptest/property-test-functions.html#check-all"><code>checkAll</code></a> function. For more complex scenarios yoy may need to write <a href="https://kotest.io/docs/proptest/custom-generators.html">custom generators</a> that provide more exact input to your tests.</p>
 <h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
 <p>The current implementation has a potential problem: you need to update <code>problems</code> every time you update <code>deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using a <code>StateFlow</code>.</p>
 <p>Your <strong>task</strong> is to replace each update to the <code>problems</code> mutable state with a new definition based on <code>deck</code>. You can use the function <code>map</code> in <code>utils/flow.kt</code>.</p>
@@ -516,12 +525,6 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>An intuitive understanding for this operation arises if we look at a <code>MutableStateFlow</code> as a <em>list</em> of all the values as the time flows. In that way, the problems arise as <code>map</code>ping the validation over each element of that list.</p>
 </div>
 </div>
-<h2 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge">Gym Leader Challenge</a></h2>
-<p>The rules described above correspond to the <em>Standard</em> format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like <a href="https://gymleaderchallenge.com/">Gym Leader Challenge</a> (GLC). As an <strong>extra task</strong>, you may implement <a href="https://gymleaderchallenge.com/rules">GLC rules</a>.</p>
-<ul>
-<li>You may need to add some UI element to specify the format your deck is in.</li>
-<li>GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.</li>
-</ul>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deck-building"><a class="header" href="#deck-building">Deck building</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: reducers, actions as data</p>
@@ -900,6 +903,22 @@ The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

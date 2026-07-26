@@ -25,12 +25,6 @@ The main rules for the legality of a deck are:
 
 Implement this validation using `Either` or `Raise`, and try to break the process in different functions. The notion of [fail-first vs. accumulation](https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation) is important here, so you can squeeze as much information as possible.
 
-```admonish tip title="Return value checker"
-
-The `module.yaml` file enables the (experimental) [return value checker](https://kotlinlang.org/docs/unused-return-value-checker.html). This ensures that every `Either` you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some `.bind()` calls from the code you wrote for the previous tasks, and watch the compiler complaining.
-
-```
-
 **Extra task**: implement a rule to check that you can always _evolve_ every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.
 
 ```admonish info title="Nullable non-empty list"
@@ -39,11 +33,30 @@ In the given implementation of `deck/viewModel.kt` you may have noticed that `pr
 
 ```
 
-## Problems tied to specific cards
+```admonish tip title="Return value checker"
+
+The `module.yaml` file enables the (experimental) [return value checker](https://kotlinlang.org/docs/unused-return-value-checker.html). This ensures that every `Either` you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some `.bind()` calls from the code you wrote for the previous tasks, and watch the compiler complaining.
+
+```
+
+### Problems tied to specific cards
 
 This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your **task** here is introduce an _error hierarchy_ that represents each possible problem with the deck. The transformation to string should now happen in the `DeckPane` view instead.
 
 **Extra task**: show problems related to specific cards directly on them. For example, by showing the name in the `MaterialTheme.colorScheme.error` color. Think about how the information required in the error hierarchy.
+
+### Gym Leader Challenge
+
+The rules described above correspond to the _Standard_ format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like [Gym Leader Challenge](https://gymleaderchallenge.com/) (GLC). As an **extra task**, you may implement [GLC rules](https://gymleaderchallenge.com/rules).
+
+- You may need to add some UI element to specify the format your deck is in.
+- GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.
+
+## Property-based testing
+
+One big advantage of following an immutable approach to modelling decks is that testing becomes much easier, since there are no dependencies to account for. In particular you can use [property-based testing](https://kotest.io/docs/proptest/property-based-testing.html), an approach in which lots of random inputs are generated, and then _properties_ of the result are checked. This raises the level of abstraction: for example, you don't test that a certain deck returns certain error, but rather that "validating every deck with fewer than 60 card contains a `NotEnoughCards` error among those returned".
+
+Your **task** is to add more tests to the `test/tcg/validation.kt` file. This file already contains one test you can use as a template. The project is set up to use [Kotest](https://kotest.io/), in particular using the [`checkAll`](https://kotest.io/docs/proptest/property-test-functions.html#check-all) function. For more complex scenarios yoy may need to write [custom generators](https://kotest.io/docs/proptest/custom-generators.html) that provide more exact input to your tests.
 
 ## Reactive problems
 
@@ -56,10 +69,3 @@ Your **task** is to replace each update to the `problems` mutable state with a n
 An intuitive understanding for this operation arises if we look at a `MutableStateFlow` as a _list_ of all the values as the time flows. In that way, the problems arise as `map`ping the validation over each element of that list.
 
 ```
-
-## Gym Leader Challenge
-
-The rules described above correspond to the _Standard_ format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like [Gym Leader Challenge](https://gymleaderchallenge.com/) (GLC). As an **extra task**, you may implement [GLC rules](https://gymleaderchallenge.com/rules).
-
-- You may need to add some UI element to specify the format your deck is in.
-- GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.
