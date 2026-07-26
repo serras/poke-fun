@@ -3,7 +3,7 @@ package tcg.api
 import kotlinx.serialization.Serializable
 import tcg.*
 
-val CurrentRegulationMarks = listOf("G", "H", "I")
+val CurrentRegulationMarks = listOf("H", "I", "J")
 
 @Serializable
 data class JsonCard(

@@ -214,9 +214,10 @@
 </ul>
 </div>
 </div>
-<h2 id="more-precise-type"><a class="header" href="#more-precise-type">More precise <code>type</code></a></h2>
+<h2 id="improving-the-domain"><a class="header" href="#improving-the-domain">Improving the domain</a></h2>
+<h3 id="more-precise-type"><a class="header" href="#more-precise-type">More precise <code>type</code></a></h3>
 <p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
-<h2 id="more-precise-energies"><a class="header" href="#more-precise-energies">More precise energies</a></h2>
+<h3 id="more-precise-energies"><a class="header" href="#more-precise-energies">More precise energies</a></h3>
 <p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
 <ul>
 <li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
@@ -228,7 +229,7 @@
 </tbody></table>
 </div>
 <p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
-<h2 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h2>
+<h3 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h3>
 <p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
 <div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
 <div class="admonition-title">
@@ -263,7 +264,9 @@
 <li>Make this ordering "inherent" to the <code>Card</code> type, and modify its <code>Comparable</code> implementation in <code>tcg/tcg.kt</code>;</li>
 <li>Introduce this new ordering only in the <code>deck/view.kt</code> file, modifying its call to <code>sorted</code> using <code>sortedBy</code>.</li>
 </ul>
-<h2 id="new-status"><a class="header" href="#new-status">New status</a></h2>
+<h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation">Revamping the representation</a></h3>
+<p>The way decks are modelled in the <code>Deck</code> type — as a simple list of <code>Card</code>s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an <strong>extra over-arching task</strong> you may explore other representations, like using a <code>Map&lt;Card, Int&gt;</code> or a <code>List&lt;Pair&lt;Card, Int&gt;&gt;</code> instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.</p>
+<h2 id="new-search-status"><a class="header" href="#new-search-status">New search status</a></h2>
 <p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 <p>To understand how the exhaustiveness helps, add a new <code>data object Unavailable : SearchStatus</code> to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your <strong>task</strong> is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used <code>else</code> instead of matching on each of the cases separately.</p>
 
@@ -296,22 +299,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
