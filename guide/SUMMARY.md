@@ -21,5 +21,6 @@
 
 # A bit of AI
 
-- [Local AI setup](./ai-setup.md)
-- [Using AI for decks](./ai-use.md)
+- [Local LLM setup](./ai-setup.md)
+- [Fancy deck names](./ai-use.md)
+- [More ideas for AI](./ai-more.md)

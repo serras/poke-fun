@@ -1,4 +1,4 @@
-# Local AI setup
+# Local LLM setup
 
 For this part of Poké-Fun we need to access a Large Language Model (LLM). Although you can use a cloud solution, [Ollama](https://ollama.com/) gives you the chance of running a simpler one locally, so you don't need to spend any money (nor send any potentially private information to a third party).
 
@@ -8,7 +8,7 @@ To install a new model, you can use `ollama run <model-name>`. For Poké-Fun it'
 
 ```admonish tip title="Using MLX in macOS"
 
-If you have an M-series computer, you can use the MLX versions for performance gains. Simply add `-mlx` to the model name, like `gemma:e4b-mlx` above.
+If you have an M-series computer, you can use the MLX versions for performance gains. Simply add `-mlx` to the model name, like `gemma4:e4b-mlx` above. However, note that the current MLX models for Gemma4 have a bug and they don't always correctly produced structured output, so they fail in some of the exercises.
 
 ```
 

@@ -12,14 +12,15 @@ import ai.koog.prompt.executor.ollama.client.OllamaClient
 import tcg.Deck
 
 class ToolAITitler : Titler {
-    override suspend fun suggest(deck: Deck): String {
+    override suspend fun suggest(deck: Deck): TitlerResult {
         val agent = AIAgent(
             promptExecutor = MultiLLMPromptExecutor(OllamaClient()),
             llmModel = Titler.ChosenOllamaModel,
-            strategy = reActStrategy(reasoningInterval = 50),
+            strategy = reActStrategy(),
             toolRegistry = ToolRegistry {
                 tools(DeckInformation(deck))
             }
+
         ) {
             handleEvents {
                 onLLMCallStartingBlocking { println("<llm call starting>") }
@@ -32,8 +33,9 @@ class ToolAITitler : Titler {
             """What is a good name for a cool Pokémon deck? 
                            At the end give me just a title of maximum 10 words, no explanation or further steps.
                            Do not ask for user input, only use the available tools.
-                        """)
-        return result.lines().last()
+                           Give one title per line, starting with the best title.
+                        """).lines()
+        return TitlerResult(result.first(), result.drop(1))
     }
 
     class DeckInformation(val deck: Deck): ToolSet {

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Local AI setup</title>
+        <title>Local LLM setup</title>
 
 
         <!-- Custom HTML head -->
@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local LLM setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Fancy deck names</a></li><li class="chapter-item expanded "><a href="ai-more.html"><strong aria-hidden="true">14.</strong> More ideas for AI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -177,7 +177,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="local-ai-setup"><a class="header" href="#local-ai-setup">Local AI setup</a></h1>
+                        <h1 id="local-llm-setup"><a class="header" href="#local-llm-setup">Local LLM setup</a></h1>
 <p>For this part of Poké-Fun we need to access a Large Language Model (LLM). Although you can use a cloud solution, <a href="https://ollama.com/">Ollama</a> gives you the chance of running a simpler one locally, so you don't need to spend any money (nor send any potentially private information to a third party).</p>
 <p>The easiest approach is to follow the <a href="https://ollama.com/download">official download instructions</a> — although in macOS you can also use <code>brew</code>, and in Linux you can use your distribution's package manager. It's not needed to keep Ollama running as a background service, you can just fire it up using <code>ollama serve</code> whenever you need it.</p>
 <p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data.</p>
@@ -189,7 +189,7 @@
 <a class="admonition-anchor-link" href="#admonition-using-mlx-in-macos"></a>
 </div>
 <div>
-<p>If you have an M-series computer, you can use the MLX versions for performance gains. Simply add <code>-mlx</code> to the model name, like <code>gemma:e4b-mlx</code> above.</p>
+<p>If you have an M-series computer, you can use the MLX versions for performance gains. Simply add <code>-mlx</code> to the model name, like <code>gemma4:e4b-mlx</code> above. However, note that the current MLX models for Gemma4 have a bug and they don't always correctly produced structured output, so they fail in some of the exercises.</p>
 </div>
 </div>
 <p>By default, you get a small chat interface. You can try some queries, and then exit the prompt by typing <code>/bye</code>.</p>

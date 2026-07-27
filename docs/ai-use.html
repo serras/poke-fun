@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Using AI for decks</title>
+        <title>Fancy deck names</title>
 
 
         <!-- Custom HTML head -->
@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local LLM setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Fancy deck names</a></li><li class="chapter-item expanded "><a href="ai-more.html"><strong aria-hidden="true">14.</strong> More ideas for AI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -177,7 +177,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="using-ai-for-decks"><a class="header" href="#using-ai-for-decks">Using AI for decks</a></h1>
+                        <h1 id="fancy-deck-names"><a class="header" href="#fancy-deck-names">Fancy deck names</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: simple requests, tools</p>
 </blockquote>
@@ -199,12 +199,34 @@ The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog
 </div>
 </div>
 <h2 id="improving-the-basic-titler"><a class="header" href="#improving-the-basic-titler">Improving the basic titler</a></h2>
-<p>In the <code>deck/viewModel.kt</code> file we are currently using a very simple <code>Titler</code> to suggest titles. In fact, it always returns <code>"Awesome Deck"</code>. If instead of <code>Titler.Simple</code> you use the <code>BasicAITitler</code>, the request is given to an AI agent instead, so you will get different titles every time.</p>
-<p>Still, the titles tend to be very generic. The problem is that you are not introducing any <em>contextual</em> information into the query. You <strong>task</strong> is to improve the request used by <code>suggest</code> in <code>BasicAITitler</code> to have that additional information. Potential candidates are the names of cards in the decks, the previous title, and even the date the request is sent!</p>
-<h2 id="using-tools"><a class="header" href="#using-tools">Using tools</a></h2>
-<p>Although you can craft your prompts directly, AI agents support a better strategy: using <a href="https://docs.koog.ai/tools/"><em>tools</em></a>. We no longer have a one-shot call, instead there's a <em>reasoning loop</em> in which the AI agent may request additional information, knowing which data is available from the tools. This is the best way to inject contextual information, but also to provide behavior which is better coded separately (think of performing basic arithmetic).</p>
+<p>The <code>main.kt</code> file is currently injecting a a very simple <code>Titler</code> to suggest titles. In fact, it always returns <code>"Awesome Deck"</code>. If instead of <code>Titler.Simple</code> you use the <code>BasicAITitler</code>, the request is processed via an LLM, so you will get different titles every time.</p>
+<p>Still, the titles tend to be very generic. The problem is that you are not introducing any <em>contextual</em> information into the query. You <strong>task</strong> is to improve the request used by <code>suggest</code> in <code>BasicAITitler</code> to have that additional information. Potential candidates are the names of cards in the decks, the previous title, and even the date the request is sent! It may be convenient to read Koog's documentation about <a href="https://docs.koog.ai/prompts/">prompts</a> to understand how to better reflect this information for the LLM to use.</p>
+<div id="admonition-structured-output" class="admonition admonish-info" role="note" aria-labelledby="admonition-structured-output-title">
+<div class="admonition-title">
+<div id="admonition-structured-output-title">
+<p>Structured output</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-structured-output"></a>
+</div>
+<div>
+<p>The prompt executor in <code>BasicAITitler</code> directly responds with a <code>TitlerResult</code>. This feature of some LLMs (including Gemma4) is called <a href="https://docs.koog.ai/structured-output/"><em>structured output</em></a>. Koog automatically sends the corresponding JSON schema to the LLM, you only need to mark the types as <code>@Serializable</code>, as we've done in the code.</p>
+</div>
+</div>
+<h2 id="using-agents"><a class="header" href="#using-agents">Using agents</a></h2>
+<p>Although you can craft your prompts directly, it is better to use AI <a href="https://docs.koog.ai/agents/"><em>agents</em></a> instead. Agents follow an <em>strategy</em> to have a "conversation" with the LLM model, so that there can be a back-and-forth of messages requesting and providing information. In this case we use the <a href="https://docs.koog.ai/predefined-agent-strategies/#react-strategy">ReAct strategy</a>.</p>
+<p>In addition, AI agents may also use <a href="https://docs.koog.ai/tools/"><em>tools</em></a>. As part of its response, the LLM model may request additional information, knowing which data is available from the tools. This is the best way to inject contextual information, but also to provide behavior which is better coded separately (think of performing basic arithmetic).</p>
 <p>The <code>ai/tool.kt</code> file provides a blueprint of how you can introduce tools in Koog. Your <strong>task</strong> is to add new functions to <code>DeckInformation</code>, and mark them with the corresponding annotations, so that more information about your deck is available to the AI agent.</p>
-<p>Tools do not work on their own, though, the definition of the <code>AIAgent</code> now introduces a <em>strategy</em> (in particular, the <a href="https://docs.koog.ai/predefined-agent-strategies/#react-strategy">ReAct strategy</a>). This strategy describes an interaction between our client and the AI model itself, so that there can be a back-and-forth of messages requesting and providing information. The code provides a few hooks so you can see when each event is happening: feel free to introduce more information there if you're interested on the actual conversation happening under the hood.</p>
+<div id="admonition-a-look-under-the-hood" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-look-under-the-hood-title">
+<div class="admonition-title">
+<div id="admonition-a-look-under-the-hood-title">
+<p>A look under the hood</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-a-look-under-the-hood"></a>
+</div>
+<div>
+<p>If you are curious about the actual "conversation" between Poké-Fun and the LLM model, you can introduce more logging in the <code>handleEvents</code> block.</p>
+</div>
+</div>
 
                     </main>
 
@@ -214,6 +236,9 @@ The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
+                            <a rel="next prefetch" href="ai-more.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
 
                         <div style="clear: both"></div>
                     </nav>
@@ -225,6 +250,9 @@ The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog
                         <i class="fa fa-angle-left"></i>
                     </a>
 
+                    <a rel="next prefetch" href="ai-more.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
             </nav>
 
         </div>

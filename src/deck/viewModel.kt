@@ -12,7 +12,7 @@ import tcg.Card
 import tcg.Deck
 import tcg.validate
 
-class DeckViewModel : ViewModel() {
+class DeckViewModel(val titler: Titler) : ViewModel() {
     val deck: StateFlow<Deck>
         field: MutableStateFlow<Deck> = MutableStateFlow(Deck.INITIAL)
 
@@ -30,10 +30,7 @@ class DeckViewModel : ViewModel() {
 
     fun suggestTitle() {
         viewModelScope.launch {
-            val title = Titler.Simple.suggest(deck.value)
-            // val title = BasicAITitler().suggest(deck.value)
-            // val title = ToolAITitler().suggest(deck.value)
-            changeTitle(title)
+            changeTitle(titler.suggest(deck.value).bestTitle)
         }
     }
 }

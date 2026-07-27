@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local LLM setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Fancy deck names</a></li><li class="chapter-item expanded "><a href="ai-more.html"><strong aria-hidden="true">14.</strong> More ideas for AI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -199,7 +199,7 @@
 <ul>
 <li>If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the <a href="./tcg.html">introduction to the domain</a>;</li>
 <li>If you are new to the Kotlin Toolchain or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
-<li>If you are new to local LLMs for AI, follow the <a href="./ai-setup.html">local AI setup</a> instructions.</li>
+<li>If you are new to local LLMs for AI, follow the <a href="./ai-setup.html">local LLM setup</a> instructions.</li>
 </ul>
 <div id="admonition-built-with-the-kotlin-toolchain" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-the-kotlin-toolchain-title">
 <div class="admonition-title">
@@ -224,7 +224,8 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li><a href="./par.html">Loading and saving</a>: store your work locally, and learn about parallel combinators in Arrow Fx.</li>
 <li><a href="./architecture.html">Better architecture</a>: introduce resource management, and overall nicer design.</li>
 <li><a href="./cmp.html">Nicer UI</a>: implement more visual feedback using Compose Multiplatform.</li>
-<li><a href="./ai-use.html">Using AI for decks</a>: use some simple AI functionality to spice the application.</li>
+<li><a href="./ai-use.html">Fancy deck titles</a>: learn the basics of AI agents to generate titles for the deck.</li>
+<li><a href="./ai-use.html">More ideas for AI</a>: use more AI functionality to spice the application.</li>
 </ul>
 <div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
 <div class="admonition-title">
@@ -832,7 +833,7 @@ In the previous iteration of this navigation, prior to 2.8.0, you used strings i
 One more instance where <a href="https://developer.android.com/guide/navigation/design/type-safety">type safety</a> is a welcome addition.</p>
 </div>
 </div>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="local-ai-setup"><a class="header" href="#local-ai-setup">Local AI setup</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-llm-setup"><a class="header" href="#local-llm-setup">Local LLM setup</a></h1>
 <p>For this part of Poké-Fun we need to access a Large Language Model (LLM). Although you can use a cloud solution, <a href="https://ollama.com/">Ollama</a> gives you the chance of running a simpler one locally, so you don't need to spend any money (nor send any potentially private information to a third party).</p>
 <p>The easiest approach is to follow the <a href="https://ollama.com/download">official download instructions</a> — although in macOS you can also use <code>brew</code>, and in Linux you can use your distribution's package manager. It's not needed to keep Ollama running as a background service, you can just fire it up using <code>ollama serve</code> whenever you need it.</p>
 <p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data.</p>
@@ -844,7 +845,7 @@ One more instance where <a href="https://developer.android.com/guide/navigation/
 <a class="admonition-anchor-link" href="ai-setup.html#admonition-using-mlx-in-macos"></a>
 </div>
 <div>
-<p>If you have an M-series computer, you can use the MLX versions for performance gains. Simply add <code>-mlx</code> to the model name, like <code>gemma:e4b-mlx</code> above.</p>
+<p>If you have an M-series computer, you can use the MLX versions for performance gains. Simply add <code>-mlx</code> to the model name, like <code>gemma4:e4b-mlx</code> above. However, note that the current MLX models for Gemma4 have a bug and they don't always correctly produced structured output, so they fail in some of the exercises.</p>
 </div>
 </div>
 <p>By default, you get a small chat interface. You can try some queries, and then exit the prompt by typing <code>/bye</code>.</p>
@@ -878,7 +879,7 @@ Here's a thinking process that leads to the suggested names:
 <div>
 <p>The <code>ai/titler.kt</code> file contains the code to set up the connection to local Ollama in using <a href="https://docs.koog.ai/">Koog</a>. Check the current parameters, and adapt as required, especially the choice of model.</p>
 </div>
-</div><div style="break-before: page; page-break-before: always;"></div><h1 id="using-ai-for-decks"><a class="header" href="#using-ai-for-decks">Using AI for decks</a></h1>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="fancy-deck-names"><a class="header" href="#fancy-deck-names">Fancy deck names</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: simple requests, tools</p>
 </blockquote>
@@ -900,12 +901,57 @@ The code snippets in this section relate to <a href="https://docs.koog.ai/">Koog
 </div>
 </div>
 <h2 id="improving-the-basic-titler"><a class="header" href="#improving-the-basic-titler">Improving the basic titler</a></h2>
-<p>In the <code>deck/viewModel.kt</code> file we are currently using a very simple <code>Titler</code> to suggest titles. In fact, it always returns <code>"Awesome Deck"</code>. If instead of <code>Titler.Simple</code> you use the <code>BasicAITitler</code>, the request is given to an AI agent instead, so you will get different titles every time.</p>
-<p>Still, the titles tend to be very generic. The problem is that you are not introducing any <em>contextual</em> information into the query. You <strong>task</strong> is to improve the request used by <code>suggest</code> in <code>BasicAITitler</code> to have that additional information. Potential candidates are the names of cards in the decks, the previous title, and even the date the request is sent!</p>
-<h2 id="using-tools"><a class="header" href="#using-tools">Using tools</a></h2>
-<p>Although you can craft your prompts directly, AI agents support a better strategy: using <a href="https://docs.koog.ai/tools/"><em>tools</em></a>. We no longer have a one-shot call, instead there's a <em>reasoning loop</em> in which the AI agent may request additional information, knowing which data is available from the tools. This is the best way to inject contextual information, but also to provide behavior which is better coded separately (think of performing basic arithmetic).</p>
+<p>The <code>main.kt</code> file is currently injecting a a very simple <code>Titler</code> to suggest titles. In fact, it always returns <code>"Awesome Deck"</code>. If instead of <code>Titler.Simple</code> you use the <code>BasicAITitler</code>, the request is processed via an LLM, so you will get different titles every time.</p>
+<p>Still, the titles tend to be very generic. The problem is that you are not introducing any <em>contextual</em> information into the query. You <strong>task</strong> is to improve the request used by <code>suggest</code> in <code>BasicAITitler</code> to have that additional information. Potential candidates are the names of cards in the decks, the previous title, and even the date the request is sent! It may be convenient to read Koog's documentation about <a href="https://docs.koog.ai/prompts/">prompts</a> to understand how to better reflect this information for the LLM to use.</p>
+<div id="admonition-structured-output" class="admonition admonish-info" role="note" aria-labelledby="admonition-structured-output-title">
+<div class="admonition-title">
+<div id="admonition-structured-output-title">
+<p>Structured output</p>
+</div>
+<a class="admonition-anchor-link" href="ai-use.html#admonition-structured-output"></a>
+</div>
+<div>
+<p>The prompt executor in <code>BasicAITitler</code> directly responds with a <code>TitlerResult</code>. This feature of some LLMs (including Gemma4) is called <a href="https://docs.koog.ai/structured-output/"><em>structured output</em></a>. Koog automatically sends the corresponding JSON schema to the LLM, you only need to mark the types as <code>@Serializable</code>, as we've done in the code.</p>
+</div>
+</div>
+<h2 id="using-agents"><a class="header" href="#using-agents">Using agents</a></h2>
+<p>Although you can craft your prompts directly, it is better to use AI <a href="https://docs.koog.ai/agents/"><em>agents</em></a> instead. Agents follow an <em>strategy</em> to have a "conversation" with the LLM model, so that there can be a back-and-forth of messages requesting and providing information. In this case we use the <a href="https://docs.koog.ai/predefined-agent-strategies/#react-strategy">ReAct strategy</a>.</p>
+<p>In addition, AI agents may also use <a href="https://docs.koog.ai/tools/"><em>tools</em></a>. As part of its response, the LLM model may request additional information, knowing which data is available from the tools. This is the best way to inject contextual information, but also to provide behavior which is better coded separately (think of performing basic arithmetic).</p>
 <p>The <code>ai/tool.kt</code> file provides a blueprint of how you can introduce tools in Koog. Your <strong>task</strong> is to add new functions to <code>DeckInformation</code>, and mark them with the corresponding annotations, so that more information about your deck is available to the AI agent.</p>
-<p>Tools do not work on their own, though, the definition of the <code>AIAgent</code> now introduces a <em>strategy</em> (in particular, the <a href="https://docs.koog.ai/predefined-agent-strategies/#react-strategy">ReAct strategy</a>). This strategy describes an interaction between our client and the AI model itself, so that there can be a back-and-forth of messages requesting and providing information. The code provides a few hooks so you can see when each event is happening: feel free to introduce more information there if you're interested on the actual conversation happening under the hood.</p>
+<div id="admonition-a-look-under-the-hood" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-look-under-the-hood-title">
+<div class="admonition-title">
+<div id="admonition-a-look-under-the-hood-title">
+<p>A look under the hood</p>
+</div>
+<a class="admonition-anchor-link" href="ai-use.html#admonition-a-look-under-the-hood"></a>
+</div>
+<div>
+<p>If you are curious about the actual "conversation" between Poké-Fun and the LLM model, you can introduce more logging in the <code>handleEvents</code> block.</p>
+</div>
+</div>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="more-ideas-for-ai"><a class="header" href="#more-ideas-for-ai">More ideas for AI</a></h1>
+<h2 id="deck-archetype"><a class="header" href="#deck-archetype">Deck archetype</a></h2>
+<p>Apart from the title, there's more to describe a deck. For example, we have its <a href="https://tcgprotectors.com/blogs/pokemon-blog/pokemon-tcg-deck-archetypes-guide-aggro-control-combo-midrange"><em>archetype</em></a>, which roughly describes the way in which the deck is played:</p>
+<ul>
+<li><em>Aggro</em> decks focus on big and fast attacks,</li>
+<li><em>Control</em> decks focus on controlling what happens in the game, both for you and your opponent,</li>
+<li><em>Combo</em> decks focus on getting one specific combination of cards into play,</li>
+<li><em>Toolbox</em> decks focus on responding to any situation it may face,</li>
+<li>...</li>
+</ul>
+<p>Archetypes are not set in stone, but may help understand what the deck is about. Your <strong>task</strong> is to use AI to categorize the current deck into one (or more) of those archetypes. It may be interesting to consider:</p>
+<ul>
+<li>How much information does the LLM model already have about the Pokémon TCG?</li>
+<li>What is the easiest way to get the information back? Think, among others, of structured output.</li>
+</ul>
+<p>Once you have this information, you may consider bringing a bit of spice to your Poké-Fun application, by changing some color details or backgrounds to better reflect the archetype of the deck.</p>
+<h2 id="card-suggestions"><a class="header" href="#card-suggestions">Card suggestions</a></h2>
+<p>What would be more useful than AI actually <em>helping</em> you to build your deck? You can implement this functionality, and see how much it helps!</p>
+<p>From the point of view of this workshop, the most interesting bit is how to <em>model</em> this information — something we already covered in a <a href="./adt.html">past section</a>. You can think about:</p>
+<ul>
+<li>How does my representation change depending on whether we only want to give recommendations on <em>more</em> cards, or we also want to recommend <em>removing</em> or even <em>swapping</em> one card for a better one?</li>
+<li>How could we introduce additional explanation about the reason for the change?</li>
+</ul>
 
                     </main>
 

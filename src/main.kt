@@ -1,3 +1,4 @@
+import ai.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,10 @@ fun main() {
     setProperty("apple.awt.application.name", "Poké-Fun")
     // required, see https://filekit.mintlify.app/dialogs/file-picker
     setProperty("apple.awt.application.appearance", "system")
+    // choose the titler
+    // val titler = Titler.Simple
+    // val titler = BasicAITitler()
+    val titler = ToolAITitler()
     // start the application proper
     application {
         AppTheme {
@@ -30,7 +35,7 @@ fun main() {
                 title = "Poké-Fun",
                 onCloseRequest = ::exitApplication
             ) {
-                val sharedDeckModel = viewModel { DeckViewModel() }
+                val sharedDeckModel = viewModel { DeckViewModel(titler) }
 
                 HorizontalSplitPane(
                     modifier = Modifier.background(MaterialTheme.colorScheme.background)

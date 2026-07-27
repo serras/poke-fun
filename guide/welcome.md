@@ -16,7 +16,7 @@ The starting point introduces the domain and the main components of the technolo
 
 - If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the [introduction to the domain](./tcg.md);
 - If you are new to the Kotlin Toolchain or Compose Multiplatform, start with [the technology](./tech-intro.md),
-- If you are new to local LLMs for AI, follow the [local AI setup](./ai-setup.md) instructions.
+- If you are new to local LLMs for AI, follow the [local LLM setup](./ai-setup.md) instructions.
 
 ```admonish warning title="Built with the Kotlin Toolchain"
 
@@ -36,7 +36,8 @@ Each section contains an introduction to one or more topics, and pointers to add
 - [Loading and saving](./par.md): store your work locally, and learn about parallel combinators in Arrow Fx.
 - [Better architecture](./architecture.md): introduce resource management, and overall nicer design.
 - [Nicer UI](./cmp.md): implement more visual feedback using Compose Multiplatform.
-- [Using AI for decks](./ai-use.md): use some simple AI functionality to spice the application.
+- [Fancy deck titles](./ai-use.md): learn the basics of AI agents to generate titles for the deck.
+- [More ideas for AI](./ai-use.md): use more AI functionality to spice the application.
 
 ```admonish tip title="A word from our sponsor"
 
