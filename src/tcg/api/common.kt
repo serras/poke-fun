@@ -5,6 +5,9 @@ import tcg.*
 
 val CurrentRegulationMarks = listOf("H", "I", "J")
 
+fun Card.inFormat(): Boolean =
+    regulationMark in CurrentRegulationMarks || identifier.startsWith("sve-")
+
 @Serializable
 data class JsonCard(
     val name: String,

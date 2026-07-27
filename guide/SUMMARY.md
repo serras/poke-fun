@@ -14,7 +14,7 @@
 - [Law-abiding decks](./validation.md)
 - [Deck building](./build.md)
 - [Deal with bad internet](./resilience.md)
-- [Using local data](./local.md)
+- [Through the magnifying glass](./optics.md)
 - [Loading and saving](./par.md)
 - [Better architecture](./architecture.md)
 - [Nicer UI](./cmp.md)

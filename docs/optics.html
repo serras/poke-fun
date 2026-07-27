@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Using local data</title>
+        <title>Through the magnifying glass</title>
 
 
         <!-- Custom HTML head -->
@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="local.html"><strong aria-hidden="true">8.</strong> Using local data</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="welcome.html">Welcome</a></li><li class="chapter-item expanded affix "><li class="part-title">Introduction</li><li class="chapter-item expanded "><a href="tcg.html"><strong aria-hidden="true">1.</strong> Trading Card Games</a></li><li class="chapter-item expanded "><a href="tech-intro.html"><strong aria-hidden="true">2.</strong> The technology</a></li><li class="chapter-item expanded "><a href="intro.html"><strong aria-hidden="true">3.</strong> Overview of the code</a></li><li class="chapter-item expanded affix "><li class="part-title">Practice</li><li class="chapter-item expanded "><a href="adt.html"><strong aria-hidden="true">4.</strong> What is (in) a deck</a></li><li class="chapter-item expanded "><a href="validation.html"><strong aria-hidden="true">5.</strong> Law-abiding decks</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">6.</strong> Deck building</a></li><li class="chapter-item expanded "><a href="resilience.html"><strong aria-hidden="true">7.</strong> Deal with bad internet</a></li><li class="chapter-item expanded "><a href="optics.html"><strong aria-hidden="true">8.</strong> Through the magnifying glass</a></li><li class="chapter-item expanded "><a href="par.html"><strong aria-hidden="true">9.</strong> Loading and saving</a></li><li class="chapter-item expanded "><a href="architecture.html"><strong aria-hidden="true">10.</strong> Better architecture</a></li><li class="chapter-item expanded "><a href="cmp.html"><strong aria-hidden="true">11.</strong> Nicer UI</a></li><li class="chapter-item expanded affix "><li class="part-title">A bit of AI</li><li class="chapter-item expanded "><a href="ai-setup.html"><strong aria-hidden="true">12.</strong> Local AI setup</a></li><li class="chapter-item expanded "><a href="ai-use.html"><strong aria-hidden="true">13.</strong> Using AI for decks</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -177,14 +177,32 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="using-local-data"><a class="header" href="#using-local-data">Using local data</a></h1>
+                        <h1 id="through-the-magnifying-glass"><a class="header" href="#through-the-magnifying-glass">Through the magnifying glass</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: optics, JSON manipulation</p>
 </blockquote>
+<p>You may have noticed, while reading the types <code>Deck</code>, <code>Card</code>, and others in <code>tcg.md</code>, that all of them are marked with the <code>@optics</code> annotation. <em>Optics</em> are a key concept for concise query and manipulation of immutable data. If you have never used them, we strongly recommend to check <a href="https://arrow-kt.io/learn/immutable-data/intro/">Arrow's documentation on the matter</a>.</p>
+<h2 id="sprinkling-some-optics-magic-dust"><a class="header" href="#sprinkling-some-optics-magic-dust">Sprinkling some optics magic dust</a></h2>
+<p>The usual "gateway drug" to optics is replacing complex updates of immutable data with an imperative-style approach. This doesn't mean you're modifying the data in place, simply that the code you write <em>looks similar</em> to doing so. This is explained at length in <a href="https://arrow-kt.io/learn/immutable-data/lens/#more-powerful-copy"><em>More powerful <code>copy</code></em></a>. Your <strong>task</strong> is to update <code>deck/viewModel.kt</code> to use this technique instead of <code>copy</code>.</p>
+<p>Right now <code>DeckPane</code> is very empty whenever there are no problems. Instead of a simple message, <code>DeckProblems</code> could show some statistics about the deck: how many cards of each category there are, how many of each energy type, and so on. This <strong>task</strong> should be implemented using <a href="https://arrow-kt.io/learn/immutable-data/prism-iso/#sealed-class-hierarchies">prisms</a>, <a href="https://arrow-kt.io/learn/immutable-data/optional/">optionals</a>, and <a href="https://arrow-kt.io/learn/immutable-data/traversal/">traversals</a> over the <code>deck</code>.</p>
+<p>Speaking of problems, <a href="./validation.html">deck validation</a> is another place in which optics many become very handy, since you often need to dive deep inside the properties in <code>Deck</code>. The outcome of this <strong>task</strong> depends a lot on the way you've coded validation, but try to replace navigation within the structure with different optics.</p>
+<h2 id="targeting-json"><a class="header" href="#targeting-json">Targeting JSON</a></h2>
 <p>Until this point we have focused on requesting data from a remote API. In some scenarios such requests are not possible or desirable, and a local data source is a better option. When you clone the repository for these exercises, you should find a <code>pokemon-tcg-data</code> submodule that contains a <a href="https://github.com/PokemonTCG/pokemon-tcg-data">copy of the data for the remote API</a>.</p>
-<h2 id="targeting-data-with-optics"><a class="header" href="#targeting-data-with-optics">Targeting data with optics</a></h2>
-<p>The current implementation is extremely inefficient: it transforms every card in every <code>.json</code> file into a <code>Card</code> object, and then filters the results. A better solution is to perform the query directly on the JSON document, and only transform the data if it matches.</p>
-<h2 id="understanding-foreachcard"><a class="header" href="#understanding-foreachcard">Understanding <code>forEachCard</code></a></h2>
+<div id="admonition-the-inline-iterator" class="admonition admonish-tip" role="note" aria-labelledby="admonition-the-inline-iterator-title">
+<div class="admonition-title">
+<div id="admonition-the-inline-iterator-title">
+<p>The inline iterator</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-the-inline-iterator"></a>
+</div>
+<div>
+<p>The core of the implementation of <code>LocalPokemonTcgApi</code> builds upon a function that looks pretty much like <code>map</code> on lists, but with its <code>block</code> working only for <code>Card</code>s.</p>
+<p><code>inline fun forEachCard(block: (Card) -&gt; Unit)</code></p>
+<p>We could look at this function simply as a functional-first way to encode the pattern of iterating among cards, but in Kotlin the <a href="https://kotlinlang.org/docs/inline-functions.html"><code>inline</code> modifier</a> brings additional benefits. In particular, you can return <em>early</em> from an <code>inline</code> function, meaning that you don't need to fully consume all the <code>Card</code>s if you already know the result of a function. This exact fact is used in <code>getById</code> — the <code>return@getById</code> syntax means that we want to exit not the local lambda passed to the <code>forEachCard</code> function, but actually from the entire <code>getById</code> function.</p>
+</div>
+</div>
+<p>The current implementation is extremely inefficient: it transforms every card in every <code>.json</code> file into a <code>Card</code> object, and then filters the results. A better solution is to perform the query directly on the JSON document, and only transform the data if it matches. The <code>tcg/api/optics.kt</code> contains an implementation for <code>getById</code>, your <strong>task</strong> is to complete it for <code>search</code>.</p>
+<p>The current stub implementation of <code>OpticsPokemonTcgApi</code> uses <a href="https://arrow-kt.io/learn/immutable-data/intro/">optics</a> as a way to obtain information from the JSON document without too much manipulation. In general, optics are a way to query (and modify) immutable data in a concise way. In this case, the core Arrow Optics library is supported by <a href="https://github.com/nomisRev/kotlinx-serialization-jsonpath">JSON-specific optics</a>.</p>
 
                     </main>
 
