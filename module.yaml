@@ -34,8 +34,8 @@ dependencies:
 test-dependencies:
     - $kotlin.test
     - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0
-    - io.kotest:kotest-assertions-core:6.2.3
-    - io.kotest:kotest-property:6.2.3
+    - io.kotest:kotest-assertions-core:6.2.4
+    - io.kotest:kotest-property:6.2.4
 
 settings:
     kotlin:
@@ -54,9 +54,9 @@ settings:
               dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0-alpha.4
     compose:
         enabled: true
-        version: 1.12.0-beta02
+        version: 1.12.0
         resources:
             packageName: resources
     ktor:
         enabled: true
-        version: 3.5.1
+        version: 3.5.2
