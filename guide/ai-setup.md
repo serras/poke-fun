@@ -4,7 +4,7 @@ For this part of Poké-Fun we need to access a Large Language Model (LLM). Altho
 
 The easiest approach is to follow the [official download instructions](https://ollama.com/download) — although in macOS you can also use `brew`, and in Linux you can use your distribution's package manager. It's not needed to keep Ollama running as a background service, you can just fire it up using `ollama serve` whenever you need it.
 
-To install a new model, you can use `ollama run <model-name>`. For Poké-Fun it's enough to use [Gemma 4](https://ollama.com/library/gemma4) with Effective 4B parameter (`gemma4:e4b`), which you can get up and running using `ollama run gemma4:e4b`. The first time it needs to download a big chunk of data.
+To install a new model, you can use `ollama run <model-name>`. For Poké-Fun it's enough to use [Gemma 4](https://ollama.com/library/gemma4) with Effective 4B parameter (`gemma4:e4b`), which you can get up and running using `ollama run gemma4:e4b`. The first time it needs to download a big chunk of data (~10 GB).
 
 ```admonish tip title="Using MLX in macOS"
 

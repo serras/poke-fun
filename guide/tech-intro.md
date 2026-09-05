@@ -2,13 +2,13 @@
 
 Poké-Fun is implemented using [Kotlin](https://kotlinlang.org/), [Arrow](https://arrow-kt.io/), [Koog](https://docs.koog.ai/), and [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/). The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).
 
-The one choice which goes out of the ordinary is using the [Kotlin Toolchain](https://kotlin-toolchain.org/) as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the `module.yaml` file, but for the tasks you won't need to touch it. To start the application you can run `./kotlin run` in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.
+The one choice which goes out of the ordinary is using the [Kotlin Toolchain](https://kotlin-toolchain.org/) as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the `module.yaml` file, but for the tasks you won't need to touch it. To start the application, run `kotlin run -m poke-fun` via the green triangle, or in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up. Once you run it, the app window should open up. It will also output four warnings in the terminal, ignore them.
 
-We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio) to work on Poké-Fun. You need at least the corresponding [Kotlin Toolchain plug-in](https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain), and the [Kotlin Multiplatform plug-in](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform) is highly recommended. In both cases, you should see a small play button to run the application from the IDE.
+We recommend using [IntelliJ IDEA](https://www.jetbrains.com/idea/) or [Android Studio](https://developer.android.com/studio) to work on Poké-Fun. You need at least the corresponding [Kotlin Toolchain plugin](https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain), and the [Kotlin Multiplatform plugin](https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform) is highly recommended. In both cases, you should see a small play button to run the application from the IDE.
 
 ## Compose Multiplatform
 
-In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include [React](https://react.dev/) for web, [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, and [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android. [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).
+In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view. The view is defined as a function which is re-executed every time the state changes. Some well-known frameworks include [React](https://react.dev/) for web, [SwiftUI](https://developer.apple.com/xcode/swiftui/) for iOS, and [Jetpack Compose](https://developer.android.com/develop/ui/compose) for Android. [Compose Multiplatform](https://www.jetbrains.com/lp/compose-multiplatform/) uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).
 
 ```admonish info title="More about Compose Multiplatform"
 
@@ -45,7 +45,7 @@ class Counter: ViewModel() {
 }
 ```
 
-The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the `.increment()` function in the view model is tied to the use case in the view.
+The view consumes this view model, and shows a button with a text indicating the number of times it has been clicked. Note how the `.increment()` function in the view model is tied to the use case in the view.
 
 ```kotlin
 @Composable fun Screen(counter: Counter) {
@@ -55,7 +55,7 @@ The view consumes this view model, and shows a button with a text indicating the
 }
 ```
 
-What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. As discussed above, the `@Composable` annotation (alongside the Compose compiler) is the magic that makes this link work.
+What happens when the button is pressed? Then the `onClick` lambda is executed, which eventually changes the value of `count`. Compose detects this change and _recomposes_ the UI, that is, re-executes `Screen` and applies any update to the visible screen. As discussed above, the `@Composable` annotation (alongside the Compose compiler) is the magic that makes this work.
 
 If you want to use the value of a `StateFlow` several times, it's better to use a combination of [property delegation](https://kotlinlang.org/docs/delegated-properties.html) and `.collectAsState()`.
 
@@ -68,6 +68,6 @@ If you want to use the value of a `StateFlow` several times, it's better to use 
 }
 ```
 
-The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the `main` entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.
+The connection between a view model and a view is established when creating the application, or via navigation. In Poké-Fun, the `main` entry point creates a view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.
 
-Armed with this knowledge, you can read the [introduction](./intro.md) to Poké-Fun.
+Now that you are equipped with this knowledge, you can read the [introduction](./intro.md) to Poké-Fun.
