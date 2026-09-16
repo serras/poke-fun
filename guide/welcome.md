@@ -2,7 +2,7 @@
 
 Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on. Following the spirit of these times, we also hint at using (local) AI in the application.
 
-> The source code is available in [this repository](https://github.com/serras/poke-fun). Download or clone it, and you should be ready to go.
+> The source code is available in [this repository](https://github.com/serras/poke-fun). Fork and clone your own fork with submodules (IntelliJ IDEA will download the submodules itself, or use `git clone --recurse-submodules <your-fork-url>`), and you are ready to go (apart from installing all the tools that you need, like java!!!).
 
 This book assumes that you know your way around [Kotlin](https://kotlinlang.org), but previous experience with functional programming or [Arrow](https://arrow-kt.io), or with Compose Multiplatform, is not required.
 

@@ -33,11 +33,8 @@ data class Card(
     val imageResource: AsyncImagePainter
       @Composable get() = rememberAsyncImagePainter(imageUrl)
 
-    override fun compareTo(other: Card): Int {
-        if (this.category != other.category) return this.category.compareTo(other.category)
-        if (this.name != other.name) return this.name.compareTo(other.name)
-        return this.identifier.compareTo(other.identifier)
-    }
+    override fun compareTo(other: Card): Int =
+        compareValuesBy(this, other, Card::category, Card::name, Card::identifier)
 }
 
 @Immutable @optics

@@ -39,7 +39,7 @@ Access to the Pokémon TCG API is mediated by the `PokemonTcgApi` interface (in 
 
 Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a `SplitPane`, one of the [desktop-specific components](https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop) offered by Compose Multiplatform.
 
-- On the left-hand side we have the `SearchPane` (in `search/view.kt`), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the `DeckViewModel`.
+- On the left-hand side we have the `SearchPane` (in `search/view.kt`), where the users input their search, and see results. This view also adds selected cards to the deck, hence the dependence on the `DeckViewModel`.
 - On the right-hand side we have the `DeckPane` (in `deck/view.kt`), which simply shows the cards and problems.
 
-Both views make use of common component to show a single `Card` and multiple `Card`s, found in `tcg/cardView.kt`. These components have an `extra` parameter which is used to provide the different elements required in each of the views (for example, the _Add_ button in the search pane).
+Both views make use of a common component to show a single `Card` and multiple `Card`s, found in `tcg/cardView.kt`. These components have an `extra` parameter which is used to provide the different elements required in each of the views (for example, the _Add_ button in the search pane).
