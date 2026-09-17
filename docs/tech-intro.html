@@ -179,10 +179,10 @@
                     <main>
                         <h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
 <p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, <a href="https://docs.koog.ai/">Koog</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
-<p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./kotlin run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
-<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
+<p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application, run <code>./kotlin run -m poke-fun</code> via the green triangle, or in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up. Once you run it, the app window should open up. It may also output some warnings in the terminal, ignore them.</p>
+<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plugin</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plugin</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view. The view is defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
 <div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
 <div class="admonition-title">
 <div id="admonition-more-about-compose-multiplatform-title">
@@ -222,14 +222,14 @@
   }
 }
 </code></pre>
-<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
+<p>The view consumes this view model, and shows a button with a text indicating the number of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
 <pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
     Text("Clicked ${counter.count.value} times")
   }
 }
 </code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this work.</p>
 <p>If you want to use the value of a <code>StateFlow</code> several times, it's better to use a combination of <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a> and <code>.collectAsState()</code>.</p>
 <pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
@@ -238,8 +238,8 @@
   }
 }
 </code></pre>
-<p>The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the <code>main</code> entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
-<p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
+<p>The connection between a view model and a view is established when creating the application, or via navigation. In Poké-Fun, the <code>main</code> entry point creates a view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
+<p>Now that you are equipped with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 
                     </main>
 

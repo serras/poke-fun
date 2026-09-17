@@ -42,11 +42,11 @@ One nice advantage of using Compose is that it naturally leads to a more immutab
 
 ## Improving the domain
 
-### More precise `type`
+### <img src="images/oddish.png" height="20px" /> More precise `type`
 
 The given domain model uses a nullable `Type` in `Card`. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and _basic_ Energy cards. Your **task** is to transform the given domain model to capture that invariant.
 
-### More precise energies
+### <img src="images/oddish.png" height="20px" /> More precise energies
 
 Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:
 
@@ -60,7 +60,7 @@ Even the previous refinement is not completely true. In fact, two types have som
 
 Your **task** is to refine the given _Type_ to account for these nuances. However, your solution should _not_ be just two or more different types; by using inheritance you can create several subsets of types and share common cases.
 
-### Information about evolution
+### <img src="images/vileplume.png" height="20px" /> Information about evolution
 
 One of the most important features of the Pokémon franchise is that Pokémon _evolve_, that is, they turn into (stronger) Pokémon as they progress. This is reflected in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.
 
@@ -89,11 +89,11 @@ As an **additional task**, you can improve the ordering of the deck shown in the
 - Make this ordering "inherent" to the `Card` type, and modify its `Comparable` implementation in `tcg/tcg.kt`;
 - Introduce this new ordering only in the `deck/view.kt` file, modifying its call to `sorted` using `sortedBy`.
 
-### Revamping the representation
+### <img src="images/jirachi.png" height="20px" /> Revamping the representation
 
 The way decks are modelled in the `Deck` type — as a simple list of `Card`s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an **extra over-arching task** you may explore other representations, like using a `Map<Card, Int>` or a `List<Pair<Card, Int>>` instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.
 
-## New search status
+## <img src="images/jirachi.png" height="20px" /> New search status
 
 The `SearchStatus` type used in `search/viewModel.kt` is quite similar to `Result` describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.
 

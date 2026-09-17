@@ -2,9 +2,13 @@
 
 The application in which we are going to work on, Poké-Fun, helps in the process of building decks for the Pokémon Trading Card Game (TCG). As usual in any software project, we first need to understand what all the words in the previous sentence mean; in other words, we need to dive into the _domain_.
 
-In general, a _Trading Card Game_ is a card game in which the set of cards is not fixed, unlike Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of cards; this is known as their _deck_. The _trading_ in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.
+In general, a _Trading Card Game_ is a card game in which the set of cards is not fixed, unlike Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of cards; this is known as their _deck_. The _trading_ in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends. 
 
-Most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function without at least one basic Pokémon.
+Poké-Fun is an application geared towards _building_ your deck. The main window is quite simple: on the left-hand side you may look for cards (in the basic implementation, only by their name), and on the right hand side you see the current contents of your deck. Below you see information about the _legality_ of your deck; in the window below you can see that more cards are needed.
+
+<img src="images/app.png" />
+
+Speaking of legality: most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function without at least one basic Pokémon.
 
 Once again we find a bunch of terms from the domain, what DDD practitioners call the _Ubiquitous Language_, so let's dive a bit more. Pokémon cards are divided in three big groups.
 

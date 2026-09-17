@@ -6,13 +6,13 @@ You may have noticed, while reading the types `Deck`, `Card`, and others in `tcg
 
 ## Sprinkling some optics magic dust
 
-The usual "gateway drug" to optics is replacing complex updates of immutable data with an imperative-style approach. This doesn't mean you're modifying the data in place, simply that the code you write _looks similar_ to doing so. This is explained at length in [_More powerful `copy`_](https://arrow-kt.io/learn/immutable-data/lens/#more-powerful-copy). Your **task** is to update `deck/viewModel.kt` to use this technique instead of `copy`.
+<img src="images/oddish.png" height="20px" /> The usual "gateway drug" to optics is replacing complex updates of immutable data with an imperative-style approach. This doesn't mean you're modifying the data in place, simply that the code you write _looks similar_ to doing so. This is explained at length in [_More powerful `copy`_](https://arrow-kt.io/learn/immutable-data/lens/#more-powerful-copy). Your **task** is to update `deck/viewModel.kt` to use this technique instead of `copy`.
 
-Right now `DeckPane` is very empty whenever there are no problems. Instead of a simple message, `DeckProblems` could show some statistics about the deck: how many cards of each category there are, how many of each energy type, and so on. This **task** should be implemented using [prisms](https://arrow-kt.io/learn/immutable-data/prism-iso/#sealed-class-hierarchies), [optionals](https://arrow-kt.io/learn/immutable-data/optional/), and [traversals](https://arrow-kt.io/learn/immutable-data/traversal/) over the `deck`.
+<img src="images/oddish.png" height="20px" /> Right now `DeckPane` is very empty whenever there are no problems. Instead of a simple message, `DeckProblems` could show some statistics about the deck: how many cards of each category there are, how many of each energy type, and so on. This **task** should be implemented using [prisms](https://arrow-kt.io/learn/immutable-data/prism-iso/#sealed-class-hierarchies), [optionals](https://arrow-kt.io/learn/immutable-data/optional/), and [traversals](https://arrow-kt.io/learn/immutable-data/traversal/) over the `deck`.
 
-Speaking of problems, [deck validation](./validation.md) is another place in which optics many become very handy, since you often need to dive deep inside the properties in `Deck`. The outcome of this **task** depends a lot on the way you've coded validation, but try to replace navigation within the structure with different optics.
+<img src="images/vileplume.png" height="20px" /> Speaking of problems, [deck validation](./validation.md) is another place in which optics many become very handy, since you often need to dive deep inside the properties in `Deck`. The outcome of this **task** depends a lot on the way you've coded validation, but try to replace navigation within the structure with different optics.
 
-## Targeting JSON
+## <img src="images/jirachi.png" height="20px" /> Targeting JSON
 
 Until this point we have focused on requesting data from a remote API. In some scenarios such requests are not possible or desirable, and a local data source is a better option. When you clone the repository for these exercises, you should find a `pokemon-tcg-data` submodule that contains a [copy of the data for the remote API](https://github.com/PokemonTCG/pokemon-tcg-data).
 

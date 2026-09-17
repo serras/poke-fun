@@ -180,7 +180,7 @@
                         <h1 id="local-llm-setup"><a class="header" href="#local-llm-setup">Local LLM setup</a></h1>
 <p>For this part of Poké-Fun we need to access a Large Language Model (LLM). Although you can use a cloud solution, <a href="https://ollama.com/">Ollama</a> gives you the chance of running a simpler one locally, so you don't need to spend any money (nor send any potentially private information to a third party).</p>
 <p>The easiest approach is to follow the <a href="https://ollama.com/download">official download instructions</a> — although in macOS you can also use <code>brew</code>, and in Linux you can use your distribution's package manager. It's not needed to keep Ollama running as a background service, you can just fire it up using <code>ollama serve</code> whenever you need it.</p>
-<p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data.</p>
+<p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data (~10 GB).</p>
 <div id="admonition-using-mlx-in-macos" class="admonition admonish-tip" role="note" aria-labelledby="admonition-using-mlx-in-macos-title">
 <div class="admonition-title">
 <div id="admonition-using-mlx-in-macos-title">

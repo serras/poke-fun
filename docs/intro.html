@@ -209,10 +209,10 @@
 <p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using Ktor's <a href="https://ktor.io/docs/client-create-new-application.html">client module</a>, and a "fake" one with a few predefined cards. After finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a> section, we'll have some respectable code.</p>
 <p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
 <ul>
-<li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
+<li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search, and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
 <li>On the right-hand side we have the <code>DeckPane</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
-<p>Both views make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
+<p>Both views make use of a common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
 
                     </main>
 

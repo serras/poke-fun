@@ -2,13 +2,13 @@
 
 Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on. Following the spirit of these times, we also hint at using (local) AI in the application.
 
-> The source code is available in [this repository](https://github.com/serras/poke-fun). Fork and clone your own fork with submodules (IntelliJ IDEA will download the submodules itself, or use `git clone --recurse-submodules <your-fork-url>`), and you are ready to go (apart from installing all the tools that you need, like java!!!).
+> The source code is available in [this repository](https://github.com/serras/poke-fun). Fork and clone your own fork with submodules, either by using IntelliJ IDEA or with `git clone --recurse-submodules <your-fork-url>`.
 
 This book assumes that you know your way around [Kotlin](https://kotlinlang.org), but previous experience with functional programming or [Arrow](https://arrow-kt.io), or with Compose Multiplatform, is not required.
 
-```admonish note title="Compose is multi-plaftorm"
+```admonish tip title="A word from our sponsor"
 
-For ease of development, the provided skeleton is a desktop application. Using Compose Multiplatform you can easily make it run in Android or iOS devices, with minor modifications.
+Many of these sections complement the book [Functional Programming Ideas for the Curious Kotliner](https://leanpub.com/fp-ideas-kotlin).
 
 ```
 
@@ -17,12 +17,6 @@ The starting point introduces the domain and the main components of the technolo
 - If you have never heard of the Pokémon Trading Card Game or don't know the rules, start with the [introduction to the domain](./tcg.md);
 - If you are new to the Kotlin Toolchain or Compose Multiplatform, start with [the technology](./tech-intro.md),
 - If you are new to local LLMs for AI, follow the [local LLM setup](./ai-setup.md) instructions.
-
-```admonish warning title="Built with the Kotlin Toolchain"
-
-Poké-Fun uses the [Kotlin Toolchain](https://kotlin-toolchain.org/) as build tool, as opposed to the most usual Gradle. In particular, you need to install the [corresponding plug-in](https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain) if you are using IntelliJ or Android Studio.
-
-```
 
 Afterward, the [overview](./intro.md) describes the main components of the given code.
 The rest of the guide is divided into a series of largely independent sections, so you can choose what you want to work on.
@@ -39,8 +33,16 @@ Each section contains an introduction to one or more topics, and pointers to add
 - [Fancy deck titles](./ai-use.md): learn the basics of AI agents to generate titles for the deck.
 - [More ideas for AI](./ai-use.md): use more AI functionality to spice the application.
 
-```admonish tip title="A word from our sponsor"
+To guide you through the material, sections and tasks are marked with different Pokémon:
 
-Many of these sections complement the book [Functional Programming Ideas for the Curious Kotliner](https://leanpub.com/fp-ideas-kotlin).
+- <img src="images/oddish.png" height="20px" /> _Oddish_ for basic tasks about the topic at hand;
+- <img src="images/vileplume.png" height="20px" /> _Vileplume_ for additional practice;
+- <img src="images/jirachi.png" height="20px" /> _Jirachi_ marks sections that involve thinking and understanding trade-offs.
+
+```admonish example title="The FP appetizer"
+
+If you want to learn what functional programming is about, we recommend the 
+<img src="images/oddish.png" height="20px" /> _Oddish_ sections, and focus on
+[data modelling](./adt.md), [validation](./validation.md), [actions as data](./build.md) and [optics](./optics.md).
 
 ```

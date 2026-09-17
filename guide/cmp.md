@@ -4,7 +4,7 @@
 
 Compose Multiplatform is a great UI library based on functional principles. Although more tutorials and guides are slowly hitting the shelves, most of the material about Jetpack Compose (the Android version) still applies here. In this section we propose a couple of tasks in case you want to dive further in the UI side of things.
 
-## Better search
+## <img src="images/vileplume.png" height="20px" /> Better search
 
 Right now Poké-Fun only searches cards by name. However, the API has [many more options](https://docs.pokemontcg.io/api-reference/cards/search-cards/), so you can filter with respect to the different attributes in a card. For example, the player may want to look for cards of a specific type to build a thematic deck.
 
@@ -16,7 +16,7 @@ Your **task** is to provide an _advanced_ search view (you can look at the [offi
 
 To help with the UI side of things, the provided `Type` enumeration already contains the URL of the image corresponding to each of the types.
 
-## Card detail view
+## <img src="images/vileplume.png" height="20px" /> Card detail view
 
 Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an _overview_ of the deck. Your **task** is to add a way to show a detailed view; for example, when the card is (double) clicked.
 

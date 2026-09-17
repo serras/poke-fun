@@ -207,7 +207,7 @@ For that reason, the current code uses the <a href="./local.html">local variant<
 To run the code against the remote API, change the constructor for <code>SearchViewModel</code>.</p>
 </div>
 </div>
-<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
+<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails"><img src="images/oddish.png" height="20px" /> Retry if fails</a></h2>
 <p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
 <h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
 <p>Improve the previous solution with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
@@ -215,7 +215,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <blockquote>
 <p>A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. <code>Schedule</code> is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.</p>
 </blockquote>
-<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
+<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache"><img src="images/vileplume.png" height="20px" /> Introduce a cache</a></h2>
 <p>The given implementation queries the Pokémon TCG API service for <em>every</em> search and every card. However, cards with an existing identifier almost never change (except for errata), so there is no need to get them over and over. Searches also change rarely: new sets with additional cards only appear every 3 months, and we do not expect our users to stay that long in the application.</p>
 <p>Introducing a <em>cache</em> improves performance, and also makes our application more resilient, since fewer calls need to communicate outside. Your <strong>task</strong> is to introduce <a href="https://reactivecircus.github.io/cache4k/">Cache4k</a>, a nice Kotlin Multiplatform option for this matter.</p>
 <div id="admonition-caching-and-memoization" class="admonition admonish-info" role="note" aria-labelledby="admonition-caching-and-memoization-title">

@@ -68,7 +68,7 @@ Actions as data is the beginning of a journey to _domain specific languages_ (DS
 
 ```
 
-## Move to actions as data
+## <img src="images/oddish.png" height="20px" /> Move to actions as data
 
 Your **task** is to finish the conversion of the given code into an actions-as-data-based approach. That is, copy (and extend if necessary) the `DeckOperation` type given above, and change the view model to use a single point of entry `apply` to every transformation.
 
@@ -78,7 +78,7 @@ Even though you can keep just the list of actions that were performed, and apply
 
 ```
 
-## Remove a card
+## <img src="images/vileplume.png" height="20px" /> Remove a card
 
 Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your **task** is to implement functionality to _remove_ a card from the deck: this involves changes in _both_ view model and view.
 
@@ -88,7 +88,7 @@ Take a look at `search/view.kt` to see how to add components to each card shown 
 
 ```
 
-## Undo and redo
+## <img src="images/vileplume.png" height="20px" /> Undo and redo
 
 One functionality which becomes much easier to implement when operations are reified as data is undo and redo, since you can very easily keep track of what the user has done.
 

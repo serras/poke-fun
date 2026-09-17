@@ -20,7 +20,7 @@ To run the code against the remote API, change the constructor for `SearchViewMo
 
 ```
 
-## Retry if fails
+## <img src="images/oddish.png" height="20px" /> Retry if fails
 
 The task here is to create a wrapper that adds retry capabilities to an inner `PokemonTcgApi` instance. Explore different variations of the [`Schedule`](https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy), from a simple fixed repetition, to exponential backoff policies.
 
@@ -32,7 +32,7 @@ As described in the [documentation](https://arrow-kt.io/learn/resilience/circuit
 
 > A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. `Schedule` is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.
 
-## Introduce a cache
+## <img src="images/vileplume.png" height="20px" /> Introduce a cache
 
 The given implementation queries the Pokémon TCG API service for _every_ search and every card. However, cards with an existing identifier almost never change (except for errata), so there is no need to get them over and over. Searches also change rarely: new sets with additional cards only appear every 3 months, and we do not expect our users to stay that long in the application.
 

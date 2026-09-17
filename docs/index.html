@@ -180,18 +180,18 @@
                         <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
 <p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on. Following the spirit of these times, we also hint at using (local) AI in the application.</p>
 <blockquote>
-<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Download or clone it, and you should be ready to go.</p>
+<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Fork and clone your own fork with submodules, either by using IntelliJ IDEA or with <code>git clone --recurse-submodules &lt;your-fork-url&gt;</code>.</p>
 </blockquote>
 <p>This book assumes that you know your way around <a href="https://kotlinlang.org">Kotlin</a>, but previous experience with functional programming or <a href="https://arrow-kt.io">Arrow</a>, or with Compose Multiplatform, is not required.</p>
-<div id="admonition-compose-is-multi-plaftorm" class="admonition admonish-note" role="note" aria-labelledby="admonition-compose-is-multi-plaftorm-title">
+<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
 <div class="admonition-title">
-<div id="admonition-compose-is-multi-plaftorm-title">
-<p>Compose is multi-plaftorm</p>
+<div id="admonition-a-word-from-our-sponsor-title">
+<p>A word from our sponsor</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-compose-is-multi-plaftorm"></a>
+<a class="admonition-anchor-link" href="#admonition-a-word-from-our-sponsor"></a>
 </div>
 <div>
-<p>For ease of development, the provided skeleton is a desktop application. Using Compose Multiplatform you can easily make it run in Android or iOS devices, with minor modifications.</p>
+<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
 </div>
 </div>
 <p>The starting point introduces the domain and the main components of the technology.</p>
@@ -200,17 +200,6 @@
 <li>If you are new to the Kotlin Toolchain or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
 <li>If you are new to local LLMs for AI, follow the <a href="./ai-setup.html">local LLM setup</a> instructions.</li>
 </ul>
-<div id="admonition-built-with-the-kotlin-toolchain" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-the-kotlin-toolchain-title">
-<div class="admonition-title">
-<div id="admonition-built-with-the-kotlin-toolchain-title">
-<p>Built with the Kotlin Toolchain</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-built-with-the-kotlin-toolchain"></a>
-</div>
-<div>
-<p>Poké-Fun uses the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, as opposed to the most usual Gradle. In particular, you need to install the <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">corresponding plug-in</a> if you are using IntelliJ or Android Studio.</p>
-</div>
-</div>
 <p>Afterward, the <a href="./intro.html">overview</a> describes the main components of the given code.
 The rest of the guide is divided into a series of largely independent sections, so you can choose what you want to work on.
 Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
@@ -226,15 +215,23 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li><a href="./ai-use.html">Fancy deck titles</a>: learn the basics of AI agents to generate titles for the deck.</li>
 <li><a href="./ai-use.html">More ideas for AI</a>: use more AI functionality to spice the application.</li>
 </ul>
-<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
+<p>To guide you through the material, sections and tasks are marked with different Pokémon:</p>
+<ul>
+<li><img src="images/oddish.png" height="20px" /> <em>Oddish</em> for basic tasks about the topic at hand;</li>
+<li><img src="images/vileplume.png" height="20px" /> <em>Vileplume</em> for additional practice;</li>
+<li><img src="images/jirachi.png" height="20px" /> <em>Jirachi</em> marks sections that involve thinking and understanding trade-offs.</li>
+</ul>
+<div id="admonition-the-fp-appetizer" class="admonition admonish-example" role="note" aria-labelledby="admonition-the-fp-appetizer-title">
 <div class="admonition-title">
-<div id="admonition-a-word-from-our-sponsor-title">
-<p>A word from our sponsor</p>
+<div id="admonition-the-fp-appetizer-title">
+<p>The FP appetizer</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-a-word-from-our-sponsor"></a>
+<a class="admonition-anchor-link" href="#admonition-the-fp-appetizer"></a>
 </div>
 <div>
-<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
+<p>If you want to learn what functional programming is about, we recommend the
+<img src="images/oddish.png" height="20px" /> <em>Oddish</em> sections, and focus on
+<a href="./adt.html">data modelling</a>, <a href="./validation.html">validation</a>, <a href="./build.html">actions as data</a> and <a href="./optics.html">optics</a>.</p>
 </div>
 </div>
                     </main>

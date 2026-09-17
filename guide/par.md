@@ -4,7 +4,7 @@
 
 Poké-Fun as provided has a very big limitation. You can only work on your deck in one go: if you want to devote several sessions to it, you must either (1) not close the application, or (2) write down your cards in a piece of paper and add them back the next time. In this section we add support for loading and saving _deck files_, and learn about high-level parallelism on the way.
 
-## Load and store
+## <img src="images/oddish.png" height="20px" /> Load and store
 
 The first **task** is to implement saving the deck as a file, and being able to read it back afterward. Feel free to choose whatever format you like, from the list of identifiers separated by new lines, to some sort of JSON.
 
@@ -22,7 +22,7 @@ However, doing so only ensures that the action runs in the context of our view m
 
 ```
 
-## From exceptions to `Raise`
+## <img src="images/vileplume.png" height="20px" /> From exceptions to `Raise`
 
 Problems may arise during the retrieval of card information, but the current code is not prepared for that eventuality. In this section we improve the situation by using `Raise`.
 

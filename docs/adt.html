@@ -182,7 +182,7 @@
 <p><strong>Topics</strong>: sealed hierarchies, data classes, immutability</p>
 </blockquote>
 <p>One of the key components in the <em>functional</em> approach to programming we promote is how we <strong>model</strong> the data. In other words, how we represent the information we care about throughout the execution of our application.</p>
-<p>We prefer a <strong>immutable</strong> representation to one where mutation is available. This main benefit is at the level of <em>reasoning</em>, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
+<p>We prefer an <strong>immutable</strong> representation to one where mutation is available. This main benefit is at the level of <em>reasoning</em>, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
 <p>This property alone has a profound impact on our data types. Since there is no mutation, the values are <strong>stateless</strong>. Instead of thinking about modification, for example with <code>person.setName("me")</code>, we think in terms of transformation and copying, <code>person.copy(name = "me")</code>. Functional programmers are usually proud of their <strong>anemic</strong> domain models, in which operations always exist as transformations of data.</p>
 <p>We also strive for a <strong>precise</strong> representation, which captures every possible <em>invariant</em> (domain rule) in our data. A prime example from the UI world is data which may also be loading or have errors while obtaining. One potential representation is given by</p>
 <pre><code class="language-kotlin">class Result(
@@ -191,7 +191,7 @@
 )
 </code></pre>
 <p>with the additional invariant that at most one of the values should be non-<code>null</code>, and both being <code>null</code> represents a loading state.</p>
-<p>This is problematic, though, because there is nothing stopping us from breaking that invariant. A more precise representation capture the three possible states as three different types in a sealed hierarchy,</p>
+<p>This is problematic, though, because there is nothing stopping us from breaking that invariant. A more precise representation captures the three possible states as three different types in a sealed hierarchy,</p>
 <pre><code class="language-kotlin">sealed interface Result {
   data object Loading: Result
   data class Success(val data: Card): Result
@@ -215,22 +215,22 @@
 </div>
 </div>
 <h2 id="improving-the-domain"><a class="header" href="#improving-the-domain">Improving the domain</a></h2>
-<h3 id="more-precise-type"><a class="header" href="#more-precise-type">More precise <code>type</code></a></h3>
+<h3 id="more-precise-type"><a class="header" href="#more-precise-type"><img src="images/oddish.png" height="20px" /> More precise <code>type</code></a></h3>
 <p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
-<h3 id="more-precise-energies"><a class="header" href="#more-precise-energies">More precise energies</a></h3>
+<h3 id="more-precise-energies"><a class="header" href="#more-precise-energies"><img src="images/oddish.png" height="20px" /> More precise energies</a></h3>
 <p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
 <ul>
-<li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
+<li><em>Dragon</em> acts as the type of a Pokémon, but never as the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
 </ul>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody>
-<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks do not use that energy (since it's forbidden). However, they both use <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks use energy of a different type (since the dragon type energy doesn't exist). In this case, they both use the <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
 <tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
 </tbody></table>
 </div>
 <p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
-<h3 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h3>
-<p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
+<h3 id="information-about-evolution"><a class="header" href="#information-about-evolution"><img src="images/vileplume.png" height="20px" /> Information about evolution</a></h3>
+<p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is reflected in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
 <div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
 <div class="admonition-title">
 <div id="admonition-one-direction-does-not-imply-the-other-title">
@@ -239,7 +239,7 @@
 <a class="admonition-anchor-link" href="#admonition-one-direction-does-not-imply-the-other"></a>
 </div>
 <div>
-<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having record eight different evolutions.</p>
+<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having a record eight different evolutions.</p>
 </div>
 </div>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody>
@@ -264,9 +264,9 @@
 <li>Make this ordering "inherent" to the <code>Card</code> type, and modify its <code>Comparable</code> implementation in <code>tcg/tcg.kt</code>;</li>
 <li>Introduce this new ordering only in the <code>deck/view.kt</code> file, modifying its call to <code>sorted</code> using <code>sortedBy</code>.</li>
 </ul>
-<h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation">Revamping the representation</a></h3>
+<h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation"><img src="images/jirachi.png" height="20px" /> Revamping the representation</a></h3>
 <p>The way decks are modelled in the <code>Deck</code> type — as a simple list of <code>Card</code>s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an <strong>extra over-arching task</strong> you may explore other representations, like using a <code>Map&lt;Card, Int&gt;</code> or a <code>List&lt;Pair&lt;Card, Int&gt;&gt;</code> instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.</p>
-<h2 id="new-search-status"><a class="header" href="#new-search-status">New search status</a></h2>
+<h2 id="new-search-status"><a class="header" href="#new-search-status"><img src="images/jirachi.png" height="20px" /> New search status</a></h2>
 <p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 <p>To understand how the exhaustiveness helps, add a new <code>data object Unavailable : SearchStatus</code> to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your <strong>task</strong> is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used <code>else</code> instead of matching on each of the cases separately.</p>
 

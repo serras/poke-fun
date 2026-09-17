@@ -181,18 +181,18 @@
                         <h1 id="poké-fun-with-kotlin-and-arrow"><a class="header" href="#poké-fun-with-kotlin-and-arrow">Poké-Fun with Kotlin and Arrow</a></h1>
 <p>Welcome! In this guide we (well, actually you) are going to work on an application to build decks for the Pokémon Trading Card Game (TCG). Each chapter roughly corresponds to a different functionality: loading decks, searching cards, and so on. Following the spirit of these times, we also hint at using (local) AI in the application.</p>
 <blockquote>
-<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Download or clone it, and you should be ready to go.</p>
+<p>The source code is available in <a href="https://github.com/serras/poke-fun">this repository</a>. Fork and clone your own fork with submodules, either by using IntelliJ IDEA or with <code>git clone --recurse-submodules &lt;your-fork-url&gt;</code>.</p>
 </blockquote>
 <p>This book assumes that you know your way around <a href="https://kotlinlang.org">Kotlin</a>, but previous experience with functional programming or <a href="https://arrow-kt.io">Arrow</a>, or with Compose Multiplatform, is not required.</p>
-<div id="admonition-compose-is-multi-plaftorm" class="admonition admonish-note" role="note" aria-labelledby="admonition-compose-is-multi-plaftorm-title">
+<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
 <div class="admonition-title">
-<div id="admonition-compose-is-multi-plaftorm-title">
-<p>Compose is multi-plaftorm</p>
+<div id="admonition-a-word-from-our-sponsor-title">
+<p>A word from our sponsor</p>
 </div>
-<a class="admonition-anchor-link" href="welcome.html#admonition-compose-is-multi-plaftorm"></a>
+<a class="admonition-anchor-link" href="welcome.html#admonition-a-word-from-our-sponsor"></a>
 </div>
 <div>
-<p>For ease of development, the provided skeleton is a desktop application. Using Compose Multiplatform you can easily make it run in Android or iOS devices, with minor modifications.</p>
+<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
 </div>
 </div>
 <p>The starting point introduces the domain and the main components of the technology.</p>
@@ -201,17 +201,6 @@
 <li>If you are new to the Kotlin Toolchain or Compose Multiplatform, start with <a href="./tech-intro.html">the technology</a>,</li>
 <li>If you are new to local LLMs for AI, follow the <a href="./ai-setup.html">local LLM setup</a> instructions.</li>
 </ul>
-<div id="admonition-built-with-the-kotlin-toolchain" class="admonition admonish-warning" role="note" aria-labelledby="admonition-built-with-the-kotlin-toolchain-title">
-<div class="admonition-title">
-<div id="admonition-built-with-the-kotlin-toolchain-title">
-<p>Built with the Kotlin Toolchain</p>
-</div>
-<a class="admonition-anchor-link" href="welcome.html#admonition-built-with-the-kotlin-toolchain"></a>
-</div>
-<div>
-<p>Poké-Fun uses the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, as opposed to the most usual Gradle. In particular, you need to install the <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">corresponding plug-in</a> if you are using IntelliJ or Android Studio.</p>
-</div>
-</div>
 <p>Afterward, the <a href="./intro.html">overview</a> describes the main components of the given code.
 The rest of the guide is divided into a series of largely independent sections, so you can choose what you want to work on.
 Each section contains an introduction to one or more topics, and pointers to additional tutorials or documentation about them.</p>
@@ -227,20 +216,30 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li><a href="./ai-use.html">Fancy deck titles</a>: learn the basics of AI agents to generate titles for the deck.</li>
 <li><a href="./ai-use.html">More ideas for AI</a>: use more AI functionality to spice the application.</li>
 </ul>
-<div id="admonition-a-word-from-our-sponsor" class="admonition admonish-tip" role="note" aria-labelledby="admonition-a-word-from-our-sponsor-title">
+<p>To guide you through the material, sections and tasks are marked with different Pokémon:</p>
+<ul>
+<li><img src="images/oddish.png" height="20px" /> <em>Oddish</em> for basic tasks about the topic at hand;</li>
+<li><img src="images/vileplume.png" height="20px" /> <em>Vileplume</em> for additional practice;</li>
+<li><img src="images/jirachi.png" height="20px" /> <em>Jirachi</em> marks sections that involve thinking and understanding trade-offs.</li>
+</ul>
+<div id="admonition-the-fp-appetizer" class="admonition admonish-example" role="note" aria-labelledby="admonition-the-fp-appetizer-title">
 <div class="admonition-title">
-<div id="admonition-a-word-from-our-sponsor-title">
-<p>A word from our sponsor</p>
+<div id="admonition-the-fp-appetizer-title">
+<p>The FP appetizer</p>
 </div>
-<a class="admonition-anchor-link" href="welcome.html#admonition-a-word-from-our-sponsor"></a>
+<a class="admonition-anchor-link" href="welcome.html#admonition-the-fp-appetizer"></a>
 </div>
 <div>
-<p>Many of these sections complement the book <a href="https://leanpub.com/fp-ideas-kotlin">Functional Programming Ideas for the Curious Kotliner</a>.</p>
+<p>If you want to learn what functional programming is about, we recommend the
+<img src="images/oddish.png" height="20px" /> <em>Oddish</em> sections, and focus on
+<a href="./adt.html">data modelling</a>, <a href="./validation.html">validation</a>, <a href="./build.html">actions as data</a> and <a href="./optics.html">optics</a>.</p>
 </div>
 </div><div style="break-before: page; page-break-before: always;"></div><h1 id="trading-card-games"><a class="header" href="#trading-card-games">Trading Card Games</a></h1>
 <p>The application in which we are going to work on, Poké-Fun, helps in the process of building decks for the Pokémon Trading Card Game (TCG). As usual in any software project, we first need to understand what all the words in the previous sentence mean; in other words, we need to dive into the <em>domain</em>.</p>
-<p>In general, a <em>Trading Card Game</em> is a card game in which the set of cards is not fixed, as in Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of cards; this is known as their <em>deck</em>. The <em>trading</em> in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.</p>
-<p>Most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function without at least one basic Pokémon.</p>
+<p>In general, a <em>Trading Card Game</em> is a card game in which the set of cards is not fixed, unlike Póker or Mus. In the case of Pokémon TCG, every year more than 500 new cards are introduced. In order to play, each player chooses a subset of cards; this is known as their <em>deck</em>. The <em>trading</em> in TCG comes from the fact that traditionally you get the cards you need by exchanging them with your friends.</p>
+<p>Poké-Fun is an application geared towards <em>building</em> your deck. The main window is quite simple: on the left-hand side you may look for cards (in the basic implementation, only by their name), and on the right hand side you see the current contents of your deck. Below you see information about the <em>legality</em> of your deck; in the window below you can see that more cards are needed.</p>
+<img src="images/app.png" />
+<p>Speaking of legality: most TCGs, and Pokémon is no exception, place some implicit and explicit restrictions on how decks may be built. Explicit restrictions include, among others, that your deck must contain exactly 60 cards. Other restrictions are implicit in the rules of the game; for example, a Pokémon deck cannot function without at least one basic Pokémon.</p>
 <p>Once again we find a bunch of terms from the domain, what DDD practitioners call the <em>Ubiquitous Language</em>, so let's dive a bit more. Pokémon cards are divided in three big groups.</p>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th></tr></thead><tbody>
 <tr><td><img src="https://images.pokemontcg.io/svp/46_hires.png" alt="Bulbasaur" /></td><td><em>Pokémon</em> cards represent little monsters that fight against those of your opponent. Each Pokémon has one or more <em>attacks</em>, and <em>health points</em> (HP), which define how much damage they can take before fainting.</td></tr>
@@ -249,7 +248,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 </tbody></table>
 </div>
 <p>Pokémon and energies also have a <em>type</em>. There are currently ten different types in the Pokémon TCG — grass <img src="images/grass.png" height="15px" />, fire <img src="images/fire.png" height="15px" />, water <img src="images/water.png" height="15px" />, lightning <img src="images/lightning.png" height="15px" />, fighting <img src="images/fighting.png" height="15px" />, psychic <img src="images/psychic.png" height="15px" />, metal <img src="images/metal.png" height="15px" />, darkness <img src="images/darkness.png" height="15px" />, dragon <img src="images/dragon.png" height="15px" />, and the deprecated fairy <img src="images/fairy.png" height="15px" /> — alongside a special colorless <img src="images/colorless.png" height="15px" /> type. In most cases a Pokémon of a certain type requires energy of the same type, but this is not a rule.</p>
-<p>One key component of the Pokémon world is that the little monsters <em>evolve</em>, that is, the turn into bigger and more powerful creatures. In the TCG this is reflected by having to begin with <em>basic</em> Pokémon (hence the implicit requirement to have at least one in your deck), which then may turn into <em>stage 1</em>, and eventually in <em>stage 2</em>.</p>
+<p>One key component of the Pokémon world is that the little monsters <em>evolve</em>, that is, they turn into bigger and more powerful creatures. In the TCG this is reflected by having to begin with <em>basic</em> Pokémon (hence the implicit requirement to have at least one in your deck), which then may turn into <em>stage 1</em>, and eventually into <em>stage 2</em>.</p>
 <p>Apart from the type, one key attribute of cards is their <em>name</em>, since the rules have explicit restrictions on the amount of cards you can have with the same name. However, this does not mean that all cards with the same name are the same; for that reason each of them has an <em>identifier</em> to uniquely point to it.</p>
 <div id="admonition-example" class="admonition admonish-example" role="note" aria-labelledby="admonition-example-title">
 <div class="admonition-title">
@@ -266,10 +265,10 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>This is enough for our purposes. If you are interested to learn how to play the game, check the <a href="https://www.pokemon.com/us/pokemon-tcg/rules">official rulebook</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="the-technology"><a class="header" href="#the-technology">The technology</a></h1>
 <p>Poké-Fun is implemented using <a href="https://kotlinlang.org/">Kotlin</a>, <a href="https://arrow-kt.io/">Arrow</a>, <a href="https://docs.koog.ai/">Koog</a>, and <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a>. The latter has been chosen because it provides the same concepts to build user interfaces in a variety of platforms. In particular, we can write a desktop application that runs easily everywhere (the perks of using the JVM 😉).</p>
-<p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application you can run <code>./kotlin run</code> in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up.</p>
-<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plug-in</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plug-in</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
+<p>The one choice which goes out of the ordinary is using the <a href="https://kotlin-toolchain.org/">Kotlin Toolchain</a> as build tool, instead of Gradle, much better-known among Kotliners. Feel free to look at the <code>module.yaml</code> file, but for the tasks you won't need to touch it. To start the application, run <code>./kotlin run -m poke-fun</code> via the green triangle, or in a command line. The first time it may take some time to start, since build tools, compiler, and dependencies need to be set up. Once you run it, the app window should open up. It may also output some warnings in the terminal, ignore them.</p>
+<p>We recommend using <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> or <a href="https://developer.android.com/studio">Android Studio</a> to work on Poké-Fun. You need at least the corresponding <a href="https://plugins.jetbrains.com/plugin/31850-kotlin-toolchain">Kotlin Toolchain plugin</a>, and the <a href="https://plugins.jetbrains.com/plugin/14936-kotlin-multiplatform">Kotlin Multiplatform plugin</a> is highly recommended. In both cases, you should see a small play button to run the application from the IDE.</p>
 <h2 id="compose-multiplatform"><a class="header" href="#compose-multiplatform">Compose Multiplatform</a></h2>
-<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view, which is then defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
+<p>In recent years we have seen an explosion of a new paradigm for UI development, based on managing the state separately from the view. The view is defined as a function which is re-executed every time the state changes. Some well-known frameworks include <a href="https://react.dev/">React</a> for web, <a href="https://developer.apple.com/xcode/swiftui/">SwiftUI</a> for iOS, and <a href="https://developer.android.com/develop/ui/compose">Jetpack Compose</a> for Android. <a href="https://www.jetbrains.com/lp/compose-multiplatform/">Compose Multiplatform</a> uses the same concepts of the latter, but targeting several platforms (at the time of writing: desktop, Android, iOS, and web via WebAssembly).</p>
 <div id="admonition-more-about-compose-multiplatform" class="admonition admonish-info" role="note" aria-labelledby="admonition-more-about-compose-multiplatform-title">
 <div class="admonition-title">
 <div id="admonition-more-about-compose-multiplatform-title">
@@ -309,14 +308,14 @@ Each section contains an introduction to one or more topics, and pointers to add
   }
 }
 </code></pre>
-<p>The view consumes this view model, and shows a button with a text indicating the amount of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
+<p>The view consumes this view model, and shows a button with a text indicating the number of times it has been clicked. Note how the <code>.increment()</code> function in the view model is tied to the use case in the view.</p>
 <pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
     Text("Clicked ${counter.count.value} times")
   }
 }
 </code></pre>
-<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this link work.</p>
+<p>What happens when the button is pressed? Then the <code>onClick</code> lambda is executed, which eventually changes the value of <code>count</code>. Compose detects this change and <em>recomposes</em> the UI, that is, re-executes <code>Screen</code> and applies any update to the visible screen. As discussed above, the <code>@Composable</code> annotation (alongside the Compose compiler) is the magic that makes this work.</p>
 <p>If you want to use the value of a <code>StateFlow</code> several times, it's better to use a combination of <a href="https://kotlinlang.org/docs/delegated-properties.html">property delegation</a> and <code>.collectAsState()</code>.</p>
 <pre><code class="language-kotlin">@Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
@@ -325,8 +324,8 @@ Each section contains an introduction to one or more topics, and pointers to add
   }
 }
 </code></pre>
-<p>The connection between view model and view is ultimately done when creating the application, or via navigation. In the case of Poké-Fun, the <code>main</code> entry point creates a new view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
-<p>Armed with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
+<p>The connection between a view model and a view is established when creating the application, or via navigation. In Poké-Fun, the <code>main</code> entry point creates a view model linked to lifecycle of the application window, and then passes this view model to the corresponding view.</p>
+<p>Now that you are equipped with this knowledge, you can read the <a href="./intro.html">introduction</a> to Poké-Fun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="overview-of-the-code"><a class="header" href="#overview-of-the-code">Overview of the code</a></h1>
 <p>Now that you know about the <a href="./tcg.html">domain</a> and the <a href="./tech-intro.html">technology</a>, we can describe the given implementation of Poké-Fun.</p>
 <h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
@@ -359,16 +358,16 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Access to the Pokémon TCG API is mediated by the <code>PokemonTcgApi</code> interface (in the <code>tcg/api</code> folder), for which we give a "real" implementation talking over the network using Ktor's <a href="https://ktor.io/docs/client-create-new-application.html">client module</a>, and a "fake" one with a few predefined cards. After finishing the <a href="./resilience.html"><em>Deal with bad internet</em></a> section, we'll have some respectable code.</p>
 <p>Two different views represent the data of the view models in a graphical manner. Those are put together in a single screen using a <code>SplitPane</code>, one of the <a href="https://github.com/JetBrains/compose-multiplatform/blob/master/tutorials/README.md#desktop">desktop-specific components</a> offered by Compose Multiplatform.</p>
 <ul>
-<li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
+<li>On the left-hand side we have the <code>SearchPane</code> (in <code>search/view.kt</code>), where the users input their search, and see results. This view also adds selected cards to the deck, hence the dependence on the <code>DeckViewModel</code>.</li>
 <li>On the right-hand side we have the <code>DeckPane</code> (in <code>deck/view.kt</code>), which simply shows the cards and problems.</li>
 </ul>
-<p>Both views make use of common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
+<p>Both views make use of a common component to show a single <code>Card</code> and multiple <code>Card</code>s, found in <code>tcg/cardView.kt</code>. These components have an <code>extra</code> parameter which is used to provide the different elements required in each of the views (for example, the <em>Add</em> button in the search pane).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="what-is-in-a-deck"><a class="header" href="#what-is-in-a-deck">What is (in) a deck</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: sealed hierarchies, data classes, immutability</p>
 </blockquote>
 <p>One of the key components in the <em>functional</em> approach to programming we promote is how we <strong>model</strong> the data. In other words, how we represent the information we care about throughout the execution of our application.</p>
-<p>We prefer a <strong>immutable</strong> representation to one where mutation is available. This main benefit is at the level of <em>reasoning</em>, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
+<p>We prefer an <strong>immutable</strong> representation to one where mutation is available. This main benefit is at the level of <em>reasoning</em>, as it becomes much easier to understand what is going on and potential problems. If instead of modifying data we always transform it into a completely new value, we do not need to care about concurrent accesses. More bluntly, a whole source of potential bugs disappear when using immutability.</p>
 <p>This property alone has a profound impact on our data types. Since there is no mutation, the values are <strong>stateless</strong>. Instead of thinking about modification, for example with <code>person.setName("me")</code>, we think in terms of transformation and copying, <code>person.copy(name = "me")</code>. Functional programmers are usually proud of their <strong>anemic</strong> domain models, in which operations always exist as transformations of data.</p>
 <p>We also strive for a <strong>precise</strong> representation, which captures every possible <em>invariant</em> (domain rule) in our data. A prime example from the UI world is data which may also be loading or have errors while obtaining. One potential representation is given by</p>
 <pre><code class="language-kotlin">class Result(
@@ -377,7 +376,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 )
 </code></pre>
 <p>with the additional invariant that at most one of the values should be non-<code>null</code>, and both being <code>null</code> represents a loading state.</p>
-<p>This is problematic, though, because there is nothing stopping us from breaking that invariant. A more precise representation capture the three possible states as three different types in a sealed hierarchy,</p>
+<p>This is problematic, though, because there is nothing stopping us from breaking that invariant. A more precise representation captures the three possible states as three different types in a sealed hierarchy,</p>
 <pre><code class="language-kotlin">sealed interface Result {
   data object Loading: Result
   data class Success(val data: Card): Result
@@ -401,22 +400,22 @@ Each section contains an introduction to one or more topics, and pointers to add
 </div>
 </div>
 <h2 id="improving-the-domain"><a class="header" href="#improving-the-domain">Improving the domain</a></h2>
-<h3 id="more-precise-type"><a class="header" href="#more-precise-type">More precise <code>type</code></a></h3>
+<h3 id="more-precise-type"><a class="header" href="#more-precise-type"><img src="images/oddish.png" height="20px" /> More precise <code>type</code></a></h3>
 <p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
-<h3 id="more-precise-energies"><a class="header" href="#more-precise-energies">More precise energies</a></h3>
+<h3 id="more-precise-energies"><a class="header" href="#more-precise-energies"><img src="images/oddish.png" height="20px" /> More precise energies</a></h3>
 <p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
 <ul>
-<li><em>Dragon</em> may be the type of a Pokémon, but never the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
+<li><em>Dragon</em> acts as the type of a Pokémon, but never as the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
 </ul>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody>
-<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks do not use that energy (since it's forbidden). However, they both use <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
+<tr><td><img src="https://images.pokemontcg.io/svp/91_hires.png" alt="Koraidon" /></td><td><img src="https://images.pokemontcg.io/svp/92_hires.png" alt="Miraidon" /></td><td>These cards are of <em>dragon</em> <img src="images/dragon.png" height="15px" /> type, but their attacks use energy of a different type (since the dragon type energy doesn't exist). In this case, they both use the <em>colorless</em> <img src="images/colorless.png" height="15px" /> energy.</td></tr>
 <tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
 </tbody></table>
 </div>
 <p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
-<h3 id="information-about-evolution"><a class="header" href="#information-about-evolution">Information about evolution</a></h3>
-<p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is mapped in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
+<h3 id="information-about-evolution"><a class="header" href="#information-about-evolution"><img src="images/vileplume.png" height="20px" /> Information about evolution</a></h3>
+<p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is reflected in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
 <div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
 <div class="admonition-title">
 <div id="admonition-one-direction-does-not-imply-the-other-title">
@@ -425,7 +424,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 <a class="admonition-anchor-link" href="adt.html#admonition-one-direction-does-not-imply-the-other"></a>
 </div>
 <div>
-<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having record eight different evolutions.</p>
+<p>Every Stage 1 or Stage 2 Pokémon evolves <em>from exactly one</em> Pokémon. However, the converse is not true: a single Pokémon may evolve <em>to more than one</em> Pokémon (or none). For example, Gloom may evolve into Vileplume and Bellossom, with Eevee having a record eight different evolutions.</p>
 </div>
 </div>
 <div class="table-wrapper"><table><thead><tr><th></th><th></th><th></th><th></th></tr></thead><tbody>
@@ -450,9 +449,9 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li>Make this ordering "inherent" to the <code>Card</code> type, and modify its <code>Comparable</code> implementation in <code>tcg/tcg.kt</code>;</li>
 <li>Introduce this new ordering only in the <code>deck/view.kt</code> file, modifying its call to <code>sorted</code> using <code>sortedBy</code>.</li>
 </ul>
-<h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation">Revamping the representation</a></h3>
+<h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation"><img src="images/jirachi.png" height="20px" /> Revamping the representation</a></h3>
 <p>The way decks are modelled in the <code>Deck</code> type — as a simple list of <code>Card</code>s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an <strong>extra over-arching task</strong> you may explore other representations, like using a <code>Map&lt;Card, Int&gt;</code> or a <code>List&lt;Pair&lt;Card, Int&gt;&gt;</code> instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.</p>
-<h2 id="new-search-status"><a class="header" href="#new-search-status">New search status</a></h2>
+<h2 id="new-search-status"><a class="header" href="#new-search-status"><img src="images/jirachi.png" height="20px" /> New search status</a></h2>
 <p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 <p>To understand how the exhaustiveness helps, add a new <code>data object Unavailable : SearchStatus</code> to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your <strong>task</strong> is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used <code>else</code> instead of matching on each of the cases separately.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="law-abiding-decks"><a class="header" href="#law-abiding-decks">Law-abiding decks</a></h1>
@@ -468,6 +467,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Feel free to use any style that you prefer in this section. When in doubt, using <code>Raise</code> (as opposed to <code>Either</code>) is the preferred option when using Arrow.</p>
 <h2 id="legal-decks"><a class="header" href="#legal-decks">Legal decks</a></h2>
 <p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>tcg/validation.kt</code> file contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck, and a non-empty title.</p>
+<h3 id="main-rules"><a class="header" href="#main-rules"><img src="images/oddish.png" height="20px" /> Main rules</a></h3>
 <p>The main rules for the legality of a deck are:</p>
 <ul>
 <li>The deck must contain exactly 60 cards,</li>
@@ -480,7 +480,8 @@ Each section contains an introduction to one or more topics, and pointers to add
 <li>There must be at least one <em>basic</em> Pokémon.</li>
 </ul>
 <p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
-<p><strong>Extra task</strong>: implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
+<h3 id="evolution"><a class="header" href="#evolution"><img src="images/vileplume.png" height="20px" /> Evolution</a></h3>
+<p>implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <div id="admonition-nullable-non-empty-list" class="admonition admonish-info" role="note" aria-labelledby="admonition-nullable-non-empty-list-title">
 <div class="admonition-title">
 <div id="admonition-nullable-non-empty-list-title">
@@ -503,19 +504,19 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>The <code>module.yaml</code> file enables the (experimental) <a href="https://kotlinlang.org/docs/unused-return-value-checker.html">return value checker</a>. This ensures that every <code>Either</code> you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some <code>.bind()</code> calls from the code you wrote for the previous tasks, and watch the compiler complaining.</p>
 </div>
 </div>
-<h3 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards">Problems tied to specific cards</a></h3>
-<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
-<p><strong>Extra task</strong>: show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
-<h3 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge">Gym Leader Challenge</a></h3>
+<h3 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards"><img src="images/oddish.png" height="20px" /> Problems tied to specific cards</a></h3>
+<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is to introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
+<p>If you want some additional UI tasks, show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
+<h3 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge"><img src="images/vileplume.png" height="20px" /> Gym Leader Challenge</a></h3>
 <p>The rules described above correspond to the <em>Standard</em> format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like <a href="https://gymleaderchallenge.com/">Gym Leader Challenge</a> (GLC). As an <strong>extra task</strong>, you may implement <a href="https://gymleaderchallenge.com/rules">GLC rules</a>.</p>
 <ul>
 <li>You may need to add some UI element to specify the format your deck is in.</li>
 <li>GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.</li>
 </ul>
-<h2 id="property-based-testing"><a class="header" href="#property-based-testing">Property-based testing</a></h2>
+<h2 id="property-based-testing"><a class="header" href="#property-based-testing"><img src="images/vileplume.png" height="20px" /> Property-based testing</a></h2>
 <p>One big advantage of following an immutable approach to modelling decks is that testing becomes much easier, since there are no dependencies to account for. In particular you can use <a href="https://kotest.io/docs/proptest/property-based-testing.html">property-based testing</a>, an approach in which lots of random inputs are generated, and then <em>properties</em> of the result are checked. This raises the level of abstraction: for example, you don't test that a certain deck returns certain error, but rather that "validating every deck with fewer than 60 card contains a <code>NotEnoughCards</code> error among those returned".</p>
 <p>Your <strong>task</strong> is to add more tests to the <code>test/tcg/validation.kt</code> file. This file already contains one test you can use as a template. The project is set up to use <a href="https://kotest.io/">Kotest</a>, in particular using the <a href="https://kotest.io/docs/proptest/property-test-functions.html#check-all"><code>checkAll</code></a> function. For more complex scenarios yoy may need to write <a href="https://kotest.io/docs/proptest/custom-generators.html">custom generators</a> that provide more exact input to your tests.</p>
-<h2 id="reactive-problems"><a class="header" href="#reactive-problems">Reactive problems</a></h2>
+<h2 id="reactive-problems"><a class="header" href="#reactive-problems"><img src="images/jirachi.png" height="20px" /> Reactive problems</a></h2>
 <p>The current implementation has a potential problem: you need to update <code>problems</code> every time you update <code>deck</code>. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like <a href="https://github.com/ReactiveX/RxJava">RxJava</a> allow expressing this connection directly, and we can easily do the same using a <code>StateFlow</code>.</p>
 <p>Your <strong>task</strong> is to replace each update to the <code>problems</code> mutable state with a new definition based on <code>deck</code>. You can use the function <code>map</code> in <code>utils/flow.kt</code>.</p>
 <div id="admonition-map-as-in-lists" class="admonition admonish-info" role="note" aria-labelledby="admonition-map-as-in-lists-title">
@@ -595,7 +596,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Actions as data is the beginning of a journey to <em>domain specific languages</em> (DSLs), the idea of introducing a small language to describe your specific domain. In particular, actions as data relate to a particular technique to implement DSLs, called <em>initial style</em>. <a href="https://serranofp.com/inikio/">Inikio</a> is a compiler plug-in to facilitate the development of such DSLs in Kotlin.</p>
 </div>
 </div>
-<h2 id="move-to-actions-as-data"><a class="header" href="#move-to-actions-as-data">Move to actions as data</a></h2>
+<h2 id="move-to-actions-as-data"><a class="header" href="#move-to-actions-as-data"><img src="images/oddish.png" height="20px" /> Move to actions as data</a></h2>
 <p>Your <strong>task</strong> is to finish the conversion of the given code into an actions-as-data-based approach. That is, copy (and extend if necessary) the <code>DeckOperation</code> type given above, and change the view model to use a single point of entry <code>apply</code> to every transformation.</p>
 <div id="admonition-keeping-the-current-state" class="admonition admonish-warning" role="note" aria-labelledby="admonition-keeping-the-current-state-title">
 <div class="admonition-title">
@@ -608,7 +609,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Even though you can keep just the list of actions that were performed, and apply them whenever the current state is required, this choice usually leads to bad performance. We strongly recommend that you keep the same <code>MutableStateFlow</code> as you have now.</p>
 </div>
 </div>
-<h2 id="remove-a-card"><a class="header" href="#remove-a-card">Remove a card</a></h2>
+<h2 id="remove-a-card"><a class="header" href="#remove-a-card"><img src="images/vileplume.png" height="20px" /> Remove a card</a></h2>
 <p>Right now the only option the users of Poké-Fun have if they have added a card they do not like is to clear the entire deck 🫠 Your <strong>task</strong> is to implement functionality to <em>remove</em> a card from the deck: this involves changes in <em>both</em> view model and view.</p>
 <div id="admonition-tip" class="admonition admonish-tip" role="note" aria-labelledby="admonition-tip-title">
 <div class="admonition-title">
@@ -621,7 +622,7 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Take a look at <code>search/view.kt</code> to see how to add components to each card shown on the screen.</p>
 </div>
 </div>
-<h2 id="undo-and-redo"><a class="header" href="#undo-and-redo">Undo and redo</a></h2>
+<h2 id="undo-and-redo"><a class="header" href="#undo-and-redo"><img src="images/vileplume.png" height="20px" /> Undo and redo</a></h2>
 <p>One functionality which becomes much easier to implement when operations are reified as data is undo and redo, since you can very easily keep track of what the user has done.</p>
 <p>Your <strong>task</strong> is to finish the implementation: the given view contains buttons for the actions, but they do nothing and are never enabled. At the end, the corresponding buttons in the view should only be enabled when there are operations to undo (or redo, respectively). Hint: keep <em>two</em> stacks, one for past (undo) and one for future (redo) actions.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deal-with-bad-internet"><a class="header" href="#deal-with-bad-internet">Deal with bad internet</a></h1>
@@ -654,7 +655,7 @@ For that reason, the current code uses the <a href="./local.html">local variant<
 To run the code against the remote API, change the constructor for <code>SearchViewModel</code>.</p>
 </div>
 </div>
-<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails">Retry if fails</a></h2>
+<h2 id="retry-if-fails"><a class="header" href="#retry-if-fails"><img src="images/oddish.png" height="20px" /> Retry if fails</a></h2>
 <p>The task here is to create a wrapper that adds retry capabilities to an inner <code>PokemonTcgApi</code> instance. Explore different variations of the <a href="https://arrow-kt.io/learn/resilience/retry-and-repeat/#constructing-a-policy"><code>Schedule</code></a>, from a simple fixed repetition, to exponential backoff policies.</p>
 <h3 id="use-a-circuit-breaker"><a class="header" href="#use-a-circuit-breaker">Use a circuit breaker</a></h3>
 <p>Improve the previous solution with a <a href="https://arrow-kt.io/learn/resilience/circuitbreaker/">circuit breaker</a>, which ensures that we do not overload the service or the client in case the (transient) failure takes a long time to recover.</p>
@@ -662,7 +663,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <blockquote>
 <p>A common pattern to make resilient systems is to compose a circuit breaker with a backing-off policy that prevents the resource from overloading. <code>Schedule</code> is insufficient to make your system resilient because you also have to consider parallel calls to your functions. In contrast, a circuit breaker track failures of every function call or even different functions to the same resource or service.</p>
 </blockquote>
-<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache">Introduce a cache</a></h2>
+<h2 id="introduce-a-cache"><a class="header" href="#introduce-a-cache"><img src="images/vileplume.png" height="20px" /> Introduce a cache</a></h2>
 <p>The given implementation queries the Pokémon TCG API service for <em>every</em> search and every card. However, cards with an existing identifier almost never change (except for errata), so there is no need to get them over and over. Searches also change rarely: new sets with additional cards only appear every 3 months, and we do not expect our users to stay that long in the application.</p>
 <p>Introducing a <em>cache</em> improves performance, and also makes our application more resilient, since fewer calls need to communicate outside. Your <strong>task</strong> is to introduce <a href="https://reactivecircus.github.io/cache4k/">Cache4k</a>, a nice Kotlin Multiplatform option for this matter.</p>
 <div id="admonition-caching-and-memoization" class="admonition admonish-info" role="note" aria-labelledby="admonition-caching-and-memoization-title">
@@ -682,10 +683,10 @@ To run the code against the remote API, change the constructor for <code>SearchV
 </blockquote>
 <p>You may have noticed, while reading the types <code>Deck</code>, <code>Card</code>, and others in <code>tcg.md</code>, that all of them are marked with the <code>@optics</code> annotation. <em>Optics</em> are a key concept for concise query and manipulation of immutable data. If you have never used them, we strongly recommend to check <a href="https://arrow-kt.io/learn/immutable-data/intro/">Arrow's documentation on the matter</a>.</p>
 <h2 id="sprinkling-some-optics-magic-dust"><a class="header" href="#sprinkling-some-optics-magic-dust">Sprinkling some optics magic dust</a></h2>
-<p>The usual "gateway drug" to optics is replacing complex updates of immutable data with an imperative-style approach. This doesn't mean you're modifying the data in place, simply that the code you write <em>looks similar</em> to doing so. This is explained at length in <a href="https://arrow-kt.io/learn/immutable-data/lens/#more-powerful-copy"><em>More powerful <code>copy</code></em></a>. Your <strong>task</strong> is to update <code>deck/viewModel.kt</code> to use this technique instead of <code>copy</code>.</p>
-<p>Right now <code>DeckPane</code> is very empty whenever there are no problems. Instead of a simple message, <code>DeckProblems</code> could show some statistics about the deck: how many cards of each category there are, how many of each energy type, and so on. This <strong>task</strong> should be implemented using <a href="https://arrow-kt.io/learn/immutable-data/prism-iso/#sealed-class-hierarchies">prisms</a>, <a href="https://arrow-kt.io/learn/immutable-data/optional/">optionals</a>, and <a href="https://arrow-kt.io/learn/immutable-data/traversal/">traversals</a> over the <code>deck</code>.</p>
-<p>Speaking of problems, <a href="./validation.html">deck validation</a> is another place in which optics many become very handy, since you often need to dive deep inside the properties in <code>Deck</code>. The outcome of this <strong>task</strong> depends a lot on the way you've coded validation, but try to replace navigation within the structure with different optics.</p>
-<h2 id="targeting-json"><a class="header" href="#targeting-json">Targeting JSON</a></h2>
+<p><img src="images/oddish.png" height="20px" /> The usual "gateway drug" to optics is replacing complex updates of immutable data with an imperative-style approach. This doesn't mean you're modifying the data in place, simply that the code you write <em>looks similar</em> to doing so. This is explained at length in <a href="https://arrow-kt.io/learn/immutable-data/lens/#more-powerful-copy"><em>More powerful <code>copy</code></em></a>. Your <strong>task</strong> is to update <code>deck/viewModel.kt</code> to use this technique instead of <code>copy</code>.</p>
+<p><img src="images/oddish.png" height="20px" /> Right now <code>DeckPane</code> is very empty whenever there are no problems. Instead of a simple message, <code>DeckProblems</code> could show some statistics about the deck: how many cards of each category there are, how many of each energy type, and so on. This <strong>task</strong> should be implemented using <a href="https://arrow-kt.io/learn/immutable-data/prism-iso/#sealed-class-hierarchies">prisms</a>, <a href="https://arrow-kt.io/learn/immutable-data/optional/">optionals</a>, and <a href="https://arrow-kt.io/learn/immutable-data/traversal/">traversals</a> over the <code>deck</code>.</p>
+<p><img src="images/vileplume.png" height="20px" /> Speaking of problems, <a href="./validation.html">deck validation</a> is another place in which optics many become very handy, since you often need to dive deep inside the properties in <code>Deck</code>. The outcome of this <strong>task</strong> depends a lot on the way you've coded validation, but try to replace navigation within the structure with different optics.</p>
+<h2 id="targeting-json"><a class="header" href="#targeting-json"><img src="images/jirachi.png" height="20px" /> Targeting JSON</a></h2>
 <p>Until this point we have focused on requesting data from a remote API. In some scenarios such requests are not possible or desirable, and a local data source is a better option. When you clone the repository for these exercises, you should find a <code>pokemon-tcg-data</code> submodule that contains a <a href="https://github.com/PokemonTCG/pokemon-tcg-data">copy of the data for the remote API</a>.</p>
 <div id="admonition-the-inline-iterator" class="admonition admonish-tip" role="note" aria-labelledby="admonition-the-inline-iterator-title">
 <div class="admonition-title">
@@ -707,7 +708,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <p><strong>Topics</strong>: parallel operations, <code>Raise</code> + exceptions + concurrency</p>
 </blockquote>
 <p>Poké-Fun as provided has a very big limitation. You can only work on your deck in one go: if you want to devote several sessions to it, you must either (1) not close the application, or (2) write down your cards in a piece of paper and add them back the next time. In this section we add support for loading and saving <em>deck files</em>, and learn about high-level parallelism on the way.</p>
-<h2 id="load-and-store"><a class="header" href="#load-and-store">Load and store</a></h2>
+<h2 id="load-and-store"><a class="header" href="#load-and-store"><img src="images/oddish.png" height="20px" /> Load and store</a></h2>
 <p>The first <strong>task</strong> is to implement saving the deck as a file, and being able to read it back afterward. Feel free to choose whatever format you like, from the list of identifiers separated by new lines, to some sort of JSON.</p>
 <p>The code provided in <code>deck/view.kt</code> integrates <a href="https://github.com/vinceglb/FileKit">FileKit</a> to show the file picker of the platform the application is running on. The button are disabled, remember to set <code>enabled = true</code> in the call to <code>IconButton</code>. Saving the deck is easy, but loading it potentially involves getting the information from each of them. You should use the <code>getById</code> method from <code>PokemonTcgApi</code> to retrieve the <code>Card</code> corresponding to a given identifier.</p>
 <p>In a first approximation, using <code>map</code> over the sequence of identifiers should be enough. Albeit simple, that solution lacks performance. Arrow provides <a href="https://arrow-kt.io/learn/coroutines/parallel/"><em>high-level concurrency</em></a> which solves the problem quite succinctly. Use <a href="https://arrow-kt.io/learn/coroutines/parallel/#independently-in-parallel"><code>parMap</code></a> to turn the sequential iteration into a concurrent set of operations.</p>
@@ -724,7 +725,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <p>However, doing so only ensures that the action runs in the context of our view model, but does not provide any feedback to the user. A better approach would be to introduce actions, as we did in the <a href="./build.html"><em>Deck building</em></a> section, and state pertaining the progress of saving and loading.</p>
 </div>
 </div>
-<h2 id="from-exceptions-to-raise"><a class="header" href="#from-exceptions-to-raise">From exceptions to <code>Raise</code></a></h2>
+<h2 id="from-exceptions-to-raise"><a class="header" href="#from-exceptions-to-raise"><img src="images/vileplume.png" height="20px" /> From exceptions to <code>Raise</code></a></h2>
 <p>Problems may arise during the retrieval of card information, but the current code is not prepared for that eventuality. In this section we improve the situation by using <code>Raise</code>.</p>
 <div id="admonition-about-raise" class="admonition admonish-info" role="note" aria-labelledby="admonition-about-raise-title">
 <div class="admonition-title">
@@ -767,7 +768,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <p><em>Leave something slightly better off than you found it.</em></p>
 </div>
 </div>
-<h2 id="as-explicit-as-possible"><a class="header" href="#as-explicit-as-possible">As explicit as possible</a></h2>
+<h2 id="as-explicit-as-possible"><a class="header" href="#as-explicit-as-possible"><img src="images/jirachi.png" height="20px" /> As explicit as possible</a></h2>
 <p>One of the mottos of the style of functional programming we promote is making explicit as much of the function behavior as possible. In statically-typed languages like Kotlin, <em>explicit</em> means <em>in the function signature</em>. The information we want to explicit in functions are, among others:</p>
 <ol>
 <li>Services and resources required to execute the function. Those may be provided as simple arguments, or using <em>extension receivers</em> (and in the future, with <a href="https://github.com/Kotlin/KEEP/blob/context-parameters/proposals/context-parameters.md"><em>context parameters</em></a>).</li>
@@ -775,7 +776,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 </ol>
 <p>A longer explanation, including more examples of the usage of receivers, can be found in the <a href="https://arrow-kt.io/learn/design/effects-contexts/">Arrow documentation</a>.</p>
 <p>One downside which is often mentioned of that style is that dependencies need to be <em>manually</em> injected. That is, the developer creates the instances of every service used by the application, as opposed to using a dependency injection (DI) framework like <a href="https://insert-koin.io/">Koin</a> and <a href="https://developer.android.com/training/dependency-injection/hilt-android">Hilt</a>. However, we don't see this as a downside: by taking control of the creation of services we end up with simpler logic, minimize the amount of inter-dependencies, and avoid runtime or compile-time costs associated to DI frameworks.</p>
-<h2 id="resource-management"><a class="header" href="#resource-management">Resource management</a></h2>
+<h2 id="resource-management"><a class="header" href="#resource-management"><img src="images/oddish.png" height="20px" /> Resource management</a></h2>
 <p>One of the challenges with this style of programming is managing the acquisition and release of resources and services. One of the problems is too much <em>nesting</em> in their creation,</p>
 <pre><code class="language-kotlin">HttpClient().use { client -&gt;
   KtorPokemonTcgApi(client).use { api -&gt;
@@ -791,14 +792,13 @@ To run the code against the remote API, change the constructor for <code>SearchV
 }
 </code></pre>
 <p>One step further is <a href="https://arrow-kt.io/ecosystem/suspendapp/">SuspendApp</a>, which adds graceful shutdown to the whole application. By combining <a href="https://arrow-kt.io/ecosystem/suspendapp/#suspendapp-arrows-resource">SuspendApp with Resource</a>, you can ensure that finalizers runs correctly, even when the application is terminated.</p>
-<h3 id="poké-resources"><a class="header" href="#poké-resources">Poké-Resources</a></h3>
 <p>Your <strong>task</strong> is to improve the current architecture of the application by introducing Resource and SuspendApp. Feel free to change the service constructors from the more implicit version provided to a more explicit version; for example, creating the <code>HttpClient</code> for <code>KtorPokemonTcgApi</code> explicitly. At the end, the application should thread a single <code>PokemonTcgApi</code>, created in a <code>resourceScope</code> in <code>main</code>, down to the view model.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="nicer-ui"><a class="header" href="#nicer-ui">Nicer UI</a></h1>
 <blockquote>
 <p><strong>Topics</strong>: Compose, navigation</p>
 </blockquote>
 <p>Compose Multiplatform is a great UI library based on functional principles. Although more tutorials and guides are slowly hitting the shelves, most of the material about Jetpack Compose (the Android version) still applies here. In this section we propose a couple of tasks in case you want to dive further in the UI side of things.</p>
-<h2 id="better-search"><a class="header" href="#better-search">Better search</a></h2>
+<h2 id="better-search"><a class="header" href="#better-search"><img src="images/vileplume.png" height="20px" /> Better search</a></h2>
 <p>Right now Poké-Fun only searches cards by name. However, the API has <a href="https://docs.pokemontcg.io/api-reference/cards/search-cards/">many more options</a>, so you can filter with respect to the different attributes in a card. For example, the player may want to look for cards of a specific type to build a thematic deck.</p>
 <p>Your <strong>task</strong> is to provide an <em>advanced</em> search view (you can look at the <a href="https://www.pokemon.com/us/pokemon-tcg/pokemon-cards/">official card database</a> for inspiration). This requires changes in a few places:</p>
 <ul>
@@ -807,7 +807,7 @@ To run the code against the remote API, change the constructor for <code>SearchV
 <li>You have to provide additional UI elements for the player to change the filters.</li>
 </ul>
 <p>To help with the UI side of things, the provided <code>Type</code> enumeration already contains the URL of the image corresponding to each of the types.</p>
-<h2 id="card-detail-view"><a class="header" href="#card-detail-view">Card detail view</a></h2>
+<h2 id="card-detail-view"><a class="header" href="#card-detail-view"><img src="images/vileplume.png" height="20px" /> Card detail view</a></h2>
 <p>Sometimes you may want to check the text on a card, but Poké-Fun does not make that easy, since the deck pane focuses on an <em>overview</em> of the deck. Your <strong>task</strong> is to add a way to show a detailed view; for example, when the card is (double) clicked.</p>
 <p>We encourage you to use the <a href="https://developer.android.com/guide/navigation/navigation-3">navigation library</a> provided by Compose. To help you get started, we provide a very basic version in <code>deck/navigation.kt</code>. As you can see, navigation is done via <em>routes</em>, which are serializable classes representing a particular screen and data. Inside each of them, you define how the UI should look like, as we've been doing until now.</p>
 <pre><code class="language-kotlin">entry&lt;Routes.Main&gt; { 
@@ -836,7 +836,7 @@ One more instance where <a href="https://developer.android.com/guide/navigation/
 <div style="break-before: page; page-break-before: always;"></div><h1 id="local-llm-setup"><a class="header" href="#local-llm-setup">Local LLM setup</a></h1>
 <p>For this part of Poké-Fun we need to access a Large Language Model (LLM). Although you can use a cloud solution, <a href="https://ollama.com/">Ollama</a> gives you the chance of running a simpler one locally, so you don't need to spend any money (nor send any potentially private information to a third party).</p>
 <p>The easiest approach is to follow the <a href="https://ollama.com/download">official download instructions</a> — although in macOS you can also use <code>brew</code>, and in Linux you can use your distribution's package manager. It's not needed to keep Ollama running as a background service, you can just fire it up using <code>ollama serve</code> whenever you need it.</p>
-<p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data.</p>
+<p>To install a new model, you can use <code>ollama run &lt;model-name&gt;</code>. For Poké-Fun it's enough to use <a href="https://ollama.com/library/gemma4">Gemma 4</a> with Effective 4B parameter (<code>gemma4:e4b</code>), which you can get up and running using <code>ollama run gemma4:e4b</code>. The first time it needs to download a big chunk of data (~10 GB).</p>
 <div id="admonition-using-mlx-in-macos" class="admonition admonish-tip" role="note" aria-labelledby="admonition-using-mlx-in-macos-title">
 <div class="admonition-title">
 <div id="admonition-using-mlx-in-macos-title">

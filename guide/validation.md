@@ -15,6 +15,8 @@ Feel free to use any style that you prefer in this section. When in doubt, using
 
 Your **task** in this section is to implement the rules for a _legal_ deck, that is, one that can be used to play Pokémon TCG. The `tcg/validation.kt` file contains a barebones implementation of `validate`, which simply checks the number of cards in the deck, and a non-empty title.
 
+### <img src="images/oddish.png" height="20px" /> Main rules
+
 The main rules for the legality of a deck are:
 
 - The deck must contain exactly 60 cards,
@@ -25,7 +27,9 @@ The main rules for the legality of a deck are:
 
 Implement this validation using `Either` or `Raise`, and try to break the process in different functions. The notion of [fail-first vs. accumulation](https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation) is important here, so you can squeeze as much information as possible.
 
-**Extra task**: implement a rule to check that you can always _evolve_ every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.
+### <img src="images/vileplume.png" height="20px" /> Evolution
+
+implement a rule to check that you can always _evolve_ every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.
 
 ```admonish info title="Nullable non-empty list"
 
@@ -39,26 +43,26 @@ The `module.yaml` file enables the (experimental) [return value checker](https:/
 
 ```
 
-### Problems tied to specific cards
+### <img src="images/oddish.png" height="20px" /> Problems tied to specific cards
 
-This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your **task** here is introduce an _error hierarchy_ that represents each possible problem with the deck. The transformation to string should now happen in the `DeckPane` view instead.
+This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your **task** here is to introduce an _error hierarchy_ that represents each possible problem with the deck. The transformation to string should now happen in the `DeckPane` view instead.
 
-**Extra task**: show problems related to specific cards directly on them. For example, by showing the name in the `MaterialTheme.colorScheme.error` color. Think about how the information required in the error hierarchy.
+If you want some additional UI tasks, show problems related to specific cards directly on them. For example, by showing the name in the `MaterialTheme.colorScheme.error` color. Think about how the information required in the error hierarchy.
 
-### Gym Leader Challenge
+### <img src="images/vileplume.png" height="20px" /> Gym Leader Challenge
 
 The rules described above correspond to the _Standard_ format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like [Gym Leader Challenge](https://gymleaderchallenge.com/) (GLC). As an **extra task**, you may implement [GLC rules](https://gymleaderchallenge.com/rules).
 
 - You may need to add some UI element to specify the format your deck is in.
 - GLC forbids some sorts of cards, namely those with a Rule Box and ACE SPECs. This information is available from the API, but currently not reflected in the domain model.
 
-## Property-based testing
+## <img src="images/vileplume.png" height="20px" /> Property-based testing
 
 One big advantage of following an immutable approach to modelling decks is that testing becomes much easier, since there are no dependencies to account for. In particular you can use [property-based testing](https://kotest.io/docs/proptest/property-based-testing.html), an approach in which lots of random inputs are generated, and then _properties_ of the result are checked. This raises the level of abstraction: for example, you don't test that a certain deck returns certain error, but rather that "validating every deck with fewer than 60 card contains a `NotEnoughCards` error among those returned".
 
 Your **task** is to add more tests to the `test/tcg/validation.kt` file. This file already contains one test you can use as a template. The project is set up to use [Kotest](https://kotest.io/), in particular using the [`checkAll`](https://kotest.io/docs/proptest/property-test-functions.html#check-all) function. For more complex scenarios yoy may need to write [custom generators](https://kotest.io/docs/proptest/custom-generators.html) that provide more exact input to your tests.
 
-## Reactive problems
+## <img src="images/jirachi.png" height="20px" /> Reactive problems
 
 The current implementation has a potential problem: you need to update `problems` every time you update `deck`. But actually, the problems of a deck directly derive from the contents of the deck itself. Reactive frameworks like [RxJava](https://github.com/ReactiveX/RxJava) allow expressing this connection directly, and we can easily do the same using a `StateFlow`.
 
