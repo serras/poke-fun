@@ -97,3 +97,17 @@ enum class Type(private val imageUrl: String) {
     val imageResource: AsyncImagePainter
       @Composable get() = rememberAsyncImagePainter(imageUrl)
 }
+
+private val wrongTrainer: Card = Card(
+    "Wrong", "wrong-1",
+    Category.Trainer(TrainerCategory.Item),
+    Type.Colorless,
+    null
+)
+
+private val wrongDragon: Card = Card(
+    "Wrong Dragon", "wrong-1",
+    Category.Trainer(TrainerCategory.Item),
+    Type.Colorless,
+    null
+)

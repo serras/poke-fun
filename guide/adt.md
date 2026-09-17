@@ -42,13 +42,44 @@ One nice advantage of using Compose is that it naturally leads to a more immutab
 
 ## Improving the domain
 
+For this set of tasks you need to work on the `tcg/tcg.kt` file, where the main domain model for decks and cards is defined.
+
 ### <img src="images/oddish.png" height="20px" /> More precise `type`
 
-The given domain model uses a nullable `Type` in `Card`. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and _basic_ Energy cards. Your **task** is to transform the given domain model to capture that invariant.
+The given domain model uses a nullable `Type` in `Card`. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and _basic_ Energy cards. However, this means that we can define cards outside the real-world model, the `wrongTrainer` given in that file is an example thereof.
+
+Your **task** is to transform the given domain model to better capture the invariant that over `Type`. Once this task is finished, you should not be able to make `wrongCard` compile if you want to keep it a _Trainer_ card. Note that in most cases your solution requires not only modifying `Card`, but also changes in other classes.
+
+<details>
+<summary><i>If you are stuck...</i></summary>
+
+The main question here is: where should this information live if not in `Card`? Since `Category` already displays a separation between different groups of cards, this is a natural place to include information that it is only available to some of them.
+
+</details>
+
+<details>
+<summary><i>Some discussion on the answer</i></summary>
+
+Note that having a nullable `type` when reading information about a card is not a problem per se, we just need to avoid _creating_ one such card. One nice feature of Kotlin is that you can refine the nullability of a property in children classes, so a great solution to this task is to make `type` part of `Category`, and have it non-nullable in `Pokemon` and `Energy`.
+
+```kotlin
+sealed interface Category: Comparable<Category> {
+    val type: Type?
+    
+    data class Pokemon(val stage: PokemonStage, override val type: Type) : Category
+    data class Energy(val category: EnergyCategory, override val type: Type) : Category
+    data class Trainer(val category: TrainerCategory) : Category {
+        override val type: Type? = null
+    }
+}
+```
+
+</details>
 
 ### <img src="images/oddish.png" height="20px" /> More precise energies
 
-Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:
+The given domain model gives all types the same treatment, but this is not true in the game.
+In particular, two types follow some special rules:
 
 - _Dragon_ acts as the type of a Pokémon, but never as the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.
 - When _colorless_ energy appears in a cost, it may be paid by _any_ type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.
@@ -58,7 +89,29 @@ Even the previous refinement is not completely true. In fact, two types have som
 | ![Koraidon](https://images.pokemontcg.io/svp/91_hires.png) | ![Miraidon](https://images.pokemontcg.io/svp/92_hires.png) | These cards are of _dragon_ <img src="images/dragon.png" height="15px" /> type, but their attacks use energy of a different type (since the dragon type energy doesn't exist). In this case, they both use the _colorless_ <img src="images/colorless.png" height="15px" /> energy. |
 | ![Chatot](https://images.pokemontcg.io/sv5/181_hires.png) | ![Snorlax](https://images.pokemontcg.io/svp/51_hires.png) | These cards are of _colorless_ type. They are used in every type of deck, since their attack cost can be paid using any energy.                                                                                                                                                      |
 
-Your **task** is to refine the given _Type_ to account for these nuances. However, your solution should _not_ be just two or more different types; by using inheritance you can create several subsets of types and share common cases.
+Your **task** is to refine the given _Type_ to account for these nuances, so that `wrongDragon` defined in the file no longer compiles. However, your solution should _not_ be just two or more different types; by using inheritance you can create several subsets of types and share common cases. Hint: sometimes enumerations are too limiting.
+
+<details>
+<summary><i>If you are stuck...</i></summary>
+
+Consider the following enumeration:
+
+```kotlin
+enum class ThisOrThat { This, That }
+```
+
+We can represent the same elements by using a sealed hierarchy and a couple of objects:
+
+```kotlin
+sealed interface ThisOrThat {
+    data object This : ThisOrThat
+    data object That : ThisOrThat
+}
+```
+
+But now we have gained the ability to introduce intermediate interfaces in the hierarchy, between the overarching parent and each of the objects.
+
+</details>
 
 ### <img src="images/vileplume.png" height="20px" /> Information about evolution
 
@@ -86,12 +139,18 @@ The code uses `kotlinx.serialization` to transform the JSON returned by the API 
 
 As an **additional task**, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together. At this point you have two options:
 
-- Make this ordering "inherent" to the `Card` type, and modify its `Comparable` implementation in `tcg/tcg.kt`;
-- Introduce this new ordering only in the `deck/view.kt` file, modifying its call to `sorted` using `sortedBy`.
+1. Make this ordering "inherent" to the `Card` type, and modify its `Comparable` implementation in `tcg/tcg.kt`;
+2. Introduce this new ordering only in the `deck/view.kt` file, modifying its call to `sorted` using `sortedBy`.
 
 ### <img src="images/jirachi.png" height="20px" /> Revamping the representation
 
 The way decks are modelled in the `Deck` type — as a simple list of `Card`s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an **extra over-arching task** you may explore other representations, like using a `Map<Card, Int>` or a `List<Pair<Card, Int>>` instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.
+
+```admonish tip title="Everybody thinks differently"
+
+If you are following this guide as a workshop, or alongside some friends or colleagues, we encourage you to share your code and findings with others. Domain modelling almost never has a single perfect answer, and people see different trade-offs depending on their previous knowledge and experience.
+
+```
 
 ## <img src="images/jirachi.png" height="20px" /> New search status
 

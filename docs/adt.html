@@ -215,10 +215,31 @@
 </div>
 </div>
 <h2 id="improving-the-domain"><a class="header" href="#improving-the-domain">Improving the domain</a></h2>
+<p>For this set of tasks you need to work on the <code>tcg/tcg.kt</code> file, where the main domain model for decks and cards is defined.</p>
 <h3 id="more-precise-type"><a class="header" href="#more-precise-type"><img src="images/oddish.png" height="20px" /> More precise <code>type</code></a></h3>
-<p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
+<p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. However, this means that we can define cards outside the real-world model, the <code>wrongTrainer</code> given in that file is an example thereof.</p>
+<p>Your <strong>task</strong> is to transform the given domain model to better capture the invariant that over <code>Type</code>. Once this task is finished, you should not be able to make <code>wrongCard</code> compile if you want to keep it a <em>Trainer</em> card. Note that in most cases your solution requires not only modifying <code>Card</code>, but also changes in other classes.</p>
+<details>
+<summary><i>If you are stuck...</i></summary>
+<p>The main question here is: where should this information live if not in <code>Card</code>? Since <code>Category</code> already displays a separation between different groups of cards, this is a natural place to include information that it is only available to some of them.</p>
+</details>
+<details>
+<summary><i>Some discussion on the answer</i></summary>
+<p>Note that having a nullable <code>type</code> when reading information about a card is not a problem per se, we just need to avoid <em>creating</em> one such card. One nice feature of Kotlin is that you can refine the nullability of a property in children classes, so a great solution to this task is to make <code>type</code> part of <code>Category</code>, and have it non-nullable in <code>Pokemon</code> and <code>Energy</code>.</p>
+<pre><code class="language-kotlin">sealed interface Category: Comparable&lt;Category&gt; {
+    val type: Type?
+    
+    data class Pokemon(val stage: PokemonStage, override val type: Type) : Category
+    data class Energy(val category: EnergyCategory, override val type: Type) : Category
+    data class Trainer(val category: TrainerCategory) : Category {
+        override val type: Type? = null
+    }
+}
+</code></pre>
+</details>
 <h3 id="more-precise-energies"><a class="header" href="#more-precise-energies"><img src="images/oddish.png" height="20px" /> More precise energies</a></h3>
-<p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
+<p>The given domain model gives all types the same treatment, but this is not true in the game.
+In particular, two types follow some special rules:</p>
 <ul>
 <li><em>Dragon</em> acts as the type of a Pokémon, but never as the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
@@ -228,7 +249,20 @@
 <tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
 </tbody></table>
 </div>
-<p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
+<p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances, so that <code>wrongDragon</code> defined in the file no longer compiles. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases. Hint: sometimes enumerations are too limiting.</p>
+<details>
+<summary><i>If you are stuck...</i></summary>
+<p>Consider the following enumeration:</p>
+<pre><code class="language-kotlin">enum class ThisOrThat { This, That }
+</code></pre>
+<p>We can represent the same elements by using a sealed hierarchy and a couple of objects:</p>
+<pre><code class="language-kotlin">sealed interface ThisOrThat {
+    data object This : ThisOrThat
+    data object That : ThisOrThat
+}
+</code></pre>
+<p>But now we have gained the ability to introduce intermediate interfaces in the hierarchy, between the overarching parent and each of the objects.</p>
+</details>
 <h3 id="information-about-evolution"><a class="header" href="#information-about-evolution"><img src="images/vileplume.png" height="20px" /> Information about evolution</a></h3>
 <p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is reflected in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
 <div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
@@ -260,12 +294,23 @@
 </div>
 </div>
 <p>As an <strong>additional task</strong>, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together. At this point you have two options:</p>
-<ul>
+<ol>
 <li>Make this ordering "inherent" to the <code>Card</code> type, and modify its <code>Comparable</code> implementation in <code>tcg/tcg.kt</code>;</li>
 <li>Introduce this new ordering only in the <code>deck/view.kt</code> file, modifying its call to <code>sorted</code> using <code>sortedBy</code>.</li>
-</ul>
+</ol>
 <h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation"><img src="images/jirachi.png" height="20px" /> Revamping the representation</a></h3>
 <p>The way decks are modelled in the <code>Deck</code> type — as a simple list of <code>Card</code>s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an <strong>extra over-arching task</strong> you may explore other representations, like using a <code>Map&lt;Card, Int&gt;</code> or a <code>List&lt;Pair&lt;Card, Int&gt;&gt;</code> instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.</p>
+<div id="admonition-everybody-thinks-differently" class="admonition admonish-tip" role="note" aria-labelledby="admonition-everybody-thinks-differently-title">
+<div class="admonition-title">
+<div id="admonition-everybody-thinks-differently-title">
+<p>Everybody thinks differently</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-everybody-thinks-differently"></a>
+</div>
+<div>
+<p>If you are following this guide as a workshop, or alongside some friends or colleagues, we encourage you to share your code and findings with others. Domain modelling almost never has a single perfect answer, and people see different trade-offs depending on their previous knowledge and experience.</p>
+</div>
+</div>
 <h2 id="new-search-status"><a class="header" href="#new-search-status"><img src="images/jirachi.png" height="20px" /> New search status</a></h2>
 <p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 <p>To understand how the exhaustiveness helps, add a new <code>data object Unavailable : SearchStatus</code> to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your <strong>task</strong> is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used <code>else</code> instead of matching on each of the cases separately.</p>

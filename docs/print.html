@@ -331,8 +331,8 @@ Each section contains an introduction to one or more topics, and pointers to add
 <h2 id="cards"><a class="header" href="#cards">Cards</a></h2>
 <p>The <code>tcg</code> module gives access to cards and their information.</p>
 <ul>
-<li>The <code>tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
-<li>Basic validation is implemented in <code>validation.kt</code>. In the <a href="./validation.html"><em>Validation</em></a> section we'll improve this functionality.</li>
+<li>The <code>tcg/tcg.kt</code> file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the <a href="./adt.html"><em>What is (in) a deck</em></a> section.</li>
+<li>Basic validation is implemented in <code>tcg/validation.kt</code>. In the <a href="./validation.html"><em>Validation</em></a> section we'll improve this functionality.</li>
 </ul>
 <p>To get a bit more comfortable with the domain, you can write a <code>Deck</code> by hand, and pass it through the given validation. A throwaway <code>main</code> function, or <a href="https://kotlinlang.org/docs/kotlin-notebook-overview.html">Kotlin Notebooks</a> are simple ways to test them. If you need some help, <code>tcg/api/api.kt</code> contains a few cards used in the mock Pokémon TCG API.</p>
 <h2 id="general-design"><a class="header" href="#general-design">General design</a></h2>
@@ -400,10 +400,31 @@ Each section contains an introduction to one or more topics, and pointers to add
 </div>
 </div>
 <h2 id="improving-the-domain"><a class="header" href="#improving-the-domain">Improving the domain</a></h2>
+<p>For this set of tasks you need to work on the <code>tcg/tcg.kt</code> file, where the main domain model for decks and cards is defined.</p>
 <h3 id="more-precise-type"><a class="header" href="#more-precise-type"><img src="images/oddish.png" height="20px" /> More precise <code>type</code></a></h3>
-<p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. Your <strong>task</strong> is to transform the given domain model to capture that invariant.</p>
+<p>The given domain model uses a nullable <code>Type</code> in <code>Card</code>. This is because not every card in the Pokémon TCG has a type; this attribute is restricted to Pokémon and <em>basic</em> Energy cards. However, this means that we can define cards outside the real-world model, the <code>wrongTrainer</code> given in that file is an example thereof.</p>
+<p>Your <strong>task</strong> is to transform the given domain model to better capture the invariant that over <code>Type</code>. Once this task is finished, you should not be able to make <code>wrongCard</code> compile if you want to keep it a <em>Trainer</em> card. Note that in most cases your solution requires not only modifying <code>Card</code>, but also changes in other classes.</p>
+<details>
+<summary><i>If you are stuck...</i></summary>
+<p>The main question here is: where should this information live if not in <code>Card</code>? Since <code>Category</code> already displays a separation between different groups of cards, this is a natural place to include information that it is only available to some of them.</p>
+</details>
+<details>
+<summary><i>Some discussion on the answer</i></summary>
+<p>Note that having a nullable <code>type</code> when reading information about a card is not a problem per se, we just need to avoid <em>creating</em> one such card. One nice feature of Kotlin is that you can refine the nullability of a property in children classes, so a great solution to this task is to make <code>type</code> part of <code>Category</code>, and have it non-nullable in <code>Pokemon</code> and <code>Energy</code>.</p>
+<pre><code class="language-kotlin">sealed interface Category: Comparable&lt;Category&gt; {
+    val type: Type?
+    
+    data class Pokemon(val stage: PokemonStage, override val type: Type) : Category
+    data class Energy(val category: EnergyCategory, override val type: Type) : Category
+    data class Trainer(val category: TrainerCategory) : Category {
+        override val type: Type? = null
+    }
+}
+</code></pre>
+</details>
 <h3 id="more-precise-energies"><a class="header" href="#more-precise-energies"><img src="images/oddish.png" height="20px" /> More precise energies</a></h3>
-<p>Even the previous refinement is not completely true. In fact, two types have some special meaning in the game:</p>
+<p>The given domain model gives all types the same treatment, but this is not true in the game.
+In particular, two types follow some special rules:</p>
 <ul>
 <li><em>Dragon</em> acts as the type of a Pokémon, but never as the type of an Energy. In the game, this manifests as attacks never requiring "dragon energy"; dragon Pokémon always use a combination of other energies.</li>
 <li>When <em>colorless</em> energy appears in a cost, it may be paid by <em>any</em> type of energy. There are no basic Colorless Energy card, but there are Colorless Pokémon.</li>
@@ -413,7 +434,20 @@ Each section contains an introduction to one or more topics, and pointers to add
 <tr><td><img src="https://images.pokemontcg.io/sv5/181_hires.png" alt="Chatot" /></td><td><img src="https://images.pokemontcg.io/svp/51_hires.png" alt="Snorlax" /></td><td>These cards are of <em>colorless</em> type. They are used in every type of deck, since their attack cost can be paid using any energy.</td></tr>
 </tbody></table>
 </div>
-<p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases.</p>
+<p>Your <strong>task</strong> is to refine the given <em>Type</em> to account for these nuances, so that <code>wrongDragon</code> defined in the file no longer compiles. However, your solution should <em>not</em> be just two or more different types; by using inheritance you can create several subsets of types and share common cases. Hint: sometimes enumerations are too limiting.</p>
+<details>
+<summary><i>If you are stuck...</i></summary>
+<p>Consider the following enumeration:</p>
+<pre><code class="language-kotlin">enum class ThisOrThat { This, That }
+</code></pre>
+<p>We can represent the same elements by using a sealed hierarchy and a couple of objects:</p>
+<pre><code class="language-kotlin">sealed interface ThisOrThat {
+    data object This : ThisOrThat
+    data object That : ThisOrThat
+}
+</code></pre>
+<p>But now we have gained the ability to introduce intermediate interfaces in the hierarchy, between the overarching parent and each of the objects.</p>
+</details>
 <h3 id="information-about-evolution"><a class="header" href="#information-about-evolution"><img src="images/vileplume.png" height="20px" /> Information about evolution</a></h3>
 <p>One of the most important features of the Pokémon franchise is that Pokémon <em>evolve</em>, that is, they turn into (stronger) Pokémon as they progress. This is reflected in the TCG as Stage 1 and Stage 2 Pokémon describing which Pokémon they evolve from.</p>
 <div id="admonition-one-direction-does-not-imply-the-other" class="admonition admonish-bug" role="note" aria-labelledby="admonition-one-direction-does-not-imply-the-other-title">
@@ -445,12 +479,23 @@ Each section contains an introduction to one or more topics, and pointers to add
 </div>
 </div>
 <p>As an <strong>additional task</strong>, you can improve the ordering of the deck shown in the right pane by taking evolution into account: evolution chains should appear together. At this point you have two options:</p>
-<ul>
+<ol>
 <li>Make this ordering "inherent" to the <code>Card</code> type, and modify its <code>Comparable</code> implementation in <code>tcg/tcg.kt</code>;</li>
 <li>Introduce this new ordering only in the <code>deck/view.kt</code> file, modifying its call to <code>sorted</code> using <code>sortedBy</code>.</li>
-</ul>
+</ol>
 <h3 id="revamping-the-representation"><a class="header" href="#revamping-the-representation"><img src="images/jirachi.png" height="20px" /> Revamping the representation</a></h3>
 <p>The way decks are modelled in the <code>Deck</code> type — as a simple list of <code>Card</code>s — makes some operations quite simple (like obtaining the size of the deck) while making some others much more complicated (like understanding how many copies of a certain card are in a deck). As an <strong>extra over-arching task</strong> you may explore other representations, like using a <code>Map&lt;Card, Int&gt;</code> or a <code>List&lt;Pair&lt;Card, Int&gt;&gt;</code> instead. The important question to answer here is what becomes harder and what easier, and understand the trade-offs in domain modelling.</p>
+<div id="admonition-everybody-thinks-differently" class="admonition admonish-tip" role="note" aria-labelledby="admonition-everybody-thinks-differently-title">
+<div class="admonition-title">
+<div id="admonition-everybody-thinks-differently-title">
+<p>Everybody thinks differently</p>
+</div>
+<a class="admonition-anchor-link" href="adt.html#admonition-everybody-thinks-differently"></a>
+</div>
+<div>
+<p>If you are following this guide as a workshop, or alongside some friends or colleagues, we encourage you to share your code and findings with others. Domain modelling almost never has a single perfect answer, and people see different trade-offs depending on their previous knowledge and experience.</p>
+</div>
+</div>
 <h2 id="new-search-status"><a class="header" href="#new-search-status"><img src="images/jirachi.png" height="20px" /> New search status</a></h2>
 <p>The <code>SearchStatus</code> type used in <code>search/viewModel.kt</code> is quite similar to <code>Result</code> describe above. You can take a look at that file and the corresponding view to see how one operates with sealed hierarchies.</p>
 <p>To understand how the exhaustiveness helps, add a new <code>data object Unavailable : SearchStatus</code> to this type, which should represent the case in which search cannot be performed because we could not contact the Pokémon TCG API. Your <strong>task</strong> is to fix all the compiler errors you find. Also, try to think about what would have changed if the code had used <code>else</code> instead of matching on each of the cases separately.</p>
@@ -467,21 +512,6 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>Feel free to use any style that you prefer in this section. When in doubt, using <code>Raise</code> (as opposed to <code>Either</code>) is the preferred option when using Arrow.</p>
 <h2 id="legal-decks"><a class="header" href="#legal-decks">Legal decks</a></h2>
 <p>Your <strong>task</strong> in this section is to implement the rules for a <em>legal</em> deck, that is, one that can be used to play Pokémon TCG. The <code>tcg/validation.kt</code> file contains a barebones implementation of <code>validate</code>, which simply checks the number of cards in the deck, and a non-empty title.</p>
-<h3 id="main-rules"><a class="header" href="#main-rules"><img src="images/oddish.png" height="20px" /> Main rules</a></h3>
-<p>The main rules for the legality of a deck are:</p>
-<ul>
-<li>The deck must contain exactly 60 cards,</li>
-<li>There must be at most 4 cards with the same name,
-<ul>
-<li>Note that cards with different identifiers but the same name are added together,</li>
-<li>The only exception to this rule are <em>basic</em> Energy cards, of which you can have an unlimited amount,</li>
-</ul>
-</li>
-<li>There must be at least one <em>basic</em> Pokémon.</li>
-</ul>
-<p>Implement this validation using <code>Either</code> or <code>Raise</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible.</p>
-<h3 id="evolution"><a class="header" href="#evolution"><img src="images/vileplume.png" height="20px" /> Evolution</a></h3>
-<p>implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <div id="admonition-nullable-non-empty-list" class="admonition admonish-info" role="note" aria-labelledby="admonition-nullable-non-empty-list-title">
 <div class="admonition-title">
 <div id="admonition-nullable-non-empty-list-title">
@@ -504,9 +534,32 @@ Each section contains an introduction to one or more topics, and pointers to add
 <p>The <code>module.yaml</code> file enables the (experimental) <a href="https://kotlinlang.org/docs/unused-return-value-checker.html">return value checker</a>. This ensures that every <code>Either</code> you obtain is ultimately consumed; since otherwise you may lose some valuable errors along the way. To get yourself acquainted with this feature, try to remove some <code>.bind()</code> calls from the code you wrote for the previous tasks, and watch the compiler complaining.</p>
 </div>
 </div>
-<h3 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards"><img src="images/oddish.png" height="20px" /> Problems tied to specific cards</a></h3>
-<p>This first task simply gives back a list of string for each problem, but this approach goes against our aim of precise types. Your <strong>task</strong> here is to introduce an <em>error hierarchy</em> that represents each possible problem with the deck. The transformation to string should now happen in the <code>DeckPane</code> view instead.</p>
-<p>If you want some additional UI tasks, show problems related to specific cards directly on them. For example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. Think about how the information required in the error hierarchy.</p>
+<h3 id="main-rules"><a class="header" href="#main-rules"><img src="images/oddish.png" height="20px" /> Main rules</a></h3>
+<p>The main rules for the legality of a deck are:</p>
+<ul>
+<li>The deck must contain exactly 60 cards,</li>
+<li>There must be at most 4 cards with the same name,
+<ul>
+<li>Note that cards with different identifiers but the same name are added together,</li>
+<li>The only exception to this rule are <em>basic</em> Energy cards, of which you can have an unlimited amount,</li>
+</ul>
+</li>
+<li>There must be at least one <em>basic</em> Pokémon.</li>
+</ul>
+<p>Implement this validation using <code>Raise</code> or <code>Either</code>, and try to break the process in different functions. The notion of <a href="https://arrow-kt.io/learn/typed-errors/validation/#fail-first-vs-accumulation">fail-first vs. accumulation</a> is important here, so you can squeeze as much information as possible. The skeleton for the function is already given: you should write the body of either <code>validateRaiseImpl</code> or <code>validateEitherImpl</code>, and update <code>validate</code> to call the corresponding function.</p>
+<h3 id="better-error-types"><a class="header" href="#better-error-types"><img src="images/oddish.png" height="20px" /> Better (error) types</a></h3>
+<p>The current implementation goes against our aim of precise types, since it uses <code>String</code> to represent any problem. Your <strong>task</strong> here is to introduce an <em>error hierarchy</em> that represents each possible problem with the deck. More concretely:</p>
+<ol>
+<li>Introduce a new <code>DeckProblem</code> sealed hierarchy,</li>
+<li>Introduce as many subclasses of <code>DeckProblem</code> as kinds of rules that may be broken, including in each of them any additional information that could be useful while reporting,</li>
+<li>Modify the <code>validate</code> function to return a <code>NonEmptyList&lt;DeckProblem&gt;?</code>, and update the code to build instances of those errors instead of using strings.</li>
+</ol>
+<p>As a result of this transformation the <code>DeckPane</code> view cannot directly print the errors, as it was doing until now. You need to define how each <code>DeckProblem</code> should be represented as a message.</p>
+<h3 id="problems-tied-to-specific-cards"><a class="header" href="#problems-tied-to-specific-cards"><img src="images/vileplume.png" height="20px" /> Problems tied to specific cards</a></h3>
+<p>Some problems pertain the whole deck (like having too few or too many cards), whereas others refer to specific cards (like having more than 4 cards) with the same name. We want the UI to show those problems differently; for example, by showing the name in the <code>MaterialTheme.colorScheme.error</code> color. But there may be some information missing to tie errors to specific cards. Your <strong>task</strong> is to refine your error hierarchy to account for this information, and update the UI accordingly.</p>
+<p>This task is especially interesting to understand the different roles of view models and views when representing information. During validation it makes sense to account for errors in a uniform fashion, whereas in the UI we want them to appear separately. By introducing a good error hierarchy, making this distinction becomes easy.</p>
+<h3 id="evolution"><a class="header" href="#evolution"><img src="images/vileplume.png" height="20px" /> Evolution</a></h3>
+<p>Implement a rule to check that you can always <em>evolve</em> every Pokémon in your deck. This means you if you have a Stage 1 or Stage 2 Pokémon, you should have a card for the Pokémon it evolves from.</p>
 <h3 id="gym-leader-challenge"><a class="header" href="#gym-leader-challenge"><img src="images/vileplume.png" height="20px" /> Gym Leader Challenge</a></h3>
 <p>The rules described above correspond to the <em>Standard</em> format, which is the one sanctioned for tournaments. However, fans of the game have come with other formats, like <a href="https://gymleaderchallenge.com/">Gym Leader Challenge</a> (GLC). As an <strong>extra task</strong>, you may implement <a href="https://gymleaderchallenge.com/rules">GLC rules</a>.</p>
 <ul>

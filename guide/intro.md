@@ -6,8 +6,8 @@ Now that you know about the [domain](./tcg.md) and the [technology](./tech-intro
 
 The `tcg` module gives access to cards and their information.
 
-- The `tcg.kt` file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the [_What is (in) a deck_](./adt.md) section.
-- Basic validation is implemented in `validation.kt`. In the [_Validation_](./validation.md) section we'll improve this functionality.
+- The `tcg/tcg.kt` file defines a set of types that represent the information in cards, including their name, identifier, category, and type. We shall delve into these types in the [_What is (in) a deck_](./adt.md) section.
+- Basic validation is implemented in `tcg/validation.kt`. In the [_Validation_](./validation.md) section we'll improve this functionality.
 
 To get a bit more comfortable with the domain, you can write a `Deck` by hand, and pass it through the given validation. A throwaway `main` function, or [Kotlin Notebooks](https://kotlinlang.org/docs/kotlin-notebook-overview.html) are simple ways to test them. If you need some help, `tcg/api/api.kt` contains a few cards used in the mock Pokémon TCG API.
 
