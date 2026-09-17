@@ -13,6 +13,8 @@ import tcg.Deck
 
 class ToolAITitler : Titler {
     override suspend fun suggest(deck: Deck): TitlerResult {
+        TODO()
+        /*
         val agent = AIAgent(
             promptExecutor = MultiLLMPromptExecutor(OllamaClient()),
             llmModel = Titler.ChosenOllamaModel,
@@ -36,6 +38,8 @@ class ToolAITitler : Titler {
                            Give one title per line, starting with the best title.
                         """).lines()
         return TitlerResult(result.first(), result.drop(1))
+
+         */
     }
 
     class DeckInformation(val deck: Deck): ToolSet {

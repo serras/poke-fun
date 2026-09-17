@@ -26,8 +26,8 @@ fun main() {
     setProperty("apple.awt.application.appearance", "system")
     // choose the titler
     // val titler = Titler.Simple
-    // val titler = BasicAITitler()
-    val titler = ToolAITitler()
+    val titler = BasicAITitler()
+    // val titler = ToolAITitler()
     // start the application proper
     application {
         AppTheme {

@@ -30,6 +30,9 @@ dependencies:
     - $ktor.serialization.kotlinx.json
     - ai.koog:koog-agents:1.1.1
     - ai.koog:prompt-executor-ollama-client:1.1.1
+    - bom: org.springframework.ai:spring-ai-bom:2.0.1
+    - org.springframework.ai:spring-ai-ollama
+    - org.springframework.ai:spring-ai-client-chat
 
 test-dependencies:
     - $kotlin.test
