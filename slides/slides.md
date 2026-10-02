@@ -366,3 +366,20 @@ fun pokemon(name: String, hp: Int): Either<String, Card> = either {
 # Strong typing and effects
 
 ## Context parameters
+
+---
+
+# AI enters the room
+
+The workshop contains a few sections about using LLMs
+
+* Using local models thanks to **Ollama**
+* With **Koog** as the library of choice
+
+---
+layout: intro
+---
+
+# Time to work!
+
+## `serranofp.com/poke-fun`

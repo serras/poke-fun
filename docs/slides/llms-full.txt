@@ -336,3 +336,18 @@ Slide 26: /poke-fun/slides/#/26
 
 ### Context parameters
 
+## AI enters the room
+
+Slide 27: /poke-fun/slides/#/27
+
+The workshop contains a few sections about using LLMs
+
+* Using local models thanks to **Ollama**
+* With **Koog** as the library of choice
+
+## Time to work!
+
+Slide 28: /poke-fun/slides/#/28
+
+### `serranofp.com/poke-fun`
+
