@@ -1,18 +1,18 @@
 # Poké-Fun
 
-Source: /
+Source: /poke-fun/slides/
 
-Slide 1: /#/1
+Slide 1: /poke-fun/slides/#/1
 
 ### Poké-Fun with Kotlin and Arrow
 
 ## Poké-Fun with Kotlin and Arrow
 
-Slide 2: /#/2
+Slide 2: /poke-fun/slides/#/2
 
 ## Welcome!
 
-Slide 3: /#/3
+Slide 3: /poke-fun/slides/#/3
 
 This is a **self-guided** workshop
 
@@ -25,15 +25,15 @@ We're here to answer any question you may have 😄
 
 ## Welcome!
 
-Slide 4: /#/4
+Slide 4: /poke-fun/slides/#/4
 
 The **main goal** to to improve Poké-Fun, an editor for Pokémon TCG decks
 
-![Application](/app.png)
+![Application](/poke-fun/slides/app.png)
 
 ## Requirements
 
-Slide 5: /#/5
+Slide 5: /poke-fun/slides/#/5
 
 The **main page** for the workshop is `serranofp.com/poke-fun`
 
@@ -46,7 +46,7 @@ The **main page** for the workshop is `serranofp.com/poke-fun`
 
 ## Self-guided workshop
 
-Slide 6: /#/6
+Slide 6: /poke-fun/slides/#/6
 
 Every chapter contains
 * Some introduction to the topic at hand
@@ -59,7 +59,7 @@ We're here to answer any question you may have 😄
 
 ## Kotlin, Arrow, Compose 😵‍💫
 
-Slide 7: /#/7
+Slide 7: /poke-fun/slides/#/7
 
 * **Kotlin** is a programming language, developed by _JetBrains_
   * Kotlin **Toolchain** is the build tool
@@ -71,7 +71,7 @@ Slide 7: /#/7
 
 ## Kotlin quick intro
 
-Slide 8: /#/8
+Slide 8: /poke-fun/slides/#/8
 
 > See `kotlinlang.org/docs` to learn more
 
@@ -93,7 +93,7 @@ fun Card.normalize() =             // extension function
 
 ## Kotlin quick intro
 
-Slide 9: /#/9
+Slide 9: /poke-fun/slides/#/9
 
 Great support for functional programming
 * Trailing lambdas are everywhere
@@ -108,7 +108,7 @@ fun Deck.allHp(): Int =
 
 ## Kotlin quick intro
 
-Slide 10: /#/10
+Slide 10: /poke-fun/slides/#/10
 
 Great support for functional programming
 * Trailing lambdas are everywhere
@@ -123,7 +123,7 @@ fun Deck.allHp(): Int =
 
 ## Core ideas
 
-Slide 11: /#/11
+Slide 11: /poke-fun/slides/#/11
 
 ### Value-oriented programming
 
@@ -133,7 +133,7 @@ Slide 11: /#/11
 
 ## Core ideas
 
-Slide 12: /#/12
+Slide 12: /poke-fun/slides/#/12
 
 ### Value-oriented programming
 
@@ -148,7 +148,7 @@ Prefer data manipulation over complex control flow
 
 ## Core ideas
 
-Slide 13: /#/13
+Slide 13: /poke-fun/slides/#/13
 
 ### Value-oriented programming
 
@@ -163,7 +163,7 @@ Introduce simple structures to keep relationships between parts of the code
 
 ## Core ideas
 
-Slide 14: /#/14
+Slide 14: /poke-fun/slides/#/14
 
 ### Value-oriented programming
 
@@ -179,7 +179,7 @@ Keep as much information as possible in your signatures
 
 ## Value-oriented programming
 
-Slide 15: /#/15
+Slide 15: /poke-fun/slides/#/15
 
 ### Immutable data -- _What is (in) a deck_
 
@@ -195,7 +195,7 @@ Kotlin provides good support for immutability
 
 ## Value-oriented programming
 
-Slide 16: /#/16
+Slide 16: /poke-fun/slides/#/16
 
 ### Immutable data -- _What is (in) a deck_
 
@@ -217,7 +217,7 @@ fun Card.normalize() =
 
 ## Value-oriented programming
 
-Slide 17: /#/17
+Slide 17: /poke-fun/slides/#/17
 
 ### Errors -- _Law-abiding decks_
 
@@ -238,7 +238,7 @@ fun pokemon(name: String, hp: Int): Either<String, Card> {
 
 ## Value-oriented programming
 
-Slide 18: /#/18
+Slide 18: /poke-fun/slides/#/18
 
 ### Optics -- _Through the magnifying glass_
 
@@ -253,7 +253,7 @@ Arrow Optics brings much nicer syntax
 
 ## Value-oriented programming
 
-Slide 19: /#/19
+Slide 19: /poke-fun/slides/#/19
 
 ### Actions-as-data -- _Deck building_
 
@@ -272,7 +272,7 @@ sealed interface DeckOperation {
 
 ## Value-oriented programming
 
-Slide 20: /#/20
+Slide 20: /poke-fun/slides/#/20
 
 ### Actions-as-data -- _Deck building_
 
@@ -293,32 +293,32 @@ fun Deck.apply(operation: DeckOperation) = when (operation) {
 
 ## Structured paradigms
 
-Slide 21: /#/21
+Slide 21: /poke-fun/slides/#/21
 
 ### Structured concurrency
  -- _Loading and saving_, _Deal with bad internet_
 
 ## Structured paradigms
 
-Slide 22: /#/22
+Slide 22: /poke-fun/slides/#/22
 
 ### View models -- _What is (in) a deck_, _Nicer UI_
 
 ## Structured paradigms
 
-Slide 23: /#/23
+Slide 23: /poke-fun/slides/#/23
 
 ### Resources and transactions -- _Better architecture_
 
 ## Strong typing and effects
 
-Slide 24: /#/24
+Slide 24: /poke-fun/slides/#/24
 
 ### Sealed hierarchies -- _What is (in) a deck_
 
 ## Strong typing and effects
 
-Slide 25: /#/25
+Slide 25: /poke-fun/slides/#/25
 
 ### Errors and nullability -- _Law-abiding decks_
 
@@ -332,7 +332,7 @@ fun pokemon(name: String, hp: Int): Either<String, Card> = either {
 
 ## Strong typing and effects
 
-Slide 26: /#/26
+Slide 26: /poke-fun/slides/#/26
 
 ### Context parameters
 

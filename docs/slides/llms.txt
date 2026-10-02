@@ -1,11 +1,11 @@
 # Poké-Fun
 
-The text and code of a slide deck. The presentation itself is at / and needs JavaScript; the pages below are its static handout, and `llms-full.txt` holds everything in one Markdown file.
+The text and code of a slide deck. The presentation itself is at /poke-fun/slides/ and needs JavaScript; the pages below are its static handout, and `llms-full.txt` holds everything in one Markdown file.
 
 ## Sections
 
-- [Poké-Fun](/handout/): Poké-Fun, Poké-Fun with Kotlin and Arrow, Welcome!, Requirements, Self-guided workshop, Kotlin, Arrow, Compose 😵‍💫, Kotlin quick intro, Core ideas, …
+- [Poké-Fun](/poke-fun/slides/handout/): Poké-Fun, Poké-Fun with Kotlin and Arrow, Welcome!, Requirements, Self-guided workshop, Kotlin, Arrow, Compose 😵‍💫, Kotlin quick intro, Core ideas, …
 
 ## Optional
 
-- [Full text](/llms-full.txt): every slide as Markdown, with complete code snippets
+- [Full text](/poke-fun/slides/llms-full.txt): every slide as Markdown, with complete code snippets
