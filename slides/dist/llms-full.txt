@@ -1,0 +1,338 @@
+# Poké-Fun
+
+Source: /
+
+Slide 1: /1
+
+### Poké-Fun with Kotlin and Arrow
+
+## Poké-Fun with Kotlin and Arrow
+
+Slide 2: /2
+
+## Welcome!
+
+Slide 3: /3
+
+This is a **self-guided** workshop
+
+1. Small introduction to Kotlin, Arrow, Compose
+2. Work on the exercises you prefer
+
+We're here to answer any question you may have 😄
+
+> serranofp.com/poke-fun
+
+## Welcome!
+
+Slide 4: /4
+
+The **main goal** to to improve Poké-Fun, an editor for Pokémon TCG decks
+
+![Application](/app.png)
+
+## Requirements
+
+Slide 5: /5
+
+The **main page** for the workshop is `serranofp.com/poke-fun`
+
+* IntelliJ IDEA `jetbrains.com/idea`
+  * Android Studio is also an option
+  * Including the Kotlin Multiplatform and Kotlin Toolchain plug-ins
+* For the AI part, Ollama `ollama.com/download`
+  * In macOS you can `brew install ollama`
+* `git clone --recurse-submodules git@github.com:serras/poke-fun.git`
+
+## Self-guided workshop
+
+Slide 6: /6
+
+Every chapter contains
+* Some introduction to the topic at hand
+* References to read / watch to learn about the topic
+* Tasks to cement your understanding
+
+> Oddish  shows you the preferred path
+
+We're here to answer any question you may have 😄
+
+## Kotlin, Arrow, Compose 😵‍💫
+
+Slide 7: /7
+
+* **Kotlin** is a programming language, developed by _JetBrains_
+  * Kotlin **Toolchain** is the build tool
+  * `kotlinx.coroutines` is the concurrency library
+* **Arrow** is a library, independently developed at `arrow-kt.io`
+  * Missing utilities for functional-style programming
+* **Compose** is a UI library, developed by _Google_ for Android
+  * Compose **Multiplatform** extends to iOS, desktop, and web
+
+## Kotlin quick intro
+
+Slide 8: /8
+
+> See `kotlinlang.org/docs` to learn more
+
+```kotlin
+data class Card(                   // data-oriented class
+  val isPokemon: Boolean,          // primary properties
+  val name: String,
+  val hp: Int?,                    // nullable types
+) {
+  val description get() = when {   // custom properties
+    isPokemon -> "$name ($hp HP)"  // string interpolation
+    else -> name 
+  }
+}
+
+fun Card.normalize() =             // extension function
+  Card(isPokemon, name.capitalize(), hp)  // no 'new'
+```
+
+## Kotlin quick intro
+
+Slide 9: /9
+
+Great support for functional programming
+* Trailing lambdas are everywhere
+* Collections use `map`, `filter`, and friends
+
+```kotlin
+data class Deck(val cards: List<Card>)
+
+fun Deck.allHp(): Int =
+  cards.sumOf { card -> card.hp ?: 0 }
+```
+
+## Kotlin quick intro
+
+Slide 10: /10
+
+Great support for functional programming
+* Trailing lambdas are everywhere
+* Collections use `map`, `filter`, and friends
+
+```kotlin
+data class Deck(val cards: List<Card>)
+
+fun Deck.allHp(): Int =
+  cards.sumOf {           it.hp ?: 0 }
+```
+
+## Core ideas
+
+Slide 11: /11
+
+### Value-oriented programming
+
+### Structured paradigms
+
+### Strong typing and effects
+
+## Core ideas
+
+Slide 12: /12
+
+### Value-oriented programming
+
+Prefer data manipulation over complex control flow
+
+* `Result`-like types instead of exceptions
+* Work with immutable data
+
+### Structured paradigms
+
+### Strong typing and effects
+
+## Core ideas
+
+Slide 13: /13
+
+### Value-oriented programming
+
+### Structured paradigms
+
+Introduce simple structures to keep relationships between parts of the code
+
+* Transactions that may commit or rollback
+* Unidirectional flow for UIs
+
+### Strong typing and effects
+
+## Core ideas
+
+Slide 14: /14
+
+### Value-oriented programming
+
+### Structured paradigms
+
+### Strong typing and effects
+
+Keep as much information as possible in your signatures
+
+* Give the compiler information to introduce better checks
+* Explicit dependencies instead of implicit ones
+* Introduce new types when new invariants pop up
+
+## Value-oriented programming
+
+Slide 15: /15
+
+### Immutable data -- _What is (in) a deck_
+
+Do not mutate data in place, always create new copies
+
+* Simplifies the concurrency story, you never see intermediate states
+* Values always preserve the invariants
+
+Kotlin provides good support for immutability
+
+* Data classes (and soon value classes) with built-in `copy`
+* Collections are immutable by default
+
+## Value-oriented programming
+
+Slide 16: /16
+
+### Immutable data -- _What is (in) a deck_
+
+```kotlin
+data class Card(
+  val isPokemon: Boolean,
+  val name: String,
+  val hp: Int?,
+) {
+  val description get() = when {
+    isPokemon -> "$name ($hp HP)"
+    else -> name 
+  }
+}
+
+fun Card.normalize() =
+  Card(isPokemon, name.capitalize(), hp)
+```
+
+## Value-oriented programming
+
+Slide 17: /17
+
+### Errors -- _Law-abiding decks_
+
+Treat errors also as values, instead of special control flow
+
+* In other words, no exceptions
+* Validation becomes simpler data manipulation
+
+```kotlin
+fun pokemon(name: String, hp: Int): Either<String, Card> {
+  if (name.isEmpty()) return Left("empty name")
+  if (hp < 10)        return Left("wrong HP")
+  return Right(Card(isPokemon = true, name, hp))
+}
+```
+
+> In the future, Kotlin will have _rich errors_
+
+## Value-oriented programming
+
+Slide 18: /18
+
+### Optics -- _Through the magnifying glass_
+
+Make querying and copying immutable data much simpler
+
+* Otherwise, immutability loses by a thousand cuts
+* By default, `copy` in Kotlin is not great
+
+Arrow Optics brings much nicer syntax
+
+> In the future, Kotlin will have _copy syntax_
+
+## Value-oriented programming
+
+Slide 19: /19
+
+### Actions-as-data -- _Deck building_
+
+Treat descriptions of processes also as data
+
+* Actions, events, queries... can be transformed and optimized
+* Understand any program as a compiler
+
+```kotlin
+sealed interface DeckOperation {
+  data class ChangeTitle(val newTitle: String): DeckOperation
+  data class AddCard(val card: Card): DeckOperation
+  data object Clear: DeckOperation
+}
+```
+
+## Value-oriented programming
+
+Slide 20: /20
+
+### Actions-as-data -- _Deck building_
+
+Treat descriptions of processes also as data
+
+* Actions, events, queries... can be transformed and optimized
+* Understand any program as a compiler
+
+```kotlin
+fun Deck.apply(operation: DeckOperation) = when (operation) {
+  is ChangeTitle -> ...
+  is AddCard -> ...
+  is Clear -> ...
+}
+```
+
+> Works incredibly well with Compose (or React + Redux)
+
+## Structured paradigms
+
+Slide 21: /21
+
+### Structured concurrency
+ -- _Loading and saving_, _Deal with bad internet_
+
+## Structured paradigms
+
+Slide 22: /22
+
+### View models -- _What is (in) a deck_, _Nicer UI_
+
+## Structured paradigms
+
+Slide 23: /23
+
+### Resources and transactions -- _Better architecture_
+
+## Strong typing and effects
+
+Slide 24: /24
+
+### Sealed hierarchies -- _What is (in) a deck_
+
+## Strong typing and effects
+
+Slide 25: /25
+
+### Errors and nullability -- _Law-abiding decks_
+
+```kotlin
+fun pokemon(name: String, hp: Int): Either<String, Card> = either {
+  ensure(name.isNotEmpty()) { "empty name" }
+  ensure(hp >= 10) { "wrong HP" }
+  Card(isPokemon = true, name, hp)
+}
+```
+
+## Strong typing and effects
+
+Slide 26: /26
+
+### Context parameters
+

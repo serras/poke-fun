@@ -1,0 +1,415 @@
+/* Deck refinements on top of slidev-theme-kotlin, shared with the reference deck. */
+:root {
+  --fundamentals-purple: #7954f6;
+  --fundamentals-pink: #eb55e6;
+  --fundamentals-ink: #1f2023;
+  --fundamentals-blue: var(--code-window-amper-color);
+  --drawn-annotation-color: var(--fundamentals-purple, #7954f6);
+  /* Code window sizing. The theme's `--code-window-columns` only sets the TYPE size
+     (characters that fit on one full-width line); the box itself always fills its
+     parent. `--code-window-width` is the deck's knob for the box: tweak it here for
+     the whole deck, or per slide with `class: code-w-fit` / `code-w-75` / `code-w-60`. */
+  --code-window-columns: 80;
+  --code-window-width: 90%;
+}
+
+.slidev-code-wrapper {
+  width: var(--code-window-width);
+  max-width: 100%;
+}
+.slidev-layout.code-w-fit { --code-window-width: fit-content; } /* hug the longest line */
+.slidev-layout.code-w-75 { --code-window-width: 75%; }
+.slidev-layout.code-w-60 { --code-window-width: 60%; }
+
+html.dark {
+  --fundamentals-ink: #f4f2f7;
+}
+
+.slidev-vclick-target:not(.slidev-vclick-anim-none) {
+  transition-duration: 280ms;
+  transition-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+::view-transition-old(root),
+::view-transition-new(root),
+::view-transition-group(root) {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.slidev-layout {
+  padding: 3rem 4rem;
+  font-size: 2.175rem;
+  line-height: 1.42;
+}
+
+.slidev-layout :is(h1, h2, h3, h4, h5, h6) { font-weight: 700; }
+.slidev-layout h1 { margin-bottom: 1.25rem; font-size: 3.65rem; line-height: 1.08; letter-spacing: -0.035em; }
+.slidev-layout h2 { margin-bottom: 1rem; }
+.slidev-layout pre { margin-top: 0.8rem; margin-bottom: 0.8rem; }
+
+.card { width: fit-content; max-width: 100%; }
+
+/* Blockquotes are used as compact slide annotations in this deck. Keep the
+   content treatment unchanged; replace the card with one quiet gradient rail. */
+.slidev-layout blockquote {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.5rem 0 1.2rem;
+  padding: 0.7rem 1rem 0.7rem 1.1rem;
+  border: 0;
+  border-left: 0.28rem solid var(--fundamentals-purple);
+  border-image: linear-gradient(180deg, #7954f6 0%, #8053f4 42%, #9a4def 67%, #d74ae5 100%) 1;
+  background: transparent !important;
+  color: var(--fundamentals-ink);
+  font-size: inherit;
+  font-weight: 650;
+  line-height: 1.35;
+}
+.slidev-layout blockquote p { margin: 0; line-height: inherit; }
+
+.fundamentals-cover h1 {
+  max-width: 50rem; font-size: 5.2rem !important;
+  background: linear-gradient(120deg, var(--fundamentals-purple), var(--fundamentals-pink));
+  background-clip: text; -webkit-background-clip: text; color: transparent;
+}
+.fundamentals-cover h2 { font-size: 2rem; }
+.section-slide h1 { max-width: 48rem; font-size: 4.4rem !important; }
+.section-slide ul { max-width: 44rem; }
+.section-slide li { margin-bottom: 0.35rem; font-size: 1.55rem; line-height: 1.3; }
+.lesson-number { color: var(--fundamentals-purple); font-size: 1.2rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
+.kodee-character { z-index: 0; }
+.slidev-layout > :not(.kodee-character) { position: relative; z-index: 1; }
+
+/* Intro */
+.deck-baseline { margin-top: 2.25rem; color: #665f71; font-size: 1.2rem; font-weight: 650; letter-spacing: 0.04em; }
+
+/* A semantic, theme-friendly numbered list. Markdown lists on the agenda
+   receive the same treatment without requiring handwritten HTML classes. */
+:is(.numbered-list, .agenda-slide ol) {
+  --numbered-list-rule: rgb(121 84 246 / 22%);
+  counter-reset: numbered-list-item;
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin: 1.55rem 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+:is(.numbered-list, .agenda-slide ol) > li {
+  counter-increment: numbered-list-item;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 3.45rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.9rem;
+  min-height: 3.15rem;
+  padding: 0.5rem 0.75rem 0.5rem 0;
+  border-bottom: 1px solid var(--numbered-list-rule);
+  color: var(--fundamentals-ink);
+  font-size: 1.38rem;
+  font-weight: 680;
+  letter-spacing: -0.012em;
+}
+:is(.numbered-list, .agenda-slide ol) > li::before {
+  align-self: center;
+  content: counter(numbered-list-item, decimal-leading-zero);
+  font-family: var(--slidev-font-mono);
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -0.08em;
+  line-height: 1;
+  text-align: left;
+  color: var(--numbered-list-marker, var(--fundamentals-purple));
+}
+
+/* `sibling-index()` and `sibling-count()` make the first marker purple and
+   the last pink, regardless of how many items a list contains. The fallback
+   above keeps markers legible in browsers that do not support these functions. */
+@supports (color: color-mix(in oklch, red calc(sibling-index() * 1%), blue)) {
+  :is(.numbered-list, .agenda-slide ol) > li::before {
+    --numbered-list-progress: calc(
+      (sibling-index() - 1) / max(1, sibling-count() - 1)
+    );
+    --numbered-list-marker: color-mix(
+      in oklch,
+      #7954f6 calc((1 - var(--numbered-list-progress)) * 100%),
+      #d74ae5 calc(var(--numbered-list-progress) * 100%)
+    );
+  }
+}
+
+:is(.agenda-list, .agenda-slide ol) { max-width: 48rem; }
+.agenda-footnote { margin-top: 1.55rem; color: #665f71; font-size: 1.2rem; }
+.section-lede { margin-top: -0.25rem; color: #665f71; font-size: 1.65rem; font-weight: 600; }
+
+html.dark :is(.numbered-list, .agenda-slide ol) { --numbered-list-rule: rgb(121 84 246 / 34%); }
+
+/* Closing: one calm, generous moment after the denser technical material. */
+.slidev-layout.closing-slide {
+  position: relative;
+  isolation: isolate;
+  padding: 0;
+  overflow: hidden;
+}
+.closing-slide::before,
+.closing-slide::after {
+  position: absolute;
+  z-index: -1;
+  border-radius: 999px;
+  content: '';
+  pointer-events: none;
+}
+.closing-slide::before {
+  top: -21rem;
+  right: -14rem;
+  width: 43rem;
+  height: 43rem;
+  background: radial-gradient(circle, rgb(121 84 246 / 15%) 0%, rgb(121 84 246 / 5%) 42%, transparent 70%);
+}
+.closing-slide::after {
+  bottom: -26rem;
+  left: 11%;
+  width: 46rem;
+  height: 46rem;
+  background: radial-gradient(circle, rgb(235 85 230 / 11%) 0%, transparent 69%);
+}
+.closing-content {
+  width: min(100% - 12rem, 64rem);
+  margin: auto;
+  text-align: center;
+}
+.closing-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-bottom: 1.45rem;
+}
+.closing-mark span {
+  display: block;
+  width: 3.7rem;
+  height: 0.2rem;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, var(--fundamentals-purple), var(--fundamentals-pink));
+}
+.closing-logo {
+  display: block;
+  width: 2.55rem;
+  height: 2.55rem;
+  background: center / contain no-repeat url('/kotlin.svg');
+}
+html.dark .closing-logo { background-image: url('/kotlin_dark.svg'); }
+.closing-eyebrow {
+  margin: 0 0 0.55rem;
+  color: var(--fundamentals-purple);
+  font-family: var(--slidev-font-mono);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.closing-slide h1 {
+  margin: 0;
+  color: var(--fundamentals-ink);
+  font-size: 5.55rem !important;
+  font-weight: 750;
+  letter-spacing: -0.065em;
+  line-height: 0.96;
+}
+.closing-slide h1 span {
+  background: linear-gradient(100deg, var(--fundamentals-purple), var(--fundamentals-pink));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.closing-rule {
+  width: 6.7rem;
+  height: 0.24rem;
+  margin: 2.1rem auto 1.65rem;
+  border-radius: 1rem;
+  background: linear-gradient(90deg, var(--fundamentals-purple), var(--fundamentals-pink));
+}
+.closing-question {
+  margin: 0;
+  color: var(--fundamentals-ink);
+  font-size: 2.15rem;
+  font-weight: 680;
+  letter-spacing: -0.03em;
+}
+.closing-question span { color: var(--fundamentals-pink); }
+html.dark .closing-slide::before { background: radial-gradient(circle, rgb(121 84 246 / 24%) 0%, rgb(121 84 246 / 7%) 42%, transparent 70%); }
+html.dark .closing-slide::after { background: radial-gradient(circle, rgb(235 85 230 / 18%) 0%, transparent 69%); }
+
+@media (prefers-reduced-motion: reduce) {
+  .slidev-vclick-target, ::view-transition-old(root), ::view-transition-new(root), ::view-transition-group(root) { transition-duration: 1ms !important; transition-delay: 0ms !important; animation-duration: 1ms !important; }
+}
+
+
+/* Long real-world examples: `class: dense-code` on the slide gives the code window a
+   narrower type so about 22 lines fit. Trim the snippet first; use this as the last resort. */
+.slidev-layout.dense-code { --code-window-columns: 104; }
+
+/* Wide terminal listings (kotlin init). */
+.slidev-layout.wide-code-slide { --code-window-columns: 100; }
+
+/* Part 3: a small stamp for the KEEP slides whose syntax may still change. */
+.slidev-layout > .keep-stamp {
+  position: absolute;
+  top: 2.4rem;
+  right: 4rem;
+  z-index: 2;
+  padding: 0.35rem 0.9rem;
+  border: 0.22rem solid #e4463b;
+  border-radius: 0.6rem;
+  color: #e4463b;
+  font-family: var(--slidev-font-mono);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-6deg);
+  opacity: 0.85;
+}
+
+/* QR card filling the right half, where Kodee stands on other intro slides.
+   The intro layout nests the slot in a relative .my-auto; release it so the
+   card positions against the whole slide. */
+.slidev-layout .my-auto:has(> .qr-card) { position: static; }
+.slidev-layout .qr-card {
+  position: absolute;
+  top: 50%;
+  left: 75%;
+  z-index: 2;
+  display: grid;
+  gap: 0.9rem;
+  justify-items: center;
+  width: 30rem;
+  margin: 0;
+  padding: 1.4rem 1.4rem 1.1rem;
+  border: 0.3rem solid transparent;
+  border-radius: 1.6rem;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(135deg, #7f52ff, #c711e1 55%, #e44857) border-box;
+  box-shadow: 0 1.2rem 3rem rgb(127 82 255 / 22%);
+  transform: translate(-50%, -50%);
+}
+.qr-card img { display: block; width: 100%; height: auto; }
+.qr-card figcaption {
+  background: linear-gradient(90deg, #7f52ff, #c711e1 55%, #e44857);
+  background-clip: text;
+  color: transparent;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* Part 6: meet-us bullet slides and the logo wall placeholder. */
+.meet-us-slide ul { max-width: 52rem; }
+.meet-us-slide li { margin-bottom: 0.5rem; font-size: 1.85rem; }
+.logo-wall {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem 2rem;
+  max-width: 70rem;
+  margin: 2rem auto 0;
+  padding: 0;
+  list-style: none;
+}
+.logo-wall li {
+  display: grid;
+  place-items: center;
+  min-height: 5.2rem;
+  border: 1px solid rgb(121 84 246 / 22%);
+  border-radius: 0.9rem;
+  background: rgb(121 84 246 / 5%);
+  color: var(--fundamentals-ink);
+  font-size: 1.6rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+html.dark .logo-wall li { border-color: rgb(121 84 246 / 34%); background: rgb(121 84 246 / 10%); }
+
+/* KotlinConf slide: video and QR card side by side under a full-width title. */
+.kotlinconf-slide .video-qr {
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.kotlinconf-slide .video-qr video {
+  flex: 1;
+  min-width: 0;
+  max-height: 100%;
+  aspect-ratio: 16 / 13;
+  border-radius: 1.2rem;
+  object-fit: cover;
+  box-shadow: 0 1.2rem 3rem rgb(0 0 0 / 18%);
+}
+.kotlinconf-slide .qr-card {
+  position: static;
+  flex: none;
+  width: 22rem;
+  transform: none;
+}
+.kotlinconf-slide .qr-title {
+  display: grid;
+  gap: 0.3rem;
+  justify-items: center;
+  text-align: center;
+}
+.kotlinconf-slide .qr-eyebrow {
+  color: #7f52ff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.kotlinconf-slide .qr-title strong {
+  font-size: 2.3rem;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.kotlinconf-slide .qr-meta {
+  margin-top: 0.4rem;
+  padding: 0.3rem 0.9rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #7f52ff, #c711e1 55%, #e44857);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.intro h1 {
+  font-size: 2.75em !important;
+  line-height: 1.1em;
+}
+
+.default h1 {
+  margin-bottom: 0.8em;
+}
+
+.slidev-layout p {
+  margin-bottom: 1em;
+}
+.slidev-layout ol {
+  margin-bottom: 1em;
+}
+.slidev-layout ul {
+  margin-bottom: 1em;
+}
+
+:root {
+    --cover-text-width: 60% !important;
+}
+
+h2 {
+  font-size: 1.2em !important;
+  margin-bottom: 0.8em !important;
+  margin-top: 1em !important;
+}
