@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Poké-Fun</title>
+<meta name="description" content="Poké-Fun — Poké-Fun">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="/handout/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Poké-Fun">
+<meta property="og:description" content="Poké-Fun — Poké-Fun">
+<meta property="og:url" content="/handout/">
+<meta property="og:site_name" content="Poké-Fun">
+<link rel="alternate" type="text/markdown" title="Full text for language models" href="/llms-full.txt">
+<meta name="generator" content="slidev-theme-kotlin">
+<style>
+:root { color-scheme: light dark; --fg: #1a1a1a; --muted: #5c5c5c; --bg: #ffffff; --panel: #f6f7f9; --line: #e2e4e8; --accent: #7f52ff; --quote: #fbf6e6; }
+@media (prefers-color-scheme: dark) { :root { --fg: #e6e6e6; --muted: #a0a4ab; --bg: #16171a; --panel: #1f2126; --line: #30333a; --accent: #b39cff; --quote: #2a2618; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 "JetBrains Sans", Inter, system-ui, sans-serif; }
+main { max-width: 52rem; margin: 0 auto; padding: 2rem 1.25rem 5rem; }
+header.site { border-bottom: 1px solid var(--line); background: var(--panel); }
+header.site nav { max-width: 52rem; margin: 0 auto; padding: 0.75rem 1.25rem; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.9rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1 { font-size: 2rem; line-height: 1.2; margin: 0 0 0.5rem; }
+h1 + p.lead { color: var(--muted); margin-top: 0; font-size: 1.05rem; }
+section.slide { padding: 1.75rem 0; border-top: 1px solid var(--line); }
+section.slide h2 { font-size: 1.35rem; margin: 0 0 0.75rem; display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap; }
+section.slide h2 a.deep-link { font-size: 0.8rem; font-weight: 500; color: var(--muted); white-space: nowrap; }
+section.slide h2 a.deep-link:hover { color: var(--accent); }
+figure.code { margin: 1rem 0; }
+figure.code figcaption { font: 600 0.75rem/1 "JetBrains Sans", Inter, system-ui, sans-serif; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.4rem; }
+pre { margin: 0; padding: 0.9rem 1.1rem; overflow-x: auto; border: 1px solid var(--line); border-radius: 0.5rem; background: var(--panel); font: 0.88rem/1.55 "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+pre.shiki { background: var(--shiki-light-bg, var(--panel)) !important; }
+@media (prefers-color-scheme: dark) { pre.shiki { background: var(--shiki-dark-bg, var(--panel)) !important; } pre.shiki span { color: var(--shiki-dark) !important; } }
+code { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; }
+:not(pre) > code { font-size: 0.9em; padding: 0.1em 0.35em; border-radius: 0.3em; background: var(--panel); }
+blockquote { margin: 1rem 0; padding: 0.6rem 1rem; border-left: 3px solid var(--accent); background: var(--quote); border-radius: 0 0.4rem 0.4rem 0; }
+blockquote p { margin: 0.25rem 0; }
+aside.notes { margin-top: 1rem; padding: 0.75rem 1rem; border: 1px dashed var(--line); border-radius: 0.5rem; color: var(--muted); font-size: 0.95rem; }
+aside.notes strong { color: var(--fg); }
+ol.toc { padding-left: 1.5rem; }
+ol.toc li { margin: 0.35rem 0; }
+ol.toc ul { padding-left: 1.25rem; color: var(--muted); font-size: 0.95rem; }
+nav.pager { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--line); font-size: 0.95rem; }
+footer { margin-top: 3rem; color: var(--muted); font-size: 0.85rem; }
+img { max-width: 100%; height: auto; }
+table { border-collapse: collapse; }
+td, th { border: 1px solid var(--line); padding: 0.3rem 0.6rem; }
+</style>
+</head>
+<body>
+<header class="site"><nav><a href="/">▶ Poké-Fun</a></nav></header>
+<main>
+<h1>Poké-Fun</h1>
+<p class="lead">The full text and code of the slides. <a href="/">Open the presentation</a>.</p>
+<section class="slide" id="slide-1">
+<h2>Poké-Fun <a class="deep-link" href="/#/1">slide 1 ↗</a></h2>
+<h3>Poké-Fun with Kotlin and Arrow</h3>
+</section>
+<section class="slide" id="slide-2">
+<h2>Poké-Fun with Kotlin and Arrow <a class="deep-link" href="/#/2">slide 2 ↗</a></h2>
+
+</section>
+<section class="slide" id="slide-3">
+<h2>Welcome! <a class="deep-link" href="/#/3">slide 3 ↗</a></h2>
+<p>This is a <strong>self-guided</strong> workshop</p>
+<ol>
+<li>Small introduction to Kotlin, Arrow, Compose</li>
+<li>Work on the exercises you prefer</li>
+</ol>
+<p>We're here to answer any question you may have 😄</p>
+<blockquote>
+<p><a href="http://serranofp.com/poke-fun">serranofp.com/poke-fun</a></p>
+</blockquote>
+</section>
+<section class="slide" id="slide-4">
+<h2>Welcome! <a class="deep-link" href="/#/4">slide 4 ↗</a></h2>
+<p>The <strong>main goal</strong> to to improve Poké-Fun, an editor for Pokémon TCG decks</p>
+<p><img src="/app.png" alt="Application"></p>
+</section>
+<section class="slide" id="slide-5">
+<h2>Requirements <a class="deep-link" href="/#/5">slide 5 ↗</a></h2>
+<p>The <strong>main page</strong> for the workshop is <code>serranofp.com/poke-fun</code></p>
+<ul>
+<li>IntelliJ IDEA <code>jetbrains.com/idea</code>
+<ul>
+<li>Android Studio is also an option</li>
+<li>Including the Kotlin Multiplatform and Kotlin Toolchain plug-ins</li>
+</ul>
+</li>
+<li>For the AI part, Ollama <code>ollama.com/download</code>
+<ul>
+<li>In macOS you can <code>brew install ollama</code></li>
+</ul>
+</li>
+<li><code>git clone --recurse-submodules git@github.com:serras/poke-fun.git</code></li>
+</ul>
+</section>
+<section class="slide" id="slide-6">
+<h2>Self-guided workshop <a class="deep-link" href="/#/6">slide 6 ↗</a></h2>
+<p>Every chapter contains</p>
+<ul>
+<li>Some introduction to the topic at hand</li>
+<li>References to read / watch to learn about the topic</li>
+<li>Tasks to cement your understanding</li>
+</ul>
+<blockquote>
+<p>Oddish  shows you the preferred path</p>
+</blockquote>
+<p>We're here to answer any question you may have 😄</p>
+</section>
+<section class="slide" id="slide-7">
+<h2>Kotlin, Arrow, Compose 😵‍💫 <a class="deep-link" href="/#/7">slide 7 ↗</a></h2>
+<ul>
+<li><strong>Kotlin</strong> is a programming language, developed by <em>JetBrains</em>
+<ul>
+<li>Kotlin <strong>Toolchain</strong> is the build tool</li>
+<li><code>kotlinx.coroutines</code> is the concurrency library</li>
+</ul>
+</li>
+<li><strong>Arrow</strong> is a library, independently developed at <code>arrow-kt.io</code>
+<ul>
+<li>Missing utilities for functional-style programming</li>
+</ul>
+</li>
+<li><strong>Compose</strong> is a UI library, developed by <em>Google</em> for Android
+<ul>
+<li>Compose <strong>Multiplatform</strong> extends to iOS, desktop, and web</li>
+</ul>
+</li>
+</ul>
+</section>
+<section class="slide" id="slide-8">
+<h2>Kotlin quick intro <a class="deep-link" href="/#/8">slide 8 ↗</a></h2>
+<blockquote>
+<p>See <code>kotlinlang.org/docs</code> to learn more</p>
+</blockquote>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(                   </span><span style="color:#8C8C8C;--shiki-dark:#808080">// data-oriented class</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> isPokemon: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Boolean</span><span style="color:#080808;--shiki-dark:#A9B7C6">,          </span><span style="color:#8C8C8C;--shiki-dark:#808080">// primary properties</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">,</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">?,                    </span><span style="color:#8C8C8C;--shiki-dark:#808080">// nullable types</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">) {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> description </span><span style="color:#0033B3;--shiki-dark:#CC7832">get</span><span style="color:#080808;--shiki-dark:#A9B7C6">() </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> when</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {   </span><span style="color:#8C8C8C;--shiki-dark:#808080">// custom properties</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">    isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#067D17;--shiki-dark:#6A8759"> "</span><span style="color:#0037A6;--shiki-dark:#CC7832">$name</span><span style="color:#067D17;--shiki-dark:#6A8759"> (</span><span style="color:#0037A6;--shiki-dark:#CC7832">$hp</span><span style="color:#067D17;--shiki-dark:#6A8759"> HP)"</span><span style="color:#8C8C8C;--shiki-dark:#808080">  // string interpolation</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">    else</span><span style="color:#0033B3;--shiki-dark:#CC7832"> -></span><span style="color:#080808;--shiki-dark:#A9B7C6"> name </span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  }</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">normalize</span><span style="color:#080808;--shiki-dark:#A9B7C6">() </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#8C8C8C;--shiki-dark:#808080">             // extension function</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon, name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">capitalize</span><span style="color:#080808;--shiki-dark:#A9B7C6">(), hp)  </span><span style="color:#8C8C8C;--shiki-dark:#808080">// no 'new'</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-9">
+<h2>Kotlin quick intro <a class="deep-link" href="/#/9">slide 9 ↗</a></h2>
+<p>Great support for functional programming</p>
+<ul>
+<li>Trailing lambdas are everywhere</li>
+<li>Collections use <code>map</code>, <code>filter</code>, and friends</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Deck</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> cards: </span><span style="color:#000000;--shiki-dark:#A9B7C6">List</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">>)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Deck</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">allHp</span><span style="color:#080808;--shiki-dark:#A9B7C6">(): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#0033B3;--shiki-dark:#CC7832"> =</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  cards.</span><span style="color:#00627A;--shiki-dark:#FFC66D">sumOf</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { card </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#080808;--shiki-dark:#A9B7C6"> card.hp ?: </span><span style="color:#1750EB;--shiki-dark:#6897BB">0</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-10">
+<h2>Kotlin quick intro <a class="deep-link" href="/#/10">slide 10 ↗</a></h2>
+<p>Great support for functional programming</p>
+<ul>
+<li>Trailing lambdas are everywhere</li>
+<li>Collections use <code>map</code>, <code>filter</code>, and friends</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Deck</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> cards: </span><span style="color:#000000;--shiki-dark:#A9B7C6">List</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">>)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Deck</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">allHp</span><span style="color:#080808;--shiki-dark:#A9B7C6">(): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#0033B3;--shiki-dark:#CC7832"> =</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  cards.</span><span style="color:#00627A;--shiki-dark:#FFC66D">sumOf</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {           it.hp ?: </span><span style="color:#1750EB;--shiki-dark:#6897BB">0</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-11">
+<h2>Core ideas <a class="deep-link" href="/#/11">slide 11 ↗</a></h2>
+<h3>Value-oriented programming</h3>
+<h3>Structured paradigms</h3>
+<h3>Strong typing and effects</h3>
+</section>
+<section class="slide" id="slide-12">
+<h2>Core ideas <a class="deep-link" href="/#/12">slide 12 ↗</a></h2>
+<h3>Value-oriented programming</h3>
+<p>Prefer data manipulation over complex control flow</p>
+<ul>
+<li><code>Result</code>-like types instead of exceptions</li>
+<li>Work with immutable data</li>
+</ul>
+<h3>Structured paradigms</h3>
+<h3>Strong typing and effects</h3>
+</section>
+<section class="slide" id="slide-13">
+<h2>Core ideas <a class="deep-link" href="/#/13">slide 13 ↗</a></h2>
+<h3>Value-oriented programming</h3>
+<h3>Structured paradigms</h3>
+<p>Introduce simple structures to keep relationships between parts of the code</p>
+<ul>
+<li>Transactions that may commit or rollback</li>
+<li>Unidirectional flow for UIs</li>
+</ul>
+<h3>Strong typing and effects</h3>
+</section>
+<section class="slide" id="slide-14">
+<h2>Core ideas <a class="deep-link" href="/#/14">slide 14 ↗</a></h2>
+<h3>Value-oriented programming</h3>
+<h3>Structured paradigms</h3>
+<h3>Strong typing and effects</h3>
+<p>Keep as much information as possible in your signatures</p>
+<ul>
+<li>Give the compiler information to introduce better checks</li>
+<li>Explicit dependencies instead of implicit ones</li>
+<li>Introduce new types when new invariants pop up</li>
+</ul>
+</section>
+<section class="slide" id="slide-15">
+<h2>Value-oriented programming <a class="deep-link" href="/#/15">slide 15 ↗</a></h2>
+<h3>Immutable data -- <em>What is (in) a deck</em></h3>
+<p>Do not mutate data in place, always create new copies</p>
+<ul>
+<li>Simplifies the concurrency story, you never see intermediate states</li>
+<li>Values always preserve the invariants</li>
+</ul>
+<p>Kotlin provides good support for immutability</p>
+<ul>
+<li>Data classes (and soon value classes) with built-in <code>copy</code></li>
+<li>Collections are immutable by default</li>
+</ul>
+</section>
+<section class="slide" id="slide-16">
+<h2>Value-oriented programming <a class="deep-link" href="/#/16">slide 16 ↗</a></h2>
+<h3>Immutable data -- <em>What is (in) a deck</em></h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> isPokemon: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Boolean</span><span style="color:#080808;--shiki-dark:#A9B7C6">,</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">,</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">?,</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">) {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> description </span><span style="color:#0033B3;--shiki-dark:#CC7832">get</span><span style="color:#080808;--shiki-dark:#A9B7C6">() </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> when</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">    isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#067D17;--shiki-dark:#6A8759"> "</span><span style="color:#0037A6;--shiki-dark:#CC7832">$name</span><span style="color:#067D17;--shiki-dark:#6A8759"> (</span><span style="color:#0037A6;--shiki-dark:#CC7832">$hp</span><span style="color:#067D17;--shiki-dark:#6A8759"> HP)"</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">    else</span><span style="color:#0033B3;--shiki-dark:#CC7832"> -></span><span style="color:#080808;--shiki-dark:#A9B7C6"> name </span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  }</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">normalize</span><span style="color:#080808;--shiki-dark:#A9B7C6">() </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon, name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">capitalize</span><span style="color:#080808;--shiki-dark:#A9B7C6">(), hp)</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-17">
+<h2>Value-oriented programming <a class="deep-link" href="/#/17">slide 17 ↗</a></h2>
+<h3>Errors -- <em>Law-abiding decks</em></h3>
+<p>Treat errors also as values, instead of special control flow</p>
+<ul>
+<li>In other words, no exceptions</li>
+<li>Validation becomes simpler data manipulation</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Either</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">> {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  if</span><span style="color:#080808;--shiki-dark:#A9B7C6"> (name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) </span><span style="color:#0033B3;--shiki-dark:#CC7832">return</span><span style="color:#00627A;--shiki-dark:#FFC66D"> Left</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6">)</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  if</span><span style="color:#080808;--shiki-dark:#A9B7C6"> (hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">&#x3C;</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">)        </span><span style="color:#0033B3;--shiki-dark:#CC7832">return</span><span style="color:#00627A;--shiki-dark:#FFC66D"> Left</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6">)</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  return</span><span style="color:#00627A;--shiki-dark:#FFC66D"> Right</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#00627A;--shiki-dark:#FFC66D">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp))</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+<blockquote>
+<p>In the future, Kotlin will have <em>rich errors</em></p>
+</blockquote>
+</section>
+<section class="slide" id="slide-18">
+<h2>Value-oriented programming <a class="deep-link" href="/#/18">slide 18 ↗</a></h2>
+<h3>Optics -- <em>Through the magnifying glass</em></h3>
+<p>Make querying and copying immutable data much simpler</p>
+<ul>
+<li>Otherwise, immutability loses by a thousand cuts</li>
+<li>By default, <code>copy</code> in Kotlin is not great</li>
+</ul>
+<p>Arrow Optics brings much nicer syntax</p>
+<blockquote>
+<p>In the future, Kotlin will have <em>copy syntax</em></p>
+</blockquote>
+</section>
+<section class="slide" id="slide-19">
+<h2>Value-oriented programming <a class="deep-link" href="/#/19">slide 19 ↗</a></h2>
+<h3>Actions-as-data -- <em>Deck building</em></h3>
+<p>Treat descriptions of processes also as data</p>
+<ul>
+<li>Actions, events, queries... can be transformed and optimized</li>
+<li>Understand any program as a compiler</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">sealed</span><span style="color:#0033B3;--shiki-dark:#CC7832"> interface</span><span style="color:#000000;--shiki-dark:#A9B7C6"> DeckOperation</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> ChangeTitle</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> newTitle: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> AddCard</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> card: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> object</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Clear</span><span style="color:#080808;--shiki-dark:#A9B7C6">: </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-20">
+<h2>Value-oriented programming <a class="deep-link" href="/#/20">slide 20 ↗</a></h2>
+<h3>Actions-as-data -- <em>Deck building</em></h3>
+<p>Treat descriptions of processes also as data</p>
+<ul>
+<li>Actions, events, queries... can be transformed and optimized</li>
+<li>Understand any program as a compiler</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Deck</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">apply</span><span style="color:#080808;--shiki-dark:#A9B7C6">(operation: </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span><span style="color:#080808;--shiki-dark:#A9B7C6">) </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> when</span><span style="color:#080808;--shiki-dark:#A9B7C6"> (operation) {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  is</span><span style="color:#080808;--shiki-dark:#A9B7C6"> ChangeTitle </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#0033B3;--shiki-dark:#CC7832"> ..</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  is</span><span style="color:#080808;--shiki-dark:#A9B7C6"> AddCard </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#0033B3;--shiki-dark:#CC7832"> ..</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  is</span><span style="color:#080808;--shiki-dark:#A9B7C6"> Clear </span><span style="color:#0033B3;--shiki-dark:#CC7832">-></span><span style="color:#0033B3;--shiki-dark:#CC7832"> ..</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+<blockquote>
+<p>Works incredibly well with Compose (or React + Redux)</p>
+</blockquote>
+</section>
+<section class="slide" id="slide-21">
+<h2>Structured paradigms <a class="deep-link" href="/#/21">slide 21 ↗</a></h2>
+<h3>Structured concurrency</h3>
+<p>-- <em>Loading and saving</em>, <em>Deal with bad internet</em></p>
+</section>
+<section class="slide" id="slide-22">
+<h2>Structured paradigms <a class="deep-link" href="/#/22">slide 22 ↗</a></h2>
+<h3>View models -- <em>What is (in) a deck</em>, <em>Nicer UI</em></h3>
+</section>
+<section class="slide" id="slide-23">
+<h2>Structured paradigms <a class="deep-link" href="/#/23">slide 23 ↗</a></h2>
+<h3>Resources and transactions -- <em>Better architecture</em></h3>
+</section>
+<section class="slide" id="slide-24">
+<h2>Strong typing and effects <a class="deep-link" href="/#/24">slide 24 ↗</a></h2>
+<h3>Sealed hierarchies -- <em>What is (in) a deck</em></h3>
+</section>
+<section class="slide" id="slide-25">
+<h2>Strong typing and effects <a class="deep-link" href="/#/25">slide 25 ↗</a></h2>
+<h3>Errors and nullability -- <em>Law-abiding decks</em></h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Either</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">> </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> either</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isNotEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">>=</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-26">
+<h2>Strong typing and effects <a class="deep-link" href="/#/26">slide 26 ↗</a></h2>
+<h3>Context parameters</h3>
+</section>
+
+<footer>Generated from the slides on 2026-10-02. Every section links back to the live slide it was written for.</footer>
+</main>
+</body>
+</html>
