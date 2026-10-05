@@ -50,7 +50,7 @@ We're here to answer any question you may have 😄
 
 # Welcome!
 
-The **main goal** to to improve Poké-Fun, an editor for Pokémon TCG decks
+The **main goal** is to improve Poké-Fun, an editor for Pokémon TCG decks
 
 ![Application](/app.png)
 
@@ -122,15 +122,13 @@ Great support for functional programming
 * Trailing lambdas are everywhere
 * Collections use `map`, `filter`, and friends
 
-```kotlin
+```kotlin magic-move
 data class Deck(val cards: List<Card>)
 
 fun Deck.allHp(): Int =
   cards.sumOf { card -> card.hp ?: 0 }
 ```
 
----
-magic-move
 ---
 
 # Kotlin quick intro
@@ -139,7 +137,7 @@ Great support for functional programming
 * Trailing lambdas are everywhere
 * Collections use `map`, `filter`, and friends
 
-```kotlin
+```kotlin magic-move
 data class Deck(val cards: List<Card>)
 
 fun Deck.allHp(): Int =
@@ -157,8 +155,6 @@ fun Deck.allHp(): Int =
 ## Strong typing and effects
 
 ---
-magic-move
----
 
 # Core ideas
 
@@ -174,8 +170,6 @@ Prefer data manipulation over complex control flow
 ## Strong typing and effects
 
 ---
-magic-move
----
 
 # Core ideas
 
@@ -190,8 +184,6 @@ Introduce simple structures to keep relationships between parts of the code
 
 ## Strong typing and effects
 
----
-magic-move
 ---
 
 # Core ideas
@@ -313,7 +305,7 @@ Treat descriptions of processes also as data
 * Understand any program as a compiler
 
 ```kotlin
-fun Deck.apply(operation: DeckOperation) = when (operation) {
+fun Deck.perform(operation: DeckOperation) = when (operation) {
   is ChangeTitle -> ...
   is AddCard -> ...
   is Clear -> ...
@@ -332,7 +324,7 @@ Instead of creating (and then managing) independent threads, <br />
 Kotlin imposes tree-like hierarchies for concurrency
 
 * Every _coroutine_ has a parent coroutine
-* By default, coroutines **wait** to all their children
+* By default, coroutines **wait** for all their children
 * **Cancellation** is propagated to children
 * **Exceptions** follow a similar propagation paradigm
 
@@ -346,7 +338,7 @@ Kotlin imposes tree-like hierarchies for concurrency
 suspend fun loadData(userId: UserId) = coroutineScope {
   val data   = async { Db.loadUser(userId) }
   val avatar = async { downloadAvatar(userId) }
-  return User(data.await(), avatar.await().path)
+  User(data.await(), avatar.await().path)
 }
 ```
 
@@ -360,7 +352,7 @@ suspend fun loadData(userId: UserId) = coroutineScope {
 suspend fun loadData(userId: UserId) = coroutineScope {
   val data   = async { Db.loadUser(userId) }
   val avatar = async { downloadAvatar(userId) }
-  return User(data.await(), avatar.await().path)
+  User(data.await(), avatar.await().path)
 }
 ```
 
@@ -419,7 +411,8 @@ class Counter: ViewModel() {
 ```kotlin
 @Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
-    Text("Clicked ${counter.count.value} times")
+    val count by counter.count.collectAsState()
+    Text("Clicked $count times")
   }
 }
 ```
@@ -429,7 +422,7 @@ class Counter: ViewModel() {
 # Structured paradigms
 
 <p style="font-size: 130%">
-<b>Coroutines</b> and <b>view models</b> are whole topics on its own, <br />
+<b>Coroutines</b> and <b>view models</b> are whole topics on their own, <br />
 but feel free to ask about them if you want to know more
 </p>
 
@@ -553,7 +546,7 @@ Two points of view to describe what happens in the computation
 
 ## Context parameters
 
-```kotlin
+```kotlin magic-move
 
 fun pokemon(name: String, hp: Int): Either<String, Card> = either {
   ensure(name.isNotEmpty()) { "empty name" }
@@ -564,20 +557,18 @@ fun pokemon(name: String, hp: Int): Either<String, Card> = either {
 ```
 
 ---
-magic-move
----
 
 # Strong typing and effects
 
 ## Context parameters
 
-```kotlin
+```kotlin magic-move
 context(raise: Raise<String>)
-fun pokemon(name: String, hp: Int): Card = either {
+fun pokemon(name: String, hp: Int): Card {
   ensure(name.isNotEmpty()) { "empty name" }
   ensure(hp >= 10) { "wrong HP" }
   // if you get there, nothing was 'raise'd
-  Card(isPokemon = true, name, hp)
+  return Card(isPokemon = true, name, hp)
 }
 ```
 

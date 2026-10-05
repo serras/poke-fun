@@ -27,7 +27,7 @@ We're here to answer any question you may have 😄
 
 Slide 4: /poke-fun/slides/#/4
 
-The **main goal** to to improve Poké-Fun, an editor for Pokémon TCG decks
+The **main goal** is to improve Poké-Fun, an editor for Pokémon TCG decks
 
 ![Application](/poke-fun/slides/app.png)
 
@@ -282,7 +282,7 @@ Treat descriptions of processes also as data
 * Understand any program as a compiler
 
 ```kotlin
-fun Deck.apply(operation: DeckOperation) = when (operation) {
+fun Deck.perform(operation: DeckOperation) = when (operation) {
   is ChangeTitle -> ...
   is AddCard -> ...
   is Clear -> ...
@@ -303,7 +303,7 @@ Instead of creating (and then managing) independent threads,
 Kotlin imposes tree-like hierarchies for concurrency
 
 * Every _coroutine_ has a parent coroutine
-* By default, coroutines **wait** to all their children
+* By default, coroutines **wait** for all their children
 * **Cancellation** is propagated to children
 * **Exceptions** follow a similar propagation paradigm
 
@@ -317,7 +317,7 @@ Slide 22: /poke-fun/slides/#/22
 suspend fun loadData(userId: UserId) = coroutineScope {
   val data   = async { Db.loadUser(userId) }
   val avatar = async { downloadAvatar(userId) }
-  return User(data.await(), avatar.await().path)
+  User(data.await(), avatar.await().path)
 }
 ```
 
@@ -331,7 +331,7 @@ Slide 23: /poke-fun/slides/#/23
 suspend fun loadData(userId: UserId) = coroutineScope {
   val data   = async { Db.loadUser(userId) }
   val avatar = async { downloadAvatar(userId) }
-  return User(data.await(), avatar.await().path)
+  User(data.await(), avatar.await().path)
 }
 ```
 
@@ -387,7 +387,8 @@ Slide 26: /poke-fun/slides/#/26
 ```kotlin
 @Composable fun Screen(counter: Counter) {
   Button(onClick = { counter.increment() }) {
-    Text("Clicked ${counter.count.value} times")
+    val count by counter.count.collectAsState()
+    Text("Clicked $count times")
   }
 }
 ```
@@ -396,7 +397,7 @@ Slide 26: /poke-fun/slides/#/26
 
 Slide 27: /poke-fun/slides/#/27
 
-Coroutines and view models are whole topics on its own,
+Coroutines and view models are whole topics on their own,
 
 but feel free to ask about them if you want to know more
 
@@ -536,11 +537,11 @@ Slide 36: /poke-fun/slides/#/36
 
 ```kotlin
 context(raise: Raise<String>)
-fun pokemon(name: String, hp: Int): Card = either {
+fun pokemon(name: String, hp: Int): Card {
   ensure(name.isNotEmpty()) { "empty name" }
   ensure(hp >= 10) { "wrong HP" }
   // if you get there, nothing was 'raise'd
-  Card(isPokemon = true, name, hp)
+  return Card(isPokemon = true, name, hp)
 }
 ```
 
