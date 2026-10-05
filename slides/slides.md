@@ -328,11 +328,110 @@ fun Deck.apply(operation: DeckOperation) = when (operation) {
 
 ## Structured concurrency <br /> -- _Loading and saving_, _Deal with bad internet_
 
+Instead of creating (and then managing) independent threads, <br />
+Kotlin imposes tree-like hierarchies for concurrency
+
+* Every _coroutine_ has a parent coroutine
+* By default, coroutines **wait** to all their children
+* **Cancellation** is propagated to children
+* **Exceptions** follow a similar propagation paradigm
+
+---
+
+# Structured paradigms
+
+## Structured concurrency
+
+```kotlin
+suspend fun loadData(userId: UserId) = coroutineScope {
+  val data   = async { Db.loadUser(userId) }
+  val avatar = async { downloadAvatar(userId) }
+  return User(data.await(), avatar.await().path)
+}
+```
+
+---
+
+# Structured paradigms
+
+## Structured concurrency
+
+```kotlin
+suspend fun loadData(userId: UserId) = coroutineScope {
+  val data   = async { Db.loadUser(userId) }
+  val avatar = async { downloadAvatar(userId) }
+  return User(data.await(), avatar.await().path)
+}
+```
+
+<br />
+
+Coroutines are **aware of lifecycles**, such as
+
+- Android activities (screens)
+- Web server requests
+
 ---
 
 # Structured paradigms
 
 ## View models -- _What is (in) a deck_, _Nicer UI_
+
+Separate state and its updating from representation in the UI
+
+* **View models** hold the data, usually in a flow
+* **Views** define the UI and user interaction
+  * In Compose, they are defined as `@Composable` functions
+
+Works very well with actions-as-data, leading to **reducers**
+
+---
+
+# Structured paradigms
+
+## View models -- _What is (in) a deck_, _Nicer UI_
+
+```kotlin
+class Counter: ViewModel() {
+  // 1. define a state that evolves over time
+  val count: StateFlow<Int>
+    // 2. private state, starting at 0
+    field = MutableStateFlow(0)
+
+  // 3. operations to change the state
+  fun increment() {
+    count.update { it + 1 }
+  }
+}
+```
+
+---
+
+# Structured paradigms
+
+## View models -- _What is (in) a deck_, _Nicer UI_
+
+`@Composable` functions define the UI as a tree of components
+
+* Those components depend on the particular UI library you use
+
+
+```kotlin
+@Composable fun Screen(counter: Counter) {
+  Button(onClick = { counter.increment() }) {
+    Text("Clicked ${counter.count.value} times")
+  }
+}
+```
+
+---
+
+# Structured paradigms
+
+<p style="font-size: 130%">
+<b>Coroutines</b> and <b>view models</b> are whole topics on its own, <br />
+but feel free to ask about them if you want to know more
+</p>
 
 ---
 
@@ -340,11 +439,32 @@ fun Deck.apply(operation: DeckOperation) = when (operation) {
 
 ## Resources and transactions -- _Better architecture_
 
+Arrow extends the idea of tree-like relationships to other architectural concerns
+
+* **Resources** require special logic for _release_
+  * On success, but also cancellation and exceptions
+* **Transactions** have special _commit_ requirements, and may be retried
+  * Implemented using _Software Transactional Memory_ (STM)
+* **Sagas** have _undo_ logic to perform when an error occurs    
+
 ---
 
 # Strong typing and effects
 
 ## Sealed hierarchies -- _What is (in) a deck_
+
+**Closed** set of classes that define all possibilities in a domain
+
+* The compiler can check _exhaustiveness_ of the code
+* Introduce as many classes as needed to define your domain _precisely_
+
+```kotlin
+sealed interface DeckOperation {
+  data class ChangeTitle(val newTitle: String): DeckOperation
+  data class AddCard(val card: Card): DeckOperation
+  data object Clear: DeckOperation
+}
+```
 
 ---
 
@@ -352,11 +472,32 @@ fun Deck.apply(operation: DeckOperation) = when (operation) {
 
 ## Errors and nullability -- _Law-abiding decks_
 
+As a consequence of _strong typing_ and _value-oriented programming_
+
+<br />
+
+**Nullability** is part of Kotlin types, like `Int?`
+- Dedicated syntax for null-aware operations, like `x?.foo()`
+- Nullability checks influence the type of the variables
+
+**Errors** are also defined as potential values
+- Arrow brings `Either` and `Ior` as generic wrappers
+
+---
+
+# Strong typing and effects
+
+## Errors and nullability
+
+Arrow brings **nice syntax** to define potentially-failing operations
+
+* Very close to exception-based code, but with value-oriented semantics
 
 ```kotlin
 fun pokemon(name: String, hp: Int): Either<String, Card> = either {
   ensure(name.isNotEmpty()) { "empty name" }
   ensure(hp >= 10) { "wrong HP" }
+  // if you get there, nothing was 'raise'd
   Card(isPokemon = true, name, hp)
 }
 ```
@@ -366,6 +507,79 @@ fun pokemon(name: String, hp: Int): Either<String, Card> = either {
 # Strong typing and effects
 
 ## Context parameters
+
+Two points of view to describe what happens in the computation
+
+* As values, with different outcomes described as a sealed hierarchy
+* As **effects**, with a _context_ that defines additional _capabilities_
+
+---
+
+# Strong typing and effects
+
+## Context parameters
+
+Two points of view to describe what happens in the computation
+
+* As values, with different outcomes described as a sealed hierarchy
+* As **effects**, with a _context_ that defines additional _capabilities_
+
+## Examples of effects
+
+* Whether the computation may have a failure path
+* Whether the computation uses concurrency
+* Whether talking to a database is required
+
+---
+
+# Strong typing and effects
+
+## Context parameters
+
+Two points of view to describe what happens in the computation
+
+* As values, with different outcomes described as a sealed hierarchy
+* As **effects**, with a _context_ that defines additional _capabilities_
+
+## Examples of effects
+
+* Whether the computation may have a failure path `=>` `Raise`
+* Whether the computation uses concurrency `=>` `CoroutineScope`
+* Whether talking to a database is required `=>` `DbService`
+
+---
+
+# Strong typing and effects
+
+## Context parameters
+
+```kotlin
+
+fun pokemon(name: String, hp: Int): Either<String, Card> = either {
+  ensure(name.isNotEmpty()) { "empty name" }
+  ensure(hp >= 10) { "wrong HP" }
+  // if you get there, nothing was 'raise'd
+  Card(isPokemon = true, name, hp)
+}
+```
+
+---
+magic-move
+---
+
+# Strong typing and effects
+
+## Context parameters
+
+```kotlin
+context(raise: Raise<String>)
+fun pokemon(name: String, hp: Int): Card = either {
+  ensure(name.isNotEmpty()) { "empty name" }
+  ensure(hp >= 10) { "wrong HP" }
+  // if you get there, nothing was 'raise'd
+  Card(isPokemon = true, name, hp)
+}
+```
 
 ---
 

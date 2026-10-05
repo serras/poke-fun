@@ -395,13 +395,13 @@ html.dark .logo-wall li { border-color: rgb(121 84 246 / 34%); background: rgb(1
 }
 
 .slidev-layout p {
-  margin-bottom: 1em;
+  line-height: 1.1em !important;
 }
 .slidev-layout ol {
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
 }
 .slidev-layout ul {
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
 }
 
 :root {
@@ -412,4 +412,5 @@ h2 {
   font-size: 1.2em !important;
   margin-bottom: 0.8em !important;
   margin-top: 1em !important;
+  line-height: 1.15em !important;
 }

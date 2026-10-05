@@ -312,46 +312,220 @@ td, th { border: 1px solid var(--line); padding: 0.3rem 0.6rem; }
 <h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/21">slide 21 ↗</a></h2>
 <h3>Structured concurrency</h3>
 <p>-- <em>Loading and saving</em>, <em>Deal with bad internet</em></p>
+<p>Instead of creating (and then managing) independent threads,</p>
+<p>Kotlin imposes tree-like hierarchies for concurrency</p>
+<ul>
+<li>Every <em>coroutine</em> has a parent coroutine</li>
+<li>By default, coroutines <strong>wait</strong> to all their children</li>
+<li><strong>Cancellation</strong> is propagated to children</li>
+<li><strong>Exceptions</strong> follow a similar propagation paradigm</li>
+</ul>
 </section>
 <section class="slide" id="slide-22">
 <h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/22">slide 22 ↗</a></h2>
-<h3>View models -- <em>What is (in) a deck</em>, <em>Nicer UI</em></h3>
+<h3>Structured concurrency</h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">suspend</span><span style="color:#0033B3;--shiki-dark:#CC7832"> fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> loadData</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId: </span><span style="color:#000000;--shiki-dark:#A9B7C6">UserId</span><span style="color:#080808;--shiki-dark:#A9B7C6">) </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> coroutineScope</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#0033B3;--shiki-dark:#CC7832"> data</span><span style="color:#0033B3;--shiki-dark:#CC7832">   =</span><span style="color:#00627A;--shiki-dark:#FFC66D"> async</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { Db.</span><span style="color:#00627A;--shiki-dark:#FFC66D">loadUser</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId) }</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> avatar </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> async</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { </span><span style="color:#00627A;--shiki-dark:#FFC66D">downloadAvatar</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId) }</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  return</span><span style="color:#00627A;--shiki-dark:#FFC66D"> User</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">await</span><span style="color:#080808;--shiki-dark:#A9B7C6">(), avatar.</span><span style="color:#00627A;--shiki-dark:#FFC66D">await</span><span style="color:#080808;--shiki-dark:#A9B7C6">().path)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
 </section>
 <section class="slide" id="slide-23">
 <h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/23">slide 23 ↗</a></h2>
-<h3>Resources and transactions -- <em>Better architecture</em></h3>
+<h3>Structured concurrency</h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">suspend</span><span style="color:#0033B3;--shiki-dark:#CC7832"> fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> loadData</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId: </span><span style="color:#000000;--shiki-dark:#A9B7C6">UserId</span><span style="color:#080808;--shiki-dark:#A9B7C6">) </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> coroutineScope</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#0033B3;--shiki-dark:#CC7832"> data</span><span style="color:#0033B3;--shiki-dark:#CC7832">   =</span><span style="color:#00627A;--shiki-dark:#FFC66D"> async</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { Db.</span><span style="color:#00627A;--shiki-dark:#FFC66D">loadUser</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId) }</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> avatar </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> async</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { </span><span style="color:#00627A;--shiki-dark:#FFC66D">downloadAvatar</span><span style="color:#080808;--shiki-dark:#A9B7C6">(userId) }</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  return</span><span style="color:#00627A;--shiki-dark:#FFC66D"> User</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">data</span><span style="color:#080808;--shiki-dark:#A9B7C6">.</span><span style="color:#00627A;--shiki-dark:#FFC66D">await</span><span style="color:#080808;--shiki-dark:#A9B7C6">(), avatar.</span><span style="color:#00627A;--shiki-dark:#FFC66D">await</span><span style="color:#080808;--shiki-dark:#A9B7C6">().path)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+<p>Coroutines are <strong>aware of lifecycles</strong>, such as</p>
+<ul>
+<li>Android activities (screens)</li>
+<li>Web server requests</li>
+</ul>
 </section>
 <section class="slide" id="slide-24">
-<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/24">slide 24 ↗</a></h2>
-<h3>Sealed hierarchies -- <em>What is (in) a deck</em></h3>
+<h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/24">slide 24 ↗</a></h2>
+<h3>View models -- <em>What is (in) a deck</em>, <em>Nicer UI</em></h3>
+<p>Separate state and its updating from representation in the UI</p>
+<ul>
+<li><strong>View models</strong> hold the data, usually in a flow</li>
+<li><strong>Views</strong> define the UI and user interaction
+<ul>
+<li>In Compose, they are defined as <code>@Composable</code> functions</li>
+</ul>
+</li>
+</ul>
+<p>Works very well with actions-as-data, leading to <strong>reducers</strong></p>
 </section>
 <section class="slide" id="slide-25">
-<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/25">slide 25 ↗</a></h2>
-<h3>Errors and nullability -- <em>Law-abiding decks</em></h3>
-<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Either</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">> </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> either</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
-<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isNotEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
-<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">>=</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
-<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp)</span></span>
+<h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/25">slide 25 ↗</a></h2>
+<h3>View models -- <em>What is (in) a deck</em>, <em>Nicer UI</em></h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Counter</span><span style="color:#080808;--shiki-dark:#A9B7C6">: </span><span style="color:#000000;--shiki-dark:#A9B7C6">ViewModel</span><span style="color:#080808;--shiki-dark:#A9B7C6">() {</span></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">  // 1. define a state that evolves over time</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> count: </span><span style="color:#000000;--shiki-dark:#A9B7C6">StateFlow</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">></span></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">    // 2. private state, starting at 0</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">    field</span><span style="color:#0033B3;--shiki-dark:#CC7832"> =</span><span style="color:#00627A;--shiki-dark:#FFC66D"> MutableStateFlow</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#1750EB;--shiki-dark:#6897BB">0</span><span style="color:#080808;--shiki-dark:#A9B7C6">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">  // 3. operations to change the state</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> increment</span><span style="color:#080808;--shiki-dark:#A9B7C6">() {</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">    count.</span><span style="color:#00627A;--shiki-dark:#FFC66D">update</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { it </span><span style="color:#0033B3;--shiki-dark:#CC7832">+</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 1</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  }</span></span>
 <span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
 </section>
 <section class="slide" id="slide-26">
-<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/26">slide 26 ↗</a></h2>
-<h3>Context parameters</h3>
+<h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/26">slide 26 ↗</a></h2>
+<h3>View models -- <em>What is (in) a deck</em>, <em>Nicer UI</em></h3>
+<p><code>@Composable</code> functions define the UI as a tree of components</p>
+<ul>
+<li>Those components depend on the particular UI library you use</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#9E880D;--shiki-dark:#BBB529">@Composable</span><span style="color:#0033B3;--shiki-dark:#CC7832"> fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> Screen</span><span style="color:#080808;--shiki-dark:#A9B7C6">(counter: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Counter</span><span style="color:#080808;--shiki-dark:#A9B7C6">) {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Button</span><span style="color:#080808;--shiki-dark:#A9B7C6">(onClick </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#080808;--shiki-dark:#A9B7C6"> { counter.</span><span style="color:#00627A;--shiki-dark:#FFC66D">increment</span><span style="color:#080808;--shiki-dark:#A9B7C6">() }) {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">    Text</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#067D17;--shiki-dark:#6A8759">"Clicked </span><span style="color:#0037A6;--shiki-dark:#CC7832">${</span><span style="color:#080808;--shiki-dark:#A9B7C6">counter.count.</span><span style="color:#0033B3;--shiki-dark:#CC7832">value</span><span style="color:#0037A6;--shiki-dark:#CC7832">}</span><span style="color:#067D17;--shiki-dark:#6A8759"> times"</span><span style="color:#080808;--shiki-dark:#A9B7C6">)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">  }</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
 </section>
 <section class="slide" id="slide-27">
-<h2>AI enters the room <a class="deep-link" href="/poke-fun/slides/#/27">slide 27 ↗</a></h2>
+<h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/27">slide 27 ↗</a></h2>
+<p>Coroutines and view models are whole topics on its own,</p>
+<p>but feel free to ask about them if you want to know more</p>
+</section>
+<section class="slide" id="slide-28">
+<h2>Structured paradigms <a class="deep-link" href="/poke-fun/slides/#/28">slide 28 ↗</a></h2>
+<h3>Resources and transactions -- <em>Better architecture</em></h3>
+<p>Arrow extends the idea of tree-like relationships to other architectural concerns</p>
+<ul>
+<li><strong>Resources</strong> require special logic for <em>release</em>
+<ul>
+<li>On success, but also cancellation and exceptions</li>
+</ul>
+</li>
+<li><strong>Transactions</strong> have special <em>commit</em> requirements, and may be retried
+<ul>
+<li>Implemented using <em>Software Transactional Memory</em> (STM)</li>
+</ul>
+</li>
+<li><strong>Sagas</strong> have <em>undo</em> logic to perform when an error occurs</li>
+</ul>
+</section>
+<section class="slide" id="slide-29">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/29">slide 29 ↗</a></h2>
+<h3>Sealed hierarchies -- <em>What is (in) a deck</em></h3>
+<p><strong>Closed</strong> set of classes that define all possibilities in a domain</p>
+<ul>
+<li>The compiler can check <em>exhaustiveness</em> of the code</li>
+<li>Introduce as many classes as needed to define your domain <em>precisely</em></li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">sealed</span><span style="color:#0033B3;--shiki-dark:#CC7832"> interface</span><span style="color:#000000;--shiki-dark:#A9B7C6"> DeckOperation</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> ChangeTitle</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> newTitle: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> class</span><span style="color:#000000;--shiki-dark:#A9B7C6"> AddCard</span><span style="color:#080808;--shiki-dark:#A9B7C6">(</span><span style="color:#0033B3;--shiki-dark:#CC7832">val</span><span style="color:#080808;--shiki-dark:#A9B7C6"> card: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">  data</span><span style="color:#0033B3;--shiki-dark:#CC7832"> object</span><span style="color:#000000;--shiki-dark:#A9B7C6"> Clear</span><span style="color:#080808;--shiki-dark:#A9B7C6">: </span><span style="color:#000000;--shiki-dark:#A9B7C6">DeckOperation</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-30">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/30">slide 30 ↗</a></h2>
+<h3>Errors and nullability -- <em>Law-abiding decks</em></h3>
+<p>As a consequence of <em>strong typing</em> and <em>value-oriented programming</em></p>
+<p><strong>Nullability</strong> is part of Kotlin types, like <code>Int?</code></p>
+<ul>
+<li>Dedicated syntax for null-aware operations, like <code>x?.foo()</code></li>
+<li>Nullability checks influence the type of the variables</li>
+</ul>
+<p><strong>Errors</strong> are also defined as potential values</p>
+<ul>
+<li>Arrow brings <code>Either</code> and <code>Ior</code> as generic wrappers</li>
+</ul>
+</section>
+<section class="slide" id="slide-31">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/31">slide 31 ↗</a></h2>
+<h3>Errors and nullability</h3>
+<p>Arrow brings <strong>nice syntax</strong> to define potentially-failing operations</p>
+<ul>
+<li>Very close to exception-based code, but with value-oriented semantics</li>
+</ul>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Either</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">> </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> either</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isNotEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">>=</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">  // if you get there, nothing was 'raise'd</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-32">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/32">slide 32 ↗</a></h2>
+<h3>Context parameters</h3>
+<p>Two points of view to describe what happens in the computation</p>
+<ul>
+<li>As values, with different outcomes described as a sealed hierarchy</li>
+<li>As <strong>effects</strong>, with a <em>context</em> that defines additional <em>capabilities</em></li>
+</ul>
+</section>
+<section class="slide" id="slide-33">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/33">slide 33 ↗</a></h2>
+<h3>Context parameters</h3>
+<p>Two points of view to describe what happens in the computation</p>
+<ul>
+<li>As values, with different outcomes described as a sealed hierarchy</li>
+<li>As <strong>effects</strong>, with a <em>context</em> that defines additional <em>capabilities</em></li>
+</ul>
+<h3>Examples of effects</h3>
+<ul>
+<li>Whether the computation may have a failure path</li>
+<li>Whether the computation uses concurrency</li>
+<li>Whether talking to a database is required</li>
+</ul>
+</section>
+<section class="slide" id="slide-34">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/34">slide 34 ↗</a></h2>
+<h3>Context parameters</h3>
+<p>Two points of view to describe what happens in the computation</p>
+<ul>
+<li>As values, with different outcomes described as a sealed hierarchy</li>
+<li>As <strong>effects</strong>, with a <em>context</em> that defines additional <em>capabilities</em></li>
+</ul>
+<h3>Examples of effects</h3>
+<ul>
+<li>Whether the computation may have a failure path <code>=&gt;</code> <code>Raise</code></li>
+<li>Whether the computation uses concurrency <code>=&gt;</code> <code>CoroutineScope</code></li>
+<li>Whether talking to a database is required <code>=&gt;</code> <code>DbService</code></li>
+</ul>
+</section>
+<section class="slide" id="slide-35">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/35">slide 35 ↗</a></h2>
+<h3>Context parameters</h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Either</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">> </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#00627A;--shiki-dark:#FFC66D"> either</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isNotEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">>=</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">  // if you get there, nothing was 'raise'd</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-36">
+<h2>Strong typing and effects <a class="deep-link" href="/poke-fun/slides/#/36">slide 36 ↗</a></h2>
+<h3>Context parameters</h3>
+<figure class="code"><pre class="shiki shiki-themes intellij-light intellij-darcula" style="background-color:#ffffff;--shiki-dark-bg:#2b2b2b;color:#080808;--shiki-dark:#a9b7c6" tabindex="0"><code class="language-kotlin"><span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">context</span><span style="color:#080808;--shiki-dark:#A9B7C6">(raise: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Raise</span><span style="color:#080808;--shiki-dark:#A9B7C6">&#x3C;</span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">>)</span></span>
+<span class="line"><span style="color:#0033B3;--shiki-dark:#CC7832">fun</span><span style="color:#00627A;--shiki-dark:#FFC66D"> pokemon</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name: </span><span style="color:#000000;--shiki-dark:#A9B7C6">String</span><span style="color:#080808;--shiki-dark:#A9B7C6">, hp: </span><span style="color:#000000;--shiki-dark:#A9B7C6">Int</span><span style="color:#080808;--shiki-dark:#A9B7C6">): </span><span style="color:#000000;--shiki-dark:#A9B7C6">Card</span><span style="color:#0033B3;--shiki-dark:#CC7832"> =</span><span style="color:#00627A;--shiki-dark:#FFC66D"> either</span><span style="color:#080808;--shiki-dark:#A9B7C6"> {</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(name.</span><span style="color:#00627A;--shiki-dark:#FFC66D">isNotEmpty</span><span style="color:#080808;--shiki-dark:#A9B7C6">()) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"empty name"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  ensure</span><span style="color:#080808;--shiki-dark:#A9B7C6">(hp </span><span style="color:#0033B3;--shiki-dark:#CC7832">>=</span><span style="color:#1750EB;--shiki-dark:#6897BB"> 10</span><span style="color:#080808;--shiki-dark:#A9B7C6">) { </span><span style="color:#067D17;--shiki-dark:#6A8759">"wrong HP"</span><span style="color:#080808;--shiki-dark:#A9B7C6"> }</span></span>
+<span class="line"><span style="color:#8C8C8C;--shiki-dark:#808080">  // if you get there, nothing was 'raise'd</span></span>
+<span class="line"><span style="color:#00627A;--shiki-dark:#FFC66D">  Card</span><span style="color:#080808;--shiki-dark:#A9B7C6">(isPokemon </span><span style="color:#0033B3;--shiki-dark:#CC7832">=</span><span style="color:#0033B3;--shiki-dark:#CC7832"> true</span><span style="color:#080808;--shiki-dark:#A9B7C6">, name, hp)</span></span>
+<span class="line"><span style="color:#080808;--shiki-dark:#A9B7C6">}</span></span></code></pre></figure>
+</section>
+<section class="slide" id="slide-37">
+<h2>AI enters the room <a class="deep-link" href="/poke-fun/slides/#/37">slide 37 ↗</a></h2>
 <p>The workshop contains a few sections about using LLMs</p>
 <ul>
 <li>Using local models thanks to <strong>Ollama</strong></li>
 <li>With <strong>Koog</strong> as the library of choice</li>
 </ul>
 </section>
-<section class="slide" id="slide-28">
-<h2>Time to work! <a class="deep-link" href="/poke-fun/slides/#/28">slide 28 ↗</a></h2>
+<section class="slide" id="slide-38">
+<h2>Time to work! <a class="deep-link" href="/poke-fun/slides/#/38">slide 38 ↗</a></h2>
 <h3><code>serranofp.com/poke-fun</code></h3>
 </section>
 
-<footer>Generated from the slides on 2026-10-02. Every section links back to the live slide it was written for.</footer>
+<footer>Generated from the slides on 2026-10-05. Every section links back to the live slide it was written for.</footer>
 </main>
 </body>
 </html>
