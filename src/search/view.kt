@@ -35,8 +35,8 @@ fun SearchPane(
             )
             when (val result = searchResult) {
                 is SearchStatus.Loading ->
-                    CircularProgressIndicator(
-                        modifier = Modifier.height(20.dp).padding(10.dp)
+                    LinearProgressIndicator(
+                        modifier = Modifier.height(30.dp).padding(10.dp).fillMaxWidth()
                     )
                 is SearchStatus.Error ->
                     Text(

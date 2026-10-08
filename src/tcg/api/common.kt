@@ -20,18 +20,20 @@ data class JsonCard(
     val basicSubtypes = listOf("Basic", "Baby", "Restores", "V")
     val level1Subtypes = listOf("Stage 1", "V")
     val level2Subtypes = listOf("Stage 2", "VMAX", "VSTAR", "Restored")
-    val otherSubtypes = listOf("Level-Up", "BREAK", "LEGEND", "V-UNION")
+    val otherSubtypes = listOf("Level-Up", "LEVEL-UP", "BREAK", "LEGEND", "V-UNION")
 
     val tcg: Card
         get() {
             val category = when (supertype) {
                 "Pokémon" -> when {
+                    subtypes.isEmpty() -> Category.Pokemon(PokemonStage.Other)
                     "EX" in subtypes && "MEGA" in subtypes -> Category.Pokemon(PokemonStage.Stage1)
                     "EX" in subtypes -> Category.Pokemon(PokemonStage.Basic)
                     subtypes.any { it in otherSubtypes } -> Category.Pokemon(PokemonStage.Other)
                     subtypes.any { it in level2Subtypes } -> Category.Pokemon(PokemonStage.Stage2)
                     subtypes.any { it in level1Subtypes } -> Category.Pokemon(PokemonStage.Stage1)
                     subtypes.any { it in basicSubtypes } -> Category.Pokemon(PokemonStage.Basic)
+                    "ex" in subtypes -> Category.Pokemon(PokemonStage.Basic)
                     else -> throw IllegalArgumentException("Pokémon $subtypes not recognized")
                 }
                 "Energy" -> when {

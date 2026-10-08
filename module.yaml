@@ -10,12 +10,12 @@ dependencies:
     - $compose.desktop.components.splitPane
     - org.jetbrains.compose.material3:material3:1.12.0-alpha03
     - org.jetbrains.compose.material:material-icons-extended:1.7.3
-    - org.jetbrains.androidx.navigation3:navigation3-ui:1.2.0-alpha02
+    - org.jetbrains.androidx.navigation3:navigation3-ui:1.1.2
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3:2.11.0
     - io.coil-kt.coil3:coil-compose:3.5.0
     - io.coil-kt.coil3:coil-network-ktor3:3.5.0
-    - io.github.vinceglb:filekit-dialogs-compose:0.14.2
+    - io.github.vinceglb:filekit-dialogs-compose:0.16.0
     - bom: io.arrow-kt:arrow-stack:2.3.0-alpha.4
     - io.arrow-kt:arrow-core
     - io.arrow-kt:arrow-fx-coroutines
@@ -39,13 +39,12 @@ test-dependencies:
 
 settings:
     kotlin:
-        version: 2.4.10
+        version: 2.4.21
         serialization:
             format: json
             version: 1.11.0
         freeCompilerArgs:
             - "-Xreturn-value-checker=check"
-            - "-Xexplicit-backing-fields"
         # ksp:
         #    processors:
         #        - io.arrow-kt:arrow-optics-ksp-plugin
@@ -54,9 +53,9 @@ settings:
               dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0-alpha.4
     compose:
         enabled: true
-        version: 1.12.0
+        version: 1.12.1
         resources:
             packageName: resources
     ktor:
         enabled: true
-        version: 3.5.2
+        version: 3.6.0
