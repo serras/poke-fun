@@ -7,6 +7,9 @@
     <EXTENSION ID="amper.run.common">
       <option name="module" value="poke-fun" />
     </EXTENSION>
+    <EXTENSION ID="amper.run.jvm">
+      <option name="jvmArgs" enabled="true" value="--enable-native-access=ALL-UNNAMED" />
+    </EXTENSION>
     <method v="2" />
   </configuration>
 </component>
