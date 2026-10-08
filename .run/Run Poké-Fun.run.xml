@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Run Poké-Fun" type="Amper.Run">
+    <option name="command" value="run" />
+    <EXTENSION ID="amper.compose.hotReload">
+      <option name="composeHotReloadEnabled" value="false" />
+    </EXTENSION>
+    <EXTENSION ID="amper.run.common">
+      <option name="module" value="poke-fun" />
+    </EXTENSION>
+    <method v="2" />
+  </configuration>
+</component>
