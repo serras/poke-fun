@@ -10,13 +10,13 @@ dependencies:
     - $compose.desktop.components.splitPane
     - org.jetbrains.compose.material3:material3:1.12.0-alpha03
     - org.jetbrains.compose.material:material-icons-extended:1.7.3
-    - org.jetbrains.androidx.navigation3:navigation3-ui:1.1.2
+    - org.jetbrains.androidx.navigation3:navigation3-ui:1.2.0-rc01
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0
     - org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-navigation3:2.11.0
-    - io.coil-kt.coil3:coil-compose:3.5.0
-    - io.coil-kt.coil3:coil-network-ktor3:3.5.0
+    - io.coil-kt.coil3:coil-compose:3.6.2
+    - io.coil-kt.coil3:coil-network-ktor3:3.6.3
     - io.github.vinceglb:filekit-dialogs-compose:0.16.0
-    - bom: io.arrow-kt:arrow-stack:2.3.0-alpha.4
+    - bom: io.arrow-kt:arrow-stack:2.3.0-alpha.7
     - io.arrow-kt:arrow-core
     - io.arrow-kt:arrow-fx-coroutines
     - io.arrow-kt:arrow-resilience
@@ -28,21 +28,25 @@ dependencies:
     - $ktor.client.cio
     - $ktor.client.contentNegotiation
     - $ktor.serialization.kotlinx.json
-    - ai.koog:koog-agents:1.1.1
-    - ai.koog:prompt-executor-ollama-client:1.1.1
+    - ai.koog:koog-agents:1.3.0
+    - ai.koog:prompt-executor-ollama-client:1.3.0
 
 test-dependencies:
     - $kotlin.test
     - org.jetbrains.kotlinx:kotlinx-coroutines-test:1.11.0
-    - io.kotest:kotest-assertions-core:6.2.4
-    - io.kotest:kotest-property:6.2.4
+    - io.kotest:kotest-assertions-core:6.2.6
+    - io.kotest:kotest-property:6.2.6
 
 settings:
+    jvm:
+        jdk:
+            version: 25
+            distributions: [ jetbrains ]
     kotlin:
         version: 2.4.21
         serialization:
             format: json
-            version: 1.11.0
+            version: 1.12.0
         freeCompilerArgs:
             - "-Xreturn-value-checker=check"
         # ksp:
@@ -50,10 +54,10 @@ settings:
         #        - io.arrow-kt:arrow-optics-ksp-plugin
         compilerPlugins:
             - id: arrow.optics.plugin
-              dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0-alpha.4
+              dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0-alpha.7
     compose:
         enabled: true
-        version: 1.12.1
+        version: 1.12.2
         resources:
             packageName: resources
     ktor:
