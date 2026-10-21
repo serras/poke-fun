@@ -16,6 +16,7 @@ data class JsonCard(
     val subtypes: List<String> = emptyList(),
     val types: List<String> = emptyList(),
     val regulationMark: String? = null,
+    val images: JsonImages? = null,
 ) {
     val basicSubtypes = listOf("Basic", "Baby", "Restores", "V")
     val level1Subtypes = listOf("Stage 1", "V")
@@ -51,9 +52,15 @@ data class JsonCard(
                 else -> throw IllegalArgumentException()
             }
             val type = types.firstOrNull()?.let(Type::valueOf)
-            return Card(name, id, category, type, regulationMark)
+            return Card(name, id, category, type, regulationMark, images?.small)
         }
 }
+
+@Serializable
+data class JsonImages(
+    val small: String? = null,
+    val large: String? = null,
+)
 
 @Serializable
 data class JsonSingleResult(

@@ -23,11 +23,15 @@ data class Card(
     val category: Category,
     val type: Type?,
     val regulationMark: String?,
+    val knownImageUrl: String? = null,
 ): Comparable<Card> {
     val imageUrl: String
-        get() {
-            val (set, id) = identifier.split('-')
-            return "https://images.pokemontcg.io/$set/${id}_hires.png"
+        get() = when (knownImageUrl) {
+            null -> {
+                val (set, id) = identifier.split('-')
+                return "https://images.pokemontcg.io/$set/${id}_hires.png"
+            }
+            else -> knownImageUrl
         }
 
     val imageResource: AsyncImagePainter
