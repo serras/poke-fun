@@ -40,15 +40,32 @@ fun SingleCard(
     modifier: Modifier = Modifier,
     extra: @Composable ColumnScope.(Card) -> Unit = { }
 ) {
-    Material3Card(modifier = modifier.width(150.dp).padding(5.dp)) {
+    Material3Card(modifier = modifier.width(140.dp).padding(5.dp)) {
         Column {
-            Text(
-                card.name,
-                textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.fillMaxWidth().padding(2.dp)
-            )
+            if (card.type != null) {
+                Row(modifier = Modifier.fillMaxWidth().padding(horizontal = 7.dp, vertical = 2.dp)) {
+                    Image(
+                        painter = card.type.imageResource,
+                        contentDescription = card.type.name,
+                        modifier = Modifier.height(23.dp)
+                    )
+                    Text(
+                        card.name,
+                        textAlign = TextAlign.Right,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            } else {
+                Text(
+                    card.name,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.fillMaxWidth().padding(2.dp)
+                )
+            }
             Image(
                 painter = card.imageResource,
                 contentDescription = card.identifier,
