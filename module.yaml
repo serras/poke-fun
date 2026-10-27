@@ -16,7 +16,7 @@ dependencies:
     - io.coil-kt.coil3:coil-compose:3.6.2
     - io.coil-kt.coil3:coil-network-ktor3:3.6.3
     - io.github.vinceglb:filekit-dialogs-compose:0.16.0
-    - bom: io.arrow-kt:arrow-stack:2.3.0-alpha.7
+    - bom: io.arrow-kt:arrow-stack:2.3.0.1
     - io.arrow-kt:arrow-core
     - io.arrow-kt:arrow-fx-coroutines
     - io.arrow-kt:arrow-resilience
@@ -45,7 +45,7 @@ settings:
     kotlin:
         version: 2.4.21
         serialization:
-            format: json
+            enabled: true
             version: 1.12.0
         freeCompilerArgs:
             - "-Xreturn-value-checker=check"
@@ -54,7 +54,7 @@ settings:
         #        - io.arrow-kt:arrow-optics-ksp-plugin
         compilerPlugins:
             - id: arrow.optics.plugin
-              dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0-alpha.7
+              dependency: io.arrow-kt:arrow-optics-compiler-plugin:2.3.0.1
     compose:
         enabled: true
         version: 1.12.2
